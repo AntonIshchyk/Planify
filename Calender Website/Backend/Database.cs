@@ -102,9 +102,4 @@ namespace Backend
             Admins = new List<Admin>();       
         }
     }
-
-    public class Session
-    {
-        
-    }
 }
