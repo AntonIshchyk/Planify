@@ -1,6 +1,4 @@
-using Backend;
-
-namespace EndPointManager
+namespace Backend
 {
     public class EndPointManager
     {
