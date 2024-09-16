@@ -6,6 +6,8 @@ namespace Backend
         public string Username { get; }
         private string Password { get; set; }
         public string Email { get; }
+        public DateTime LastLogin { get; set; }
+        public bool Online { get; set; }
 
         public Admin(int id, string username, string password, string email)
         {
