@@ -31,14 +31,38 @@ namespace Backend
 
         public IResult Login(Admin admin)
         {
-            // after loggin in - create a new session
-            return Results.Ok("To Implement");
+            var existingAdmin = MemoryDB.Admins.FirstOrDefault(a => a.Id == admin.Id);
+            if (existingAdmin is null)
+            {
+                return Results.BadRequest("Admin not found");
+            }
+            else
+            {
+                if (existingAdmin.LoggedIn)
+                {
+                    return Results.BadRequest("Admin is already logged in");
+                }
+                existingAdmin.LoggedIn = true;
+                return Results.Ok($"Welcome {admin.Username}!");
+            }
         }
 
         public IResult Logout(Admin admin)
         {
-            // after loggin in - create a new session
-            return Results.Ok("To Implement");
+            var existingAdmin = MemoryDB.Admins.FirstOrDefault(a => a.Id == admin.Id);
+            if (existingAdmin is null)
+            {
+                return Results.BadRequest("Admin not found");
+            }
+            else
+            {
+                if (existingAdmin.LoggedIn)
+                {
+                    existingAdmin.LoggedIn = false;
+                    return Results.Ok($"See you later {admin.Username}!");
+                }
+                return Results.BadRequest("Admin is already logged out");
+            }
         }
     }
 }
