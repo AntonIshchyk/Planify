@@ -42,8 +42,9 @@ namespace Backend
                 {
                     return Results.BadRequest("Admin is already logged in");
                 }
+                existingAdmin.LastLogIn = DateTime.Now;
                 existingAdmin.LoggedIn = true;
-                return Results.Ok($"Welcome {admin.Username}!");
+                return Results.Ok($"Welcome {existingAdmin.Username}!");
             }
         }
 
@@ -58,8 +59,9 @@ namespace Backend
             {
                 if (existingAdmin.LoggedIn)
                 {
+                    existingAdmin.LastLogOut = DateTime.Now;
                     existingAdmin.LoggedIn = false;
-                    return Results.Ok($"See you later {admin.Username}!");
+                    return Results.Ok($"See you later {existingAdmin.Username}!");
                 }
                 return Results.BadRequest("Admin is already logged out");
             }
