@@ -5,6 +5,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddControllers();
+builder.Services.AddTransient<EventService>();
+builder.Services.AddTransient<LoginService>();
 
 var app = builder.Build();
 
