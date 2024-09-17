@@ -33,21 +33,15 @@ public class LoginControllers : Controller
         bool registered = LS.IsRegistered();
         return Ok(new IsRegisteredResponse(registered, LS.GetCurrentAdmin().Username));
     }
-
     [HttpPost("register")]
-    public IResult Register([FromBody] Admin admin)
+    public async Task<IActionResult> Register([FromBody] Admin admin)
     {
-        if (admin.Username == "Unknown" || admin.Email == "None" || admin.Password == "None")
-        {
-            return Results.BadRequest("Data is not complete");
-        }
-        var existingAdmin = LS.AdminExists(admin);
-        if (existingAdmin is not null) return Results.BadRequest("This Admin already exists");
         // don`t trust id`s from abroad, so...
         // create a new id, for safety reasons
         admin.Id = Guid.NewGuid();
-        MemoryDB.Admins.Add(admin);
-        return Results.Ok($"Admin registered {admin.Username}, {admin.Id}, {admin.Password}");
+        bool doesAdminExist = await LS.SaveAdmin(admin);
+        if (!doesAdminExist) return BadRequest("Admin is already registered");
+        else return Ok("Admin registered");
     }
 
     [HttpPost("logout")]
