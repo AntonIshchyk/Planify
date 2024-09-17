@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-[Route("Calender-Website/")]
+[Route("Calender-Website/Login")]
 public class LoginControllers : Controller
 {
     readonly LoginService LS;
@@ -33,11 +33,13 @@ public class LoginControllers : Controller
         bool registered = LS.IsRegistered();
         return Ok(new IsRegisteredResponse(registered, LS.GetCurrentAdmin().Username));
     }
+
     [HttpPost("register")]
     public async Task<IActionResult> Register([FromBody] Admin admin)
     {
         // don`t trust id`s from abroad, so...
         // create a new id, for safety reasons
+        if (admin.Username == "Unknown" || admin.Password == "None" || admin.Email == "None") return BadRequest("Admin can not be made. Give a username, password and email");
         admin.Id = Guid.NewGuid();
         bool doesAdminExist = await LS.SaveAdmin(admin);
         if (!doesAdminExist) return BadRequest("Admin is already registered");
