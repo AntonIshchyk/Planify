@@ -1,7 +1,6 @@
-using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Mvc;
 
-[Microsoft.AspNetCore.Components.Route("Calender-Website/login")]
+[Route("Calender-Website/login")]
 public class LoginControllers : Controller
 {
     readonly LoginService LS;
@@ -11,7 +10,7 @@ public class LoginControllers : Controller
         LS = loginservice;
     }
 
-    [HttpPost()]
+    [HttpPost("Login")]
     public IResult Login(Admin admin)
     {
         var existingAdmin = LS.IsCurrentAdmin(admin);
@@ -28,7 +27,7 @@ public class LoginControllers : Controller
         }
     }
 
-    [HttpGet()]
+    [HttpGet("IsRegistered")]
     public IActionResult IsRegistered()
     {
         bool registered = LS.IsRegistered();

@@ -9,10 +9,6 @@ namespace Backend
         {
             App = app;
             DB = new MemoryDB();
-
-            app.MapPost("/Register/", Register);
-            app.MapPost("/Login/", Login);
-            app.MapPost("/Logout/", Logout);
         }
 
 

@@ -8,9 +8,13 @@ public class Admin
     public DateTime LastLogOut { get; set; }
     public bool LoggedIn { get; set; }
 
-    public Admin(string username, string password, string email)
+    public Admin()
     {
         Id = Guid.NewGuid();
+    }
+
+    public Admin(string username, string password, string email)
+    {
         Username = username;
         Password = password;
         Email = email;
