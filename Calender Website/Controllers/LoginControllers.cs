@@ -13,7 +13,7 @@ public class LoginControllers : Controller
     [HttpPost("login")]
     public IResult Login([FromBody] Admin admin)
     {
-        var existingAdmin = LS.IsCurrentAdmin(admin);
+        var existingAdmin = LS.AdminExists(admin);
         if (existingAdmin is null) return Results.BadRequest("Admin not found");
         else
         {
@@ -37,7 +37,7 @@ public class LoginControllers : Controller
     [HttpPost("register")]
     public IResult Register([FromBody] Admin admin)
     {
-        var existingAdmin = MemoryDB.Admins.FirstOrDefault(a => a.Username == admin.Username && a.Password == admin.Password);
+        var existingAdmin = LS.AdminExists(admin);
         if (existingAdmin is not null) return Results.BadRequest("This Admin already exists");
         MemoryDB.Admins.Add(admin);
         return Results.Ok($"Admin registered {admin.Id}");
@@ -46,7 +46,7 @@ public class LoginControllers : Controller
     [HttpPost("logout")]
     public IResult Logout([FromBody] Admin admin)
     {
-        var existingAdmin = MemoryDB.Admins.FirstOrDefault(a => a.Username == admin.Username && a.Password == admin.Password);
+        var existingAdmin = LS.AdminExists(admin);
         if (existingAdmin is null) return Results.BadRequest("Admin not found");
         else
         {

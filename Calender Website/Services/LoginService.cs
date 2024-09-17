@@ -1,6 +1,6 @@
 public class LoginService
 {
-    public Admin IsCurrentAdmin(Admin admin) => MemoryDB.Admins.FirstOrDefault(a => a.Username == admin.Username && a.Password == admin.Password)!;
+    public Admin AdminExists(Admin admin) => MemoryDB.Admins.FirstOrDefault(a => a.Username == admin.Username && a.Password == admin.Password)!;
 
     // is registered -> WHO? 
     // just random an admin = no point at this moment
