@@ -35,12 +35,13 @@ public class LoginControllers : Controller
     }
 
     [HttpPost("register")]
-    public IResult Register(Admin admin)
+    public async Task<IActionResult> Register(Admin admin)
     {
         var existingAdmin = MemoryDB.Admins.FirstOrDefault(a => a.Username == admin.Username && a.Password == admin.Password);
-        if (existingAdmin is not null) return Results.BadRequest("This Admin already exists");
-        MemoryDB.Admins.Add(admin);
-        return Results.Ok("Admin registered");
+        if (existingAdmin is not null) return BadRequest("This Admin already exists");
+        //MemoryDB.Admins.Add(admin);
+        await LS.SaveAdmin(admin);
+        return Ok("Admin registered");
     }
 
     [HttpPost("logout")]
