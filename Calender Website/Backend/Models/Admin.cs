@@ -1,6 +1,6 @@
 public class Admin
 {
-    public int Id { get; set; }
+    public Guid Id { get; set; }
     public string Username { get; }
     public string Password { get; set; }
     public string Email { get; }
@@ -8,9 +8,9 @@ public class Admin
     public DateTime LastLogOut { get; set; }
     public bool LoggedIn { get; set; }
 
-    public Admin(int id, string username, string password, string email)
+    public Admin(string username, string password, string email)
     {
-        Id = id;
+        Id = Guid.NewGuid();
         Username = username;
         Password = password;
         Email = email;
