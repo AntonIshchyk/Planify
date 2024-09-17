@@ -18,6 +18,7 @@ namespace Backend
 
         }
 
+        
         public IResult Register(Admin admin)
         {
             var existingAdmin = MemoryDB.Admins.FirstOrDefault(a => a.Id == admin.Id);
