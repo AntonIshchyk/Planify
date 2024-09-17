@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-[Route("Calender-Website/login")]
+[Route("Calender-Website/")]
 public class LoginControllers : Controller
 {
     readonly LoginService LS;
@@ -10,8 +10,8 @@ public class LoginControllers : Controller
         LS = loginservice;
     }
 
-    [HttpPost("Login")]
-    public IResult Login(Admin admin)
+    [HttpPost("login")]
+    public IResult Login([FromBody] Admin admin)
     {
         var existingAdmin = LS.IsCurrentAdmin(admin);
         if (existingAdmin is null) return Results.BadRequest("Admin not found");
@@ -35,16 +35,16 @@ public class LoginControllers : Controller
     }
 
     [HttpPost("register")]
-    public IResult Register(Admin admin)
+    public IResult Register([FromBody] Admin admin)
     {
         var existingAdmin = MemoryDB.Admins.FirstOrDefault(a => a.Username == admin.Username && a.Password == admin.Password);
         if (existingAdmin is not null) return Results.BadRequest("This Admin already exists");
         MemoryDB.Admins.Add(admin);
-        return Results.Ok("Admin registered");
+        return Results.Ok($"Admin registered {admin.Id}");
     }
 
     [HttpPost("logout")]
-    public IResult Logout(Admin admin)
+    public IResult Logout([FromBody] Admin admin)
     {
         var existingAdmin = MemoryDB.Admins.FirstOrDefault(a => a.Username == admin.Username && a.Password == admin.Password);
         if (existingAdmin is null) return Results.BadRequest("Admin not found");
