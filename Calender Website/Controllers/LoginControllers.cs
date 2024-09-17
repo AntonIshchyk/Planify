@@ -37,8 +37,13 @@ public class LoginControllers : Controller
     [HttpPost("register")]
     public IResult Register([FromBody] Admin admin)
     {
+        if (admin.Username == "Unknown" || admin.Email == "None" || admin.Password == "None")
+        {
+            return Results.BadRequest("Data is not complete");
+        }
         var existingAdmin = LS.AdminExists(admin);
         if (existingAdmin is not null) return Results.BadRequest("This Admin already exists");
+        // don`t trust id`s from abroad, so...
         // create a new id, for safety reasons
         admin.Id = Guid.NewGuid();
         MemoryDB.Admins.Add(admin);
