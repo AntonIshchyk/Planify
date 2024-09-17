@@ -1,6 +1,6 @@
 public class Event
 {
-    public int Id { get; set; }
+    public Guid Id { get; set; }
     public string Title { get; }
     public string Description { get; }
     public DateTime Date { get; }
@@ -9,9 +9,9 @@ public class Event
     public string Location { get; }
     public bool AdminApproval { get; }
 
-    public Event(int id, string title, string description, DateTime date, DateTime startTime, DateTime endTime, string location, bool adminApproval)
+    public Event(string title, string description, DateTime date, DateTime startTime, DateTime endTime, string location, bool adminApproval)
     {
-        Id = id;
+        Id = new Guid();
         Title = title;
         Description = description;
         Date = date;

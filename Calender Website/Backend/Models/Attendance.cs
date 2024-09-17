@@ -1,12 +1,12 @@
 public class Attendance
 {
-    public int Id { get; set; }
-    public int UserId { get; set; }
+    public Guid Id { get; set; }
+    public Guid UserId { get; set; }
     public DateTime Date { get; }
 
-    public Attendance(int id, int userId, DateTime date)
+    public Attendance(Guid userId, DateTime date)
     {
-        Id = id;
+        Id = new Guid();
         UserId = userId;
         Date = date;
     }
