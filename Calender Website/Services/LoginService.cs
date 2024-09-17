@@ -21,13 +21,6 @@ public class LoginService
             if (posibleSameAdmin.Email == admin.Email && posibleSameAdmin.Username == admin.Username && posibleSameAdmin.Password == admin.Password) return false;
         }
         admins.Add(admin);
-        Console.WriteLine(admin.Id);
-        Console.WriteLine(admin.Username);
-        Console.WriteLine(admin.Email);
-        Console.WriteLine(admin.Password);
-        Console.WriteLine(admin.LastLogIn);
-        Console.WriteLine(admin.LastLogOut);
-        Console.WriteLine(admin.LoggedIn);
         await File.WriteAllTextAsync(path, JsonSerializer.Serialize(admins));
         return true;
     }
