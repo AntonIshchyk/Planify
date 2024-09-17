@@ -12,5 +12,18 @@ public class EventController : Controller{
     public async Task<IResult> GetEvent([FromQuery] Guid id){
         return Results.Ok(GetEvent(id));
     }
+
+    [HttpPost]
+    public async Task<IResult> PostEvent([FromBody] Event e){
+        return await eventService.AppendEvent(e);
+    }
+    [HttpPut]
+    public async Task<IResult> UpdateEvent([FromBody] Event e){
+        return await eventService.UpdateEvent(e);
+    }
+    [HttpDelete]
+    public async Task<IResult> DeleteEvent([FromQuery] Guid id){
+        return await eventService.DeleteEvent(id);
+    }
     
 }
