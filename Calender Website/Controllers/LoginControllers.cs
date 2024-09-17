@@ -39,8 +39,10 @@ public class LoginControllers : Controller
     {
         var existingAdmin = LS.AdminExists(admin);
         if (existingAdmin is not null) return Results.BadRequest("This Admin already exists");
+        // create a new id, for safety reasons
+        admin.Id = Guid.NewGuid();
         MemoryDB.Admins.Add(admin);
-        return Results.Ok($"Admin registered {admin.Id}");
+        return Results.Ok($"Admin registered {admin.Username}, {admin.Id}, {admin.Password}");
     }
 
     [HttpPost("logout")]
