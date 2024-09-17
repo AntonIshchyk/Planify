@@ -9,7 +9,6 @@ public class EventService{
     public async Task<Event> GetEvent(Guid id){
         Dictionary<Guid, Event> events = await ReadAllEvents();
         return events[id];
-
     }
     public async Task<IResult> AppendEvent(Event e){
         Dictionary<Guid, Event> events = await ReadAllEvents();
