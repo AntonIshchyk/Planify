@@ -36,6 +36,10 @@ public class LoginControllers : Controller
     [HttpPost("register")]
     public async Task<IActionResult> Register([FromBody] Admin admin)
     {
+        if (admin.Username == "Unknown" || admin.Email == "None" || admin.Password == "None")
+        {
+            return BadRequest("Data is not complete");
+        }
         // don`t trust id`s from abroad, so...
         // create a new id, for safety reasons
         admin.Id = Guid.NewGuid();
