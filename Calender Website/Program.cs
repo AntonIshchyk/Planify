@@ -16,6 +16,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+app.Urls.Add("http://localhost:5027");
 
 app.UseHttpsRedirection();
 
