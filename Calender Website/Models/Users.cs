@@ -1,4 +1,4 @@
-public class User
+public class Users
 {
     public Guid Id { get; set; }
     public string FirstName { get; }
@@ -7,7 +7,7 @@ public class User
     private string Password { get; set; }
     public int RecurringDays { get; }
 
-    public User(string firstName, string lastName, string email, string password, int recurringDays)
+    public Users(string firstName, string lastName, string email, string password, int recurringDays)
     {
         Id = Guid.NewGuid();
         FirstName = firstName;

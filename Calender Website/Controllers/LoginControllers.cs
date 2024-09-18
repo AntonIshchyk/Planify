@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-[Route("Calender-Website/Login")]
+[Route("Calender-Website")]
 public class LoginControllers : Controller
 {
     readonly LoginService LS;
@@ -11,7 +11,7 @@ public class LoginControllers : Controller
     }
 
     [HttpPost("login")]
-    public IResult Login([FromBody] Admin admin)
+    public IResult Login([FromBody] Admins admin)
     {
         var existingAdmin = LS.AdminExists(admin);
         if (existingAdmin is null) return Results.BadRequest("Admin not found");
@@ -35,7 +35,7 @@ public class LoginControllers : Controller
     }
 
     [HttpPost("register")]
-    public async Task<IActionResult> Register([FromBody] Admin admin)
+    public async Task<IActionResult> Register([FromBody] Admins admin)
     {
         if (admin.Username == "Unknown" || admin.Email == "None" || admin.Password == "None") return BadRequest("Data is not complete");
         // don`t trust id`s from abroad, so...
@@ -47,7 +47,7 @@ public class LoginControllers : Controller
     }
 
     [HttpPost("logout")]
-    public IResult Logout([FromBody] Admin admin)
+    public IResult Logout([FromBody] Admins admin)
     {
         var existingAdmin = LS.AdminExists(admin);
         if (existingAdmin is null) return Results.BadRequest("Admin not found");

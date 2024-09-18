@@ -2,7 +2,7 @@ using System.Text.Json;
 
 public class LoginService
 {
-    public Admin AdminExists(Admin admin) => MemoryDB.Admins.FirstOrDefault(a => a.Username == admin.Username && a.Password == admin.Password)!;
+    public Admins AdminExists(Admins admin) => MemoryDB.Admins.FirstOrDefault(a => a.Username == admin.Username && a.Password == admin.Password)!;
 
     // is registered -> WHO? 
     // just random an admin = no point at this moment
@@ -10,18 +10,16 @@ public class LoginService
 
     // to fix
     // it gets first online admin, not really the one you are
-    public Admin GetCurrentAdmin() => MemoryDB.Admins.First(a => a.LoggedIn);
+    public Admins GetCurrentAdmin() => MemoryDB.Admins.First(a => a.LoggedIn);
 
-    public async Task<bool> SaveAdmin(Admin admin)
+    public async Task<bool> SaveAdmin(Admins admin)
     {
-        string path = $"Data/Admins.json";
-        List<Admin> admins = JsonSerializer.Deserialize<List<Admin>>(await File.ReadAllTextAsync(path))!;
-        foreach (Admin posibleSameAdmin in admins)
+        List<Admins> admins = await AccesJson.ReadJson<Admins>();
+        foreach (Admins posibleSameAdmin in admins)
         {
             if (posibleSameAdmin.Email == admin.Email && posibleSameAdmin.Username == admin.Username && posibleSameAdmin.Password == admin.Password) return false;
         }
-        admins.Add(admin);
-        await File.WriteAllTextAsync(path, JsonSerializer.Serialize(admins));
+        await AccesJson.WriteJson(admin);
         return true;
     }
 }

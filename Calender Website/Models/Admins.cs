@@ -1,4 +1,4 @@
-public class Admin
+public class Admins
 {
     public Guid Id { get; set; }
     public string Username { get; set; } = "Unknown";
@@ -8,20 +8,9 @@ public class Admin
     public DateTime LastLogOut { get; set; }
     public bool LoggedIn { get; set; }
 
-    public Admin()
-    {
+    public Admins() { }
 
-    }
-
-    public Admin(string username, string password, string email)
-    {
-        Id = Guid.NewGuid();
-        Username = username;
-        Password = password;
-        Email = email;
-    }
-
-    public Admin(Guid id, string username, string password, string email)
+    public Admins(string username, string password, string email)
     {
         Id = Guid.NewGuid();
         Username = username;

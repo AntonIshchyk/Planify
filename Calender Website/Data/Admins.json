@@ -1,1 +1,11 @@
-[]
+[
+    {
+        "Id": "518b152d-6fa8-4ba0-aec1-0ecfb1774bed",
+        "Username": "TestUsername",
+        "Password": "TestPassword",
+        "Email": "Test",
+        "LastLogIn": "0001-01-01T00:00:00",
+        "LastLogOut": "0001-01-01T00:00:00",
+        "LoggedIn": false
+    }
+]
