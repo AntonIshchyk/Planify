@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-[Route("Calender-Website/Login")]
+[Route("Calender-Website")]
 public class LoginControllers : Controller
 {
     readonly LoginService LS;
