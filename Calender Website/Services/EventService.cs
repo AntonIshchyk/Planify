@@ -3,12 +3,15 @@ using System.Text.Json;
 public class EventService
 {
     string path = $"events.json";
+    string path_reviews = $"reviews.json";
     public async Task<Dictionary<Guid, Event>> ReadAllEvents() => JsonSerializer.Deserialize<Dictionary<Guid, Event>>(await File.ReadAllTextAsync(path))!;
 
+    public async Task<Dictionary<Guid, List<EventAttendance>>> ReadAllReviews() => JsonSerializer.Deserialize<Dictionary<Guid, List<EventAttendance>>>(await File.ReadAllTextAsync(path_reviews))!;
     public async Task<Event> GetEvent(Guid id)
     {
         Dictionary<Guid, Event> events = await ReadAllEvents();
-        return events[id];
+        if(events.ContainsKey(id)) return events[id];
+        return null;
     }
     public async Task<IResult> AppendEvent(Event e)
     {
@@ -35,5 +38,18 @@ public class EventService
         events.Remove(id);
         await WriteEvents(events);
         return Results.Ok("Success!");
+    }
+    public async Task<IResult> AddReview(EventAttendance review){
+        if(GetEvent(review.EventId) is null) return Results.BadRequest("Event doesn't exist!");
+        Dictionary<Guid, List<EventAttendance>> reviews = await ReadAllReviews();
+        if(reviews.ContainsKey(review.EventId)) reviews[review.EventId].Add(review);
+        else reviews[review.EventId] = new List<EventAttendance>(){review};
+        return Results.Created();
+    }
+
+    public async Task<List<EventAttendance>> GetReviews(Guid id){
+        Dictionary<Guid, List<EventAttendance>> reviews = await ReadAllReviews();
+        if(!reviews.ContainsKey(id)) return new();
+        return reviews[id];
     }
 }

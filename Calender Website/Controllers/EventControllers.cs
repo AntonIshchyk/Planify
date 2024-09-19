@@ -11,10 +11,14 @@ public class EventController : Controller
     [HttpGet()]
     public async Task<IResult> GetEvent([FromQuery] Guid id) => Results.Ok(await GetEvent(id));
 
+    [HttpPost("review")]
+    public async Task<IResult> AddReview([FromBody] EventAttendance review) => await eventService.AddReview(review);
+
+    public async Task<IResult> GetReviews([FromQuery] Guid id) => Results.Ok(await eventService.GetReviews(id));
 
 //The following controllers ONLY work if an admin is logged in on this pc. This is what the [LoggedInFilter] means.
     [LoggedInFilter]
-    [HttpPost]
+    [HttpPost()]
     public async Task<IResult> PostEvent([FromBody] Event e) => await eventService.AppendEvent(e);
 
     [LoggedInFilter]
