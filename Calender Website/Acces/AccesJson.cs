@@ -33,13 +33,8 @@ public static class AccesJson
         writer.Dispose();
     }
 
-    public static void WriteJsonList<T>(List<T> items) // where T : IHasId
+    public static void WriteJsonList<T>(List<T> items)
     {
-        /*List<T> fileItems = await ReadJson<T>();
-        foreach (T item in items)
-        {
-            await WriteJson(item);
-        }*/
         string path = $"Data/{typeof(T).Name}s.json";
         StreamWriter writer = new(path);
         writer.Write(JsonConvert.SerializeObject(items, formatting: Formatting.Indented));
