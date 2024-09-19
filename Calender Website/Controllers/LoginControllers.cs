@@ -5,9 +5,9 @@ public class LoginControllers : Controller
 {
     readonly AdminService AS;
 
-    public LoginControllers(AdminService loginservice)
+    public LoginControllers(AdminService adminService)
     {
-        AS = loginservice;
+        AS = adminService;
     }
 
     [HttpPost("login")]
