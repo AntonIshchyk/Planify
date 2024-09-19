@@ -15,10 +15,6 @@ public class LoginService
     public async Task<bool> SaveAdmin(Admin admin)
     {
         List<Admin> admins = await AccesJson.ReadJson<Admin>();
-        foreach (var a in admins)
-        {
-            Console.WriteLine(a.Username);
-        }
 
         foreach (Admin posibleSameAdmin in admins)
         {

@@ -1,5 +1,5 @@
 using Newtonsoft.Json;
-using System.Text.Json;
+
 
 public static class AccesJson
 {
@@ -7,7 +7,7 @@ public static class AccesJson
     {
         string path = $"Data/{typeof(T).Name}s.json";
         StreamReader reader;
-        List<T> items = [];
+        List<T> items = new();
 
         if (File.Exists(path))
         {
@@ -25,24 +25,12 @@ public static class AccesJson
         string path = $"Data/{typeof(T).Name}s.json";
         List<T> items = await ReadJson<T>();
         StreamWriter writer = new(path);
-        try
-        {
-            items.Add(item);
-            writer.Write(JsonConvert.SerializeObject(items, formatting: Formatting.Indented));
-        }
-        catch (FileNotFoundException ex)
-        {
-            Console.WriteLine(ex);
-        }
-        catch (JsonReaderException ex)
-        {
-            Console.WriteLine(ex);
-        }
-        finally
-        {
-            writer.Close();
-            writer.Dispose();
-        }
+
+        items.Add(item);
+        writer.Write(JsonConvert.SerializeObject(items, formatting: Formatting.Indented));
+
+        writer.Close();
+        writer.Dispose();
     }
 
     public async static Task WriteJsonList<T>(List<T> items)
