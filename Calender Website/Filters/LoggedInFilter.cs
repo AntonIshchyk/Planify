@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Mvc.Filters;
+/*using Microsoft.AspNetCore.Mvc.Filters;
 
 public class LoggedInFilter : Attribute, IAsyncActionFilter
 {
@@ -13,4 +13,4 @@ public class LoggedInFilter : Attribute, IAsyncActionFilter
         }
         await next();
     }
-}
+}*/

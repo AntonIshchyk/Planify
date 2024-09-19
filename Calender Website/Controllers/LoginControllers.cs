@@ -13,7 +13,7 @@ public class LoginControllers : Controller
     [HttpPost("login")]
     public async Task<IActionResult> Login([FromBody] Admin admin)
     {
-        var existingAdmin = await LS.AdminExists(admin);
+        Admin existingAdmin = await LS.AdminExists(admin)!;
         if (existingAdmin is null) return BadRequest("Admin not found");
         else
         {
@@ -23,10 +23,10 @@ public class LoginControllers : Controller
             }
             existingAdmin.LastLogIn = DateTime.Now;
             existingAdmin.LoggedIn = true;
+            await LS.UpdateAdmin(existingAdmin);
             return Ok($"Welcome {existingAdmin.Username}!");
         }
     }
-
 
     [HttpPost("register")]
     public async Task<IActionResult> Register([FromBody] Admin admin)

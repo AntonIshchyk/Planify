@@ -1,4 +1,4 @@
-public class Attendance
+public class Attendance : IHasId
 {
     public Guid Id { get; set; }
     public Guid UserId { get; set; }

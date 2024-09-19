@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Mvc;
+/*using Microsoft.AspNetCore.Mvc;
 
 [Microsoft.AspNetCore.Components.Route("api/events")]
 public class EventController : Controller
@@ -24,4 +24,4 @@ public class EventController : Controller
     [LoggedInFilter]
     [HttpDelete]
     public async Task<IResult> DeleteEvent([FromQuery] Guid id) => await eventService.DeleteEvent(id);
-}
+}*/
