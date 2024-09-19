@@ -9,7 +9,7 @@ public class EventController : Controller
         eventService = eventservice;
     }
     [HttpGet()]
-    public async Task<IResult> GetEvent([FromQuery] Guid id) => Results.Ok(await GetEvent(id));
+    public async Task<IResult> GetEvent([FromQuery] Guid id) => Results.Ok((await eventService.GetEvent(id), await eventService.GetReviews(id)));
 
     [HttpPost("review")]
     public async Task<IResult> AddReview([FromBody] EventAttendance review) => await eventService.AddReview(review);
