@@ -11,28 +11,22 @@ public class LoginControllers : Controller
     }
 
     [HttpPost("login")]
-    public IResult Login([FromBody] Admin admin)
+    public async Task<IActionResult> Login([FromBody] Admin admin)
     {
-        var existingAdmin = LS.AdminExists(admin);
-        if (existingAdmin is null) return Results.BadRequest("Admin not found");
+        var existingAdmin = await LS.AdminExists(admin);
+        if (existingAdmin is null) return BadRequest("Admin not found");
         else
         {
             if (existingAdmin.LoggedIn)
             {
-                return Results.BadRequest("Admin is already online");
+                return BadRequest("Admin is already online");
             }
             existingAdmin.LastLogIn = DateTime.Now;
             existingAdmin.LoggedIn = true;
-            return Results.Ok($"Welcome {existingAdmin.Username}!");
+            return Ok($"Welcome {existingAdmin.Username}!");
         }
     }
 
-    [HttpGet("IsRegistered")]
-    public IActionResult IsRegistered()
-    {
-        bool registered = LS.IsRegistered();
-        return Ok(new IsRegisteredResponse(registered, LS.GetCurrentAdmin().Username));
-    }
 
     [HttpPost("register")]
     public async Task<IActionResult> Register([FromBody] Admin admin)
@@ -47,19 +41,19 @@ public class LoginControllers : Controller
     }
 
     [HttpPost("logout")]
-    public IResult Logout([FromBody] Admin admin)
+    public async Task<IActionResult> Logout([FromBody] Admin admin)
     {
-        var existingAdmin = LS.AdminExists(admin);
-        if (existingAdmin is null) return Results.BadRequest("Admin not found");
+        var existingAdmin = await LS.AdminExists(admin);
+        if (existingAdmin is null) return BadRequest("Admin not found");
         else
         {
             if (existingAdmin.LoggedIn)
             {
                 existingAdmin.LastLogOut = DateTime.Now;
                 existingAdmin.LoggedIn = false;
-                return Results.Ok($"See you later {existingAdmin.Username}!");
+                return Ok($"See you later {existingAdmin.Username}!");
             }
-            return Results.BadRequest("Admin is already offline");
+            return BadRequest("Admin is already offline");
         }
     }
 }
