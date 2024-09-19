@@ -16,5 +16,14 @@
     "LastLogIn": "0001-01-01T00:00:00",
     "LastLogOut": "0001-01-01T00:00:00",
     "LoggedIn": false
+  },
+  {
+    "Id": "e7e722d5-be72-4bf8-82f7-9cd002d831df",
+    "Username": "TestUsername",
+    "Password": "TestPassword",
+    "Email": "TestEmails",
+    "LastLogIn": "0001-01-01T00:00:00",
+    "LastLogOut": "0001-01-01T00:00:00",
+    "LoggedIn": false
   }
 ]

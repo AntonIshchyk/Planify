@@ -5,24 +5,15 @@ public static class AccesJson
 {
     public async static Task<List<T>> ReadJson<T>()
     {
-        string path = $"Data/{typeof(T).Name}.json";
-        StreamReader reader = new(path);
+        string path = $"Data/{typeof(T).Name}s.json";
+        StreamReader reader;
         List<T> items = [];
-        try
+
+        if (File.Exists(path))
         {
+            reader = new(path);
             string content = await reader.ReadToEndAsync();
             items = JsonConvert.DeserializeObject<List<T>>(content)!;
-        }
-        catch (FileNotFoundException ex)
-        {
-            Console.WriteLine(ex);
-        }
-        catch (JsonReaderException ex)
-        {
-            Console.WriteLine(ex);
-        }
-        finally
-        {
             reader.Close();
             reader.Dispose();
         }
@@ -31,7 +22,7 @@ public static class AccesJson
 
     public async static Task WriteJson<T>(T item)
     {
-        string path = $"Data/{typeof(T).Name}.json";
+        string path = $"Data/{typeof(T).Name}s.json";
         List<T> items = await ReadJson<T>();
         StreamWriter writer = new(path);
         try
@@ -56,7 +47,7 @@ public static class AccesJson
 
     public async static Task WriteJsonList<T>(List<T> items)
     {
-        string path = $"Data/{typeof(T).Name}.json";
+        string path = $"Data/{typeof(T).Name}s.json";
         StreamWriter writer = new(path);
         try
         {
