@@ -25,14 +25,5 @@
     "LastLogIn": "0001-01-01T00:00:00",
     "LastLogOut": "0001-01-01T00:00:00",
     "LoggedIn": false
-  },
-  {
-    "Id": "87af5854-0c4d-4918-ac84-829f01c04eba",
-    "Username": "TestUsername",
-    "Password": "TestPassword",
-    "Email": "TestEmails",
-    "LastLogIn": "2024-09-19T15:05:35.3086297+02:00",
-    "LastLogOut": "2024-09-19T15:10:01.2740033+02:00",
-    "LoggedIn": false
   }
 ]

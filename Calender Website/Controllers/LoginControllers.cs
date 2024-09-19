@@ -57,4 +57,28 @@ public class LoginControllers : Controller
             return BadRequest("Admin is already offline");
         }
     }
+
+    [HttpDelete("delete-admin")]
+    public async Task<IActionResult> DeleteAdmin([FromQuery] Guid Id)
+    {
+        bool doesExist = await LS.DeleteAdmin(Id);
+        if (!doesExist) return BadRequest("Admin does not exist");
+        return Ok("Admin is deleted");
+    }
+
+    [HttpGet("get-admin")]
+    public async Task<IActionResult> GetAdmin([FromQuery] Guid Id)
+    {
+        Admin admin = await LS.GetAdmin(Id);
+        if (admin == null) return BadRequest("Admin does not exist");
+        return Ok(admin);
+    }
+
+    [HttpGet("get-all-admins")]
+    public async Task<IActionResult> GetAllAdmin([FromQuery] Guid[] ids)
+    {
+        Admin[] admins = await LS.GetManyAdmins(ids);
+        if (admins.Length <= 0) return BadRequest("There were no admins with one of these ids");
+        return Ok(admins);
+    }
 }
