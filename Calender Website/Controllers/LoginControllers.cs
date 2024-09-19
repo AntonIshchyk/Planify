@@ -11,7 +11,7 @@ public class LoginControllers : Controller
     }
 
     [HttpPost("login")]
-    public IResult Login([FromBody] Admins admin)
+    public IResult Login([FromBody] Admin admin)
     {
         var existingAdmin = LS.AdminExists(admin);
         if (existingAdmin is null) return Results.BadRequest("Admin not found");
@@ -35,7 +35,7 @@ public class LoginControllers : Controller
     }
 
     [HttpPost("register")]
-    public async Task<IActionResult> Register([FromBody] Admins admin)
+    public async Task<IActionResult> Register([FromBody] Admin admin)
     {
         if (admin.Username == "Unknown" || admin.Email == "None" || admin.Password == "None") return BadRequest("Data is not complete");
         // don`t trust id`s from abroad, so...
@@ -47,7 +47,7 @@ public class LoginControllers : Controller
     }
 
     [HttpPost("logout")]
-    public IResult Logout([FromBody] Admins admin)
+    public IResult Logout([FromBody] Admin admin)
     {
         var existingAdmin = LS.AdminExists(admin);
         if (existingAdmin is null) return Results.BadRequest("Admin not found");
