@@ -37,22 +37,10 @@ public static class AccesJson
     {
         string path = $"Data/{typeof(T).Name}s.json";
         StreamWriter writer = new(path);
-        try
-        {
-            foreach (T item in items) await WriteJson(item);
-        }
-        catch (FileNotFoundException ex)
-        {
-            Console.WriteLine(ex);
-        }
-        catch (JsonReaderException ex)
-        {
-            Console.WriteLine(ex);
-        }
-        finally
-        {
-            writer.Close();
-            writer.Dispose();
-        }
+
+        foreach (T item in items) await WriteJson(item);
+
+        writer.Close();
+        writer.Dispose();
     }
 }
