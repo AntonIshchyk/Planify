@@ -1,3 +1,4 @@
+using Newtonsoft.Json;
 using System.Text.Json;
 
 public static class AccesJson
@@ -5,28 +6,74 @@ public static class AccesJson
     public async static Task<List<T>> ReadJson<T>()
     {
         string path = $"Data/{typeof(T).Name}.json";
-        if (File.Exists(path))
+        StreamReader reader = new(path);
+        List<T> items = [];
+        try
         {
-            List<T> Data = JsonSerializer.Deserialize<List<T>>(await File.ReadAllTextAsync(path))!;
-            return Data;
+            string content = await reader.ReadToEndAsync();
+            items = JsonConvert.DeserializeObject<List<T>>(content)!;
         }
-        return [];
+        catch (FileNotFoundException ex)
+        {
+            Console.WriteLine(ex);
+        }
+        catch (JsonReaderException ex)
+        {
+            Console.WriteLine(ex);
+        }
+        finally
+        {
+            reader.Close();
+            reader.Dispose();
+        }
+        return items;
     }
 
     public async static Task WriteJson<T>(T item)
     {
         string path = $"Data/{typeof(T).Name}.json";
-        if (File.Exists(path))
+        List<T> items = await ReadJson<T>();
+        StreamWriter writer = new(path);
+        try
         {
-            List<T> data = await ReadJson<T>();
-            data.Add(item);
-            JsonSerializer.Serialize(data);
+            items.Add(item);
+            writer.Write(JsonConvert.SerializeObject(items, formatting: Formatting.Indented));
+        }
+        catch (FileNotFoundException ex)
+        {
+            Console.WriteLine(ex);
+        }
+        catch (JsonReaderException ex)
+        {
+            Console.WriteLine(ex);
+        }
+        finally
+        {
+            writer.Close();
+            writer.Dispose();
         }
     }
 
     public async static Task WriteJsonList<T>(List<T> items)
     {
         string path = $"Data/{typeof(T).Name}.json";
-        if (File.Exists(path)) foreach (T item in items) await WriteJson(item);
+        StreamWriter writer = new(path);
+        try
+        {
+            foreach (T item in items) await WriteJson(item);
+        }
+        catch (FileNotFoundException ex)
+        {
+            Console.WriteLine(ex);
+        }
+        catch (JsonReaderException ex)
+        {
+            Console.WriteLine(ex);
+        }
+        finally
+        {
+            writer.Close();
+            writer.Dispose();
+        }
     }
 }

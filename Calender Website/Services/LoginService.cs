@@ -17,7 +17,8 @@ public class LoginService
         List<Admins> admins = await AccesJson.ReadJson<Admins>();
         foreach (Admins posibleSameAdmin in admins)
         {
-            if (posibleSameAdmin.Email == admin.Email && posibleSameAdmin.Username == admin.Username && posibleSameAdmin.Password == admin.Password) return false;
+            if (posibleSameAdmin.Email == admin.Email && posibleSameAdmin.Username == admin.Username && posibleSameAdmin.Password == admin.Password)
+                return false;
         }
         await AccesJson.WriteJson(admin);
         return true;

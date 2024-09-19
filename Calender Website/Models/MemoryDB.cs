@@ -1,11 +1,11 @@
 public class MemoryDB
 {
-    public static List<User> Users { get; set; }
-    public static List<Admin> Admins { get; set; }
+    public static List<Users> Users { get; set; }
+    public static List<Admins> Admins { get; set; }
 
     static MemoryDB()
     {
-        Users = new List<User>();
-        Admins = new List<Admin>();
+        Users = [];
+        Admins = [];
     }
 }
