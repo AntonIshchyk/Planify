@@ -1,8 +1,4 @@
-using System.Text.Json;
-using Microsoft.AspNetCore.Http.HttpResults;
-using Microsoft.AspNetCore.Mvc;
-
-public class LoginService
+public class AdminService
 {
     public async Task<Admin?> AdminExists(Admin? admin)
     {

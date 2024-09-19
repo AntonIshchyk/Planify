@@ -3,17 +3,17 @@ using Microsoft.AspNetCore.Mvc;
 [Route("Calender-Website")]
 public class LoginControllers : Controller
 {
-    readonly LoginService LS;
+    readonly AdminService AS;
 
-    public LoginControllers(LoginService loginservice)
+    public LoginControllers(AdminService loginservice)
     {
-        LS = loginservice;
+        AS = loginservice;
     }
 
     [HttpPost("login")]
     public async Task<IActionResult> Login([FromBody] Admin admin)
     {
-        Admin existingAdmin = await LS.AdminExists(admin)!;
+        var existingAdmin = await AS.AdminExists(admin);
         if (existingAdmin is null) return BadRequest("Admin not found");
         else
         {
@@ -23,7 +23,7 @@ public class LoginControllers : Controller
             }
             existingAdmin.LastLogIn = DateTime.Now;
             existingAdmin.LoggedIn = true;
-            await LS.UpdateAdmin(existingAdmin);
+            await AS.UpdateAdmin(existingAdmin);
             return Ok($"Welcome {existingAdmin.Username}!");
         }
     }
@@ -35,7 +35,7 @@ public class LoginControllers : Controller
         // don`t trust id`s from abroad, so...
         // create a new id, for safety reasons
         admin.Id = Guid.NewGuid();
-        bool doesAdminExist = await LS.SaveAdmin(admin);
+        bool doesAdminExist = await AS.SaveAdmin(admin);
         if (doesAdminExist) return BadRequest("Admin is already registered");
         else return Ok("Admin registered");
     }
@@ -43,7 +43,7 @@ public class LoginControllers : Controller
     [HttpPost("logout")]
     public async Task<IActionResult> Logout([FromBody] Admin admin)
     {
-        var existingAdmin = await LS.AdminExists(admin);
+        var existingAdmin = await AS.AdminExists(admin);
         if (existingAdmin is null) return BadRequest("Admin not found");
         else
         {
@@ -51,7 +51,7 @@ public class LoginControllers : Controller
             {
                 existingAdmin.LastLogOut = DateTime.Now;
                 existingAdmin.LoggedIn = false;
-                await LS.UpdateAdmin(existingAdmin);
+                await AS.UpdateAdmin(existingAdmin);
                 return Ok($"See you later {existingAdmin.Username}!");
             }
             return BadRequest("Admin is already offline");
@@ -61,7 +61,7 @@ public class LoginControllers : Controller
     [HttpDelete("delete-admin")]
     public async Task<IActionResult> DeleteAdmin([FromQuery] Guid Id)
     {
-        bool doesExist = await LS.DeleteAdmin(Id);
+        bool doesExist = await AS.DeleteAdmin(Id);
         if (!doesExist) return BadRequest("Admin does not exist");
         return Ok("Admin is deleted");
     }
@@ -69,7 +69,7 @@ public class LoginControllers : Controller
     [HttpGet("get-admin")]
     public async Task<IActionResult> GetAdmin([FromQuery] Guid Id)
     {
-        Admin admin = await LS.GetAdmin(Id);
+        Admin admin = await AS.GetAdmin(Id);
         if (admin == null) return BadRequest("Admin does not exist");
         return Ok(admin);
     }
@@ -77,7 +77,7 @@ public class LoginControllers : Controller
     [HttpGet("get-all-admins")]
     public async Task<IActionResult> GetAllAdmin([FromQuery] Guid[] ids)
     {
-        Admin[] admins = await LS.GetManyAdmins(ids);
+        Admin[] admins = await AS.GetManyAdmins(ids);
         if (admins.Length <= 0) return BadRequest("There were no admins with one of these ids");
         return Ok(admins);
     }
