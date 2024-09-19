@@ -42,7 +42,7 @@ public class LoginControllers : Controller
         // create a new id, for safety reasons
         admin.Id = Guid.NewGuid();
         bool doesAdminExist = await LS.SaveAdmin(admin);
-        if (!doesAdminExist) return BadRequest("Admin is already registered");
+        if (doesAdminExist) return BadRequest("Admin is already registered");
         else return Ok("Admin registered");
     }
 

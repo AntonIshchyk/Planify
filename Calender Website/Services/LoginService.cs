@@ -19,9 +19,9 @@ public class LoginService
         foreach (Admin posibleSameAdmin in admins)
         {
             if (posibleSameAdmin.Email == admin.Email && posibleSameAdmin.Username == admin.Username && posibleSameAdmin.Password == admin.Password)
-                return false;
+                return true;
         }
         await AccesJson.WriteJson(admin);
-        return true;
+        return false;
     }
 }
