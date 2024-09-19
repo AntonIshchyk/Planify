@@ -9,6 +9,7 @@ public class LoginService
         return admins.FirstOrDefault(a => a.Username == admin.Username && a.Password == admin.Password);
     }
 
+    //Save admin to json
     public async Task<bool> SaveAdmin(Admin admin)
     {
         List<Admin> admins = await AccesJson.ReadJson<Admin>();
