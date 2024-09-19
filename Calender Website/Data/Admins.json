@@ -32,7 +32,7 @@
     "Password": "TestPassword",
     "Email": "TestEmails",
     "LastLogIn": "2024-09-19T15:05:35.3086297+02:00",
-    "LastLogOut": "0001-01-01T00:00:00",
-    "LoggedIn": true
+    "LastLogOut": "2024-09-19T15:10:01.2740033+02:00",
+    "LoggedIn": false
   }
 ]

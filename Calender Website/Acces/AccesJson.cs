@@ -33,7 +33,7 @@ public static class AccesJson
         writer.Dispose();
     }
 
-    public async static Task WriteJsonList<T>(List<T> items) // where T : IHasId
+    public static void WriteJsonList<T>(List<T> items) // where T : IHasId
     {
         /*List<T> fileItems = await ReadJson<T>();
         foreach (T item in items)

@@ -32,7 +32,7 @@ public class LoginService
         if (index == -1) return false;
 
         admins[index] = admin;
-        await AccesJson.WriteJsonList<Admin>(admins);
+        AccesJson.WriteJsonList(admins);
 
         return true;
     }

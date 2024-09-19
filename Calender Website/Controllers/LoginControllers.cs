@@ -51,6 +51,7 @@ public class LoginControllers : Controller
             {
                 existingAdmin.LastLogOut = DateTime.Now;
                 existingAdmin.LoggedIn = false;
+                await LS.UpdateAdmin(existingAdmin);
                 return Ok($"See you later {existingAdmin.Username}!");
             }
             return BadRequest("Admin is already offline");
