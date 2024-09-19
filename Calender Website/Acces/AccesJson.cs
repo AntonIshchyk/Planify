@@ -16,6 +16,7 @@ public static class AccesJson
     public async static Task WriteJson<T>(T item)
     {
         string path = $"Data/{typeof(T).Name}.json";
+        Console.WriteLine(path);
         if (File.Exists(path))
         {
             List<T> data = await ReadJson<T>();
