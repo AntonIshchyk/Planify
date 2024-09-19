@@ -1,4 +1,4 @@
-public class Event
+public class Event : IHasId
 {
     public Guid Id { get; set; }
     public string Title { get; }

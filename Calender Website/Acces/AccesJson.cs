@@ -7,7 +7,7 @@ public static class AccesJson
     {
         string path = $"Data/{typeof(T).Name}s.json";
         StreamReader reader;
-        List<T> items = new();
+        List<T> items = [];
 
         if (File.Exists(path))
         {
@@ -33,13 +33,11 @@ public static class AccesJson
         writer.Dispose();
     }
 
-    public async static Task WriteJsonList<T>(List<T> items)
+    public static void WriteJsonList<T>(List<T> items)
     {
         string path = $"Data/{typeof(T).Name}s.json";
         StreamWriter writer = new(path);
-
-        foreach (T item in items) await WriteJson(item);
-
+        writer.Write(JsonConvert.SerializeObject(items, formatting: Formatting.Indented));
         writer.Close();
         writer.Dispose();
     }

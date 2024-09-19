@@ -1,4 +1,4 @@
-public class EventAttendance
+public class EventAttendance : IHasId
 {
     public Guid Id { get; set; }
     public Guid UserId { get; set; }

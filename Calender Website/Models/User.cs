@@ -1,4 +1,4 @@
-public class User
+public class User : IHasId
 {
     public Guid Id { get; set; }
     public string FirstName { get; }
