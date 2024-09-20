@@ -51,31 +51,29 @@ public class LoginControllers : Controller
 
     }
 
-    // [HttpPost("logout")]
-    // public async Task<IActionResult> Logout([FromBody] Admin admin)
-    // {
-    //     var existingAdmin = await AS.AdminExists(admin);
-    //     if (existingAdmin is null) return BadRequest("Admin not found");
-    //     else
-    //     {
-    //         var session = await _sessionService.GetSessionByPersonId(existingAdmin.Id);
-    //         if (session == null)
-    //         {
-    //             return BadRequest("Admin is already offline");
-    //         }
+    [HttpPost("logout")]
+    public async Task<IActionResult> Logout([FromBody] Admin admin)
+    {
+        var existingAdmin = await AS.AdminExists(admin);
+        if (existingAdmin is null) return BadRequest("Admin not found");
+        else
+        {
+            var session = await _sessionService.GetSessionByPersonId(existingAdmin.Id);
+            if (session == null || !session.LoggedIn)
+            {
+                return BadRequest("Admin is already offline");
+            }
+            existingAdmin.LastLogOut = DateTime.Now;
+            session.LogOutDate = DateTime.Now;
 
-    //         if (session!.LoggedIn)
-    //         {
-    //             existingAdmin.LastLogOut = DateTime.Now;
-    //             session.LogOutDate = DateTime.Now;
+            existingAdmin.LoggedIn = false;
+            session.LoggedIn = false;
 
-    //             existingAdmin.LoggedIn = false;
-    //             session.LoggedIn = false;
+            await AS.UpdateAdmin(existingAdmin);
+            await _sessionService.UpdateSession(session);
 
-    //             await AS.UpdateAdmin(existingAdmin);
+            return Ok($"See you later {existingAdmin.Username}!");
 
-    //             return Ok($"See you later {existingAdmin.Username}!");
-    //         }
-    //     }
-    // }
+        }
+    }
 }
