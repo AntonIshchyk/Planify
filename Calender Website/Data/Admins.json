@@ -25,5 +25,23 @@
     "LastLogIn": "0001-01-01T00:00:00",
     "LastLogOut": "0001-01-01T00:00:00",
     "LoggedIn": false
+  },
+  {
+    "Id": "1a126ad7-944a-42fd-8070-8c2ae2b3363c",
+    "Username": "test1",
+    "Password": "fsdfs",
+    "Email": "efsdf",
+    "LastLogIn": "0001-01-01T00:00:00",
+    "LastLogOut": "0001-01-01T00:00:00",
+    "LoggedIn": false
+  },
+  {
+    "Id": "764bc77c-379c-4bb4-81ac-bbc5b4dcf4a0",
+    "Username": "test12",
+    "Password": "fsdfs",
+    "Email": "efsdf",
+    "LastLogIn": "0001-01-01T00:00:00",
+    "LastLogOut": "0001-01-01T00:00:00",
+    "LoggedIn": false
   }
 ]

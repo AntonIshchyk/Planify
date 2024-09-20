@@ -4,10 +4,12 @@ using Microsoft.AspNetCore.Mvc;
 public class LoginControllers : Controller
 {
     readonly AdminService AS;
+    readonly SessionService _sessionService;
 
-    public LoginControllers(AdminService adminService)
+    public LoginControllers(AdminService adminService, SessionService sessionService)
     {
         AS = adminService;
+        _sessionService = sessionService;
     }
 
     [HttpPost("login")]
@@ -37,7 +39,13 @@ public class LoginControllers : Controller
         admin.Id = Guid.NewGuid();
         bool doesAdminExist = await AS.SaveAdmin(admin);
         if (doesAdminExist) return BadRequest("Admin is already registered");
-        else return Ok("Admin registered");
+        else
+        {
+            var session = new Session(admin.Id);
+            await _sessionService.SaveSession(session);
+            return Ok("Admin registered");
+        }
+
     }
 
     [HttpPost("logout")]

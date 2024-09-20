@@ -1,0 +1,16 @@
+[
+  {
+    "Id": "ea387fa7-2ee9-452a-a3cf-ed8162693824",
+    "PersonId": "1a126ad7-944a-42fd-8070-8c2ae2b3363c",
+    "LogIn": "2024-09-20T11:13:15.4937086+02:00",
+    "LogOut": null,
+    "LoggedIn": true
+  },
+  {
+    "Id": "a1ec99d0-8d01-41fd-b658-37fdb2f46edd",
+    "PersonId": "764bc77c-379c-4bb4-81ac-bbc5b4dcf4a0",
+    "LogIn": "2024-09-20T11:13:25.1019275+02:00",
+    "LogOut": null,
+    "LoggedIn": true
+  }
+]
