@@ -2,9 +2,16 @@ using System.Text.Json;
 
 public class EventService
 {
-    string path = $"events.json";
-    string path_reviews = $"reviews.json";
-    public async Task<Dictionary<Guid, Event>> ReadAllEvents() => JsonSerializer.Deserialize<Dictionary<Guid, Event>>(await File.ReadAllTextAsync(path))!;
+    string path = $"./Data/Events.json";
+    string path_reviews = $"./Data/Reviews.json";
+    public async Task<Dictionary<Guid, Event>> ReadAllEvents(){
+        try{
+        return JsonSerializer.Deserialize<Dictionary<Guid, Event>>(await File.ReadAllTextAsync(path))!;
+        }
+        catch{
+            return new();
+        }
+    }
 
     public async Task<Dictionary<Guid, List<EventAttendance>>> ReadAllReviews() => JsonSerializer.Deserialize<Dictionary<Guid, List<EventAttendance>>>(await File.ReadAllTextAsync(path_reviews))!;
     public async Task<Event> GetEvent(Guid id)
@@ -15,11 +22,15 @@ public class EventService
     }
     public async Task<IResult> AppendEvent(Event e)
     {
+        if (e == null)
+        {
+        return Results.BadRequest("Event cannot be null.");
+        }
+
         Dictionary<Guid, Event> events = await ReadAllEvents();
         if (events.ContainsKey(e.Id)) return Results.BadRequest("There already exists an event with this Id!");
         events.Add(e.Id, e);
-        await WriteEvents(events);
-        return Results.Ok("Success");
+        return await WriteEvents(events);
     }
     public async Task<IResult> UpdateEvent(Event e)
     {
@@ -29,7 +40,26 @@ public class EventService
         await WriteEvents(events);
         return Results.Ok("Success");
     }
-    public async Task WriteEvents(Dictionary<Guid, Event> events) => await File.WriteAllTextAsync(path, JsonSerializer.Serialize(events));
+    public async Task<IResult> WriteEvents(Dictionary<Guid, Event> events){
+        try{
+        await File.WriteAllTextAsync(path, JsonSerializer.Serialize(events));
+        return Results.Ok();
+        }
+        catch{
+            return Results.BadRequest("File not found");
+        }
+    }
+
+     public async Task<IResult> WriteReviews(Dictionary<Guid, List<EventAttendance>> reviews){
+        try{
+        await File.WriteAllTextAsync(path_reviews, JsonSerializer.Serialize(reviews));
+        return Results.Ok();
+        }
+        catch{
+            return Results.BadRequest("File not found");
+        }
+    }
+    
 
     public async Task<IResult> DeleteEvent(Guid id)
     {
@@ -44,6 +74,7 @@ public class EventService
         Dictionary<Guid, List<EventAttendance>> reviews = await ReadAllReviews();
         if(reviews.ContainsKey(review.EventId)) reviews[review.EventId].Add(review);
         else reviews[review.EventId] = new List<EventAttendance>(){review};
+        await WriteReviews(reviews);
         return Results.Created();
     }
 
