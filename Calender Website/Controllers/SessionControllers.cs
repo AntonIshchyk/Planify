@@ -5,10 +5,12 @@ using Microsoft.AspNetCore.Mvc;
 public class SessionControllers : Controller
 {
     readonly SessionService _sessionService;
+    readonly AdminService _adminService;
 
-    public SessionControllers(SessionService sessionService)
+    public SessionControllers(SessionService sessionService, AdminService adminService)
     {
         _sessionService = sessionService;
+        _adminService = adminService;
     }
 
     [HttpDelete("delete-session")]
@@ -27,11 +29,11 @@ public class SessionControllers : Controller
     [HttpGet("get-session-id")]
     public async Task<IActionResult> GetSession([FromQuery] Guid Id)
     {
-        //
         var session = await _sessionService.GetSessionById(Id);
         if (session is not null)
         {
-            return Ok(session);
+            var admin = await _adminService.GetAdmin(session.PersonId);
+            return Ok($"{admin.LoggedIn} -> {admin.Username}");
         }
         return BadRequest("Session was not found");
     }
