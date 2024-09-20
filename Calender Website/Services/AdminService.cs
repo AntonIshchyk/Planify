@@ -1,5 +1,10 @@
 public class AdminService
 {
+    public async Task<bool> AdminExists(Guid Id)
+    {
+        return await AdminAccess.Exists(Id);
+    }
+
     public async Task<Admin?> AdminExists(Admin? admin)
     {
         List<Admin> admins = await AccesJson.ReadJson<Admin>();

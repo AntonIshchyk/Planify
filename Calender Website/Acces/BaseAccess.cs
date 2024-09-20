@@ -1,5 +1,16 @@
 public abstract class BaseAccess<T> where T : IHasId
 {
+    public static async Task<bool> Exists(Guid id)
+    {
+        var allItems = await AccesJson.ReadJson<T>();
+        var found = allItems.FirstOrDefault(x => x.Id == id);
+        if (found is null)
+        {
+            return false;
+        }
+        return true;
+    }
+
     public static async Task<T> Get(Guid id)
     {
         var allItems = await AccesJson.ReadJson<T>();

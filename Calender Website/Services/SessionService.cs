@@ -36,4 +36,10 @@ public class SessionService
     {
         await SessionAccess.Remove(session.Id);
     }
+
+
+    public async Task<bool> SessionExists(Guid Id)
+    {
+        return await SessionAccess.Exists(Id);
+    }
 }
