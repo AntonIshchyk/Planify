@@ -5,7 +5,7 @@ public class EventController : Controller
 {
     EventService eventService;
     public EventController(EventService eventservice)
-    {
+    { 
         eventService = eventservice;
     }
     [HttpGet]
