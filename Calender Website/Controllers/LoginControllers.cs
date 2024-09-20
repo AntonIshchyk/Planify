@@ -3,35 +3,29 @@ using Microsoft.AspNetCore.Mvc;
 [Route("Calender-Website")]
 public class LoginControllers : Controller
 {
-    readonly LoginService LS;
+    readonly AdminService AS;
 
-    public LoginControllers(LoginService loginservice)
+    public LoginControllers(AdminService adminService)
     {
-        LS = loginservice;
+        AS = adminService;
     }
 
     [HttpPost("login")]
-    public IResult Login([FromBody] Admin admin)
+    public async Task<IActionResult> Login([FromBody] Admin admin)
     {
-        var existingAdmin = LS.AdminExists(admin);
-        if (existingAdmin is null) return Results.BadRequest("Admin not found");
+        var existingAdmin = await AS.AdminExists(admin);
+        if (existingAdmin is null) return BadRequest("Admin not found");
         else
         {
             if (existingAdmin.LoggedIn)
             {
-                return Results.BadRequest("Admin is already online");
+                return BadRequest("Admin is already online");
             }
             existingAdmin.LastLogIn = DateTime.Now;
             existingAdmin.LoggedIn = true;
-            return Results.Ok($"Welcome {existingAdmin.Username}!");
+            await AS.UpdateAdmin(existingAdmin);
+            return Ok($"Welcome {existingAdmin.Username}!");
         }
-    }
-
-    [HttpGet("IsRegistered")]
-    public IActionResult IsRegistered()
-    {
-        bool registered = LS.IsRegistered();
-        return Ok(new IsRegisteredResponse(registered, LS.GetCurrentAdmin().Username));
     }
 
     [HttpPost("register")]
@@ -41,25 +35,26 @@ public class LoginControllers : Controller
         // don`t trust id`s from abroad, so...
         // create a new id, for safety reasons
         admin.Id = Guid.NewGuid();
-        bool doesAdminExist = await LS.SaveAdmin(admin);
-        if (!doesAdminExist) return BadRequest("Admin is already registered");
+        bool doesAdminExist = await AS.SaveAdmin(admin);
+        if (doesAdminExist) return BadRequest("Admin is already registered");
         else return Ok("Admin registered");
     }
 
     [HttpPost("logout")]
-    public IResult Logout([FromBody] Admin admin)
+    public async Task<IActionResult> Logout([FromBody] Admin admin)
     {
-        var existingAdmin = LS.AdminExists(admin);
-        if (existingAdmin is null) return Results.BadRequest("Admin not found");
+        var existingAdmin = await AS.AdminExists(admin);
+        if (existingAdmin is null) return BadRequest("Admin not found");
         else
         {
             if (existingAdmin.LoggedIn)
             {
                 existingAdmin.LastLogOut = DateTime.Now;
                 existingAdmin.LoggedIn = false;
-                return Results.Ok($"See you later {existingAdmin.Username}!");
+                await AS.UpdateAdmin(existingAdmin);
+                return Ok($"See you later {existingAdmin.Username}!");
             }
-            return Results.BadRequest("Admin is already offline");
+            return BadRequest("Admin is already offline");
         }
     }
 }
