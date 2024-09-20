@@ -20,7 +20,7 @@ public abstract class BaseAccess<T> where T : IHasId
         if (index >= 0)
         {
             allItems[index] = data;
-            await AccesJson.WriteJson(allItems);
+            AccesJson.WriteJsonList(allItems);
         }
     }
 
@@ -35,7 +35,7 @@ public abstract class BaseAccess<T> where T : IHasId
     {
         var allItems = await AccesJson.ReadJson<T>();
         allItems.Add(item);
-        await AccesJson.WriteJson(allItems);
+        AccesJson.WriteJsonList(allItems);
     }
 
     public static async Task Remove(Guid id)
@@ -45,7 +45,7 @@ public abstract class BaseAccess<T> where T : IHasId
         if (itemToRemove != null)
         {
             allItems.Remove(itemToRemove);
-            await AccesJson.WriteJson(allItems);
+            AccesJson.WriteJsonList(allItems);
         }
     }
 }
