@@ -1,4 +1,4 @@
-public class Session
+public class Session : IHasId
 {
     public Guid Id { get; set; }
     public Guid PersonId { get; set; }
