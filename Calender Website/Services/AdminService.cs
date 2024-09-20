@@ -1,5 +1,10 @@
 public class AdminService
 {
+    public async Task<bool> AdminExists(Guid Id)
+    {
+        return await AdminAccess.Exists(Id);
+    }
+
     public async Task<Admin?> AdminExists(Admin? admin)
     {
         List<Admin> admins = await AccesJson.ReadJson<Admin>();
@@ -21,40 +26,29 @@ public class AdminService
         return false;
     }
 
-    public async Task<bool> UpdateAdmin(Admin admin)
+    public async Task UpdateAdmin(Admin admin)
     {
-        List<Admin> admins = await AccesJson.ReadJson<Admin>();
-
-        int index = admins.FindIndex(a => a.Id == admin.Id);
-
-        if (index == -1) return false;
-
-        admins[index] = admin;
-        AccesJson.WriteJsonList(admins);
-
-        return true;
+        await AdminAccess.Update(admin);
     }
 
-    public async Task<bool> DeleteAdmin(Guid Id)
+    public async Task DeleteAdmin(Guid Id)
     {
-        List<Admin> admins = await AccesJson.ReadJson<Admin>();
-        int index = admins.FindIndex(a => a.Id == Id);
+        await AdminAccess.Remove(Id);
+    }
 
-        if (index < 0) return false;
-
-        admins.RemoveAt(index);
-
-        AccesJson.WriteJsonList(admins);
-
-        return true;
+    public async Task DeleteAdmin(Admin admin)
+    {
+        await AdminAccess.Remove(admin);
     }
 
     public async Task<Admin> GetAdmin(Guid Id)
     {
-        List<Admin> admins = await AccesJson.ReadJson<Admin>();
-        int index = admins.FindIndex(a => a.Id == Id);
-        if (index < 0) return null!;
-        return admins[index];
+        return await AdminAccess.Get(Id);
+    }
+
+    public async Task<List<Admin>> GetAllAdmin()
+    {
+        return await AdminAccess.LoadAll()!;
     }
 
     public async Task<Admin[]> GetManyAdmins(Guid[] ids)

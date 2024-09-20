@@ -4,10 +4,12 @@ using Microsoft.AspNetCore.Mvc;
 public class LoginControllers : Controller
 {
     readonly AdminService AS;
+    readonly SessionService _sessionService;
 
-    public LoginControllers(AdminService adminService)
+    public LoginControllers(AdminService adminService, SessionService sessionService)
     {
         AS = adminService;
+        _sessionService = sessionService;
     }
 
     [HttpPost("login")]
@@ -23,7 +25,12 @@ public class LoginControllers : Controller
             }
             existingAdmin.LastLogIn = DateTime.Now;
             existingAdmin.LoggedIn = true;
+
+            var session = new Session(existingAdmin.Id);
+
+            await _sessionService.CreateSession(session);
             await AS.UpdateAdmin(existingAdmin);
+
             return Ok($"Welcome {existingAdmin.Username}!");
         }
     }
@@ -37,7 +44,11 @@ public class LoginControllers : Controller
         admin.Id = Guid.NewGuid();
         bool doesAdminExist = await AS.SaveAdmin(admin);
         if (doesAdminExist) return BadRequest("Admin is already registered");
-        else return Ok("Admin registered");
+        else
+        {
+            return Ok("Admin registered");
+        }
+
     }
 
     [HttpPost("logout")]
@@ -47,14 +58,22 @@ public class LoginControllers : Controller
         if (existingAdmin is null) return BadRequest("Admin not found");
         else
         {
-            if (existingAdmin.LoggedIn)
+            var session = await _sessionService.GetSessionByPersonId(existingAdmin.Id);
+            if (session == null || !session.LoggedIn)
             {
-                existingAdmin.LastLogOut = DateTime.Now;
-                existingAdmin.LoggedIn = false;
-                await AS.UpdateAdmin(existingAdmin);
-                return Ok($"See you later {existingAdmin.Username}!");
+                return BadRequest("Admin is already offline");
             }
-            return BadRequest("Admin is already offline");
+            existingAdmin.LastLogOut = DateTime.Now;
+            session.LogOutDate = DateTime.Now;
+
+            existingAdmin.LoggedIn = false;
+            session.LoggedIn = false;
+
+            await AS.UpdateAdmin(existingAdmin);
+            await _sessionService.UpdateSession(session);
+
+            return Ok($"See you later {existingAdmin.Username}!");
+
         }
     }
 }

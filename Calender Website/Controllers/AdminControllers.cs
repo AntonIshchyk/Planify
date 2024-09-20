@@ -13,7 +13,8 @@ public class AdminControllers : Controller
     [HttpDelete("delete-admin")]
     public async Task<IActionResult> DeleteAdmin([FromQuery] Guid Id)
     {
-        bool doesExist = await AS.DeleteAdmin(Id);
+        bool doesExist = await AS.AdminExists(Id);
+
         if (!doesExist) return BadRequest("Admin does not exist");
         return Ok("Admin is deleted");
     }
