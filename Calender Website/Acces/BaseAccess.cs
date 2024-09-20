@@ -48,4 +48,15 @@ public abstract class BaseAccess<T> where T : IHasId
             AccesJson.WriteJsonList(allItems);
         }
     }
+
+    public static async Task Remove(T data)
+    {
+        var allItems = await AccesJson.ReadJson<T>();
+        var itemToRemove = allItems.FirstOrDefault(x => x.Id == data.Id);
+        if (itemToRemove != null)
+        {
+            allItems.Remove(itemToRemove);
+            AccesJson.WriteJsonList(allItems);
+        }
+    }
 }

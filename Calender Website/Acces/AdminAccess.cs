@@ -1,4 +1,4 @@
-public class AttendanceAccess : BaseAccess<Attendance>
+public class AdminAccess : BaseAccess<Admin>
 {
 
 }
