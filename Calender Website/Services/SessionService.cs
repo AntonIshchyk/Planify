@@ -27,7 +27,7 @@ public class SessionService
         await SessionAccess.Update(session);
     }
 
-    public async Task DeleteSessionById(Guid id)
+    public async Task DeleteSession(Guid id)
     {
         await SessionAccess.Remove(id);
     }
