@@ -39,7 +39,7 @@ public class SessionControllers : Controller
     }
 
     [HttpGet("get-session")]
-    public async Task<IActionResult> GetSession([FromQuery] Session session)
+    public async Task<IActionResult> GetSession([FromBody] Session session)
     {
         return await GetSession(session.Id);
     }
