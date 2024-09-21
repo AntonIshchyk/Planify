@@ -9,7 +9,7 @@ public class Event : IHasId
     public string Location { get; }
     public bool AdminApproval { get; }
 
-    public Event(string title, string description, DateTime date, DateTime startTime, DateTime endTime, string location, bool adminApproval)
+    public Event(string title, string description, DateTime date, DateTime startTime, DateTime endTime, string location)
     {
         Id = new Guid();
         Title = title;
@@ -18,6 +18,6 @@ public class Event : IHasId
         StartTime = startTime;
         EndTime = endTime;
         Location = location;
-        AdminApproval = adminApproval;
+        AdminApproval = false;
     }
 }
