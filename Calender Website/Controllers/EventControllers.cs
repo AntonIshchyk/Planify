@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-[Route("Calender-Website/events")]
+[Route("Calender-Website")]
 public class EventController : Controller
 {
     EventService eventService;
@@ -8,7 +8,7 @@ public class EventController : Controller
     {
         eventService = eventservice;
     }
-    [HttpGet]
+    [HttpGet("event")]
     public async Task<IResult> GetEvent([FromQuery] Guid id)
     {
         EventReview eventReview = await eventService.GetEventReviews(id);
@@ -26,7 +26,7 @@ public class EventController : Controller
     [HttpGet("review")]
     public async Task<IResult> GetReviews([FromQuery] Guid id) => Results.Ok(await eventService.GetReviews(id));
 
-    [HttpPost]
+    [HttpPost("create-event")]
     [LoggedInFilter]
     public async Task<IResult> PostEvent([FromBody] Event e)
     {
@@ -34,7 +34,7 @@ public class EventController : Controller
         return Results.BadRequest();
     }
 
-    [HttpPut]
+    [HttpPut("update-event")]
     [LoggedInFilter]
     public async Task<IResult> UpdateEvent([FromBody] Event e)
     {
@@ -42,7 +42,7 @@ public class EventController : Controller
         return Results.BadRequest();
     }
 
-    [HttpDelete]
+    [HttpDelete("delete-event")]
     [LoggedInFilter]
     public async Task<IResult> DeleteEvent([FromQuery] Guid id)
     {
