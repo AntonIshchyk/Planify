@@ -1,25 +1,26 @@
 using Microsoft.AspNetCore.Mvc;
 
-[Microsoft.AspNetCore.Mvc.Route("Calender-Website/events")]
+[Route("Calender-Website/events")]
 public class EventController : Controller
 {
     EventService eventService;
     public EventController(EventService eventservice)
-    { 
+    {
         eventService = eventservice;
     }
-    [HttpGet]
-    public async Task<IResult> GetEvent([FromQuery] Guid id){
-        EventReview eventReview = await eventService.GetEventReviews(id);
-        if(eventReview is null) return Results.BadRequest();
-        return Results.Ok(eventReview);
 
+    [HttpGet]
+    public async Task<IResult> GetEvent([FromQuery] Guid id)
+    {
+        EventReview eventReview = await eventService.GetEventReviews(id);
+        if (eventReview is null) return Results.BadRequest();
+        return Results.Ok(eventReview);
     }
 
-
     [HttpPost("review")]
-    public async Task<IResult> AddReview([FromBody] EventAttendance review){
-        if(await eventService.AddReview(review)) return Results.Accepted();
+    public async Task<IResult> AddReview([FromBody] EventAttendance review)
+    {
+        if (await eventService.AddReview(review)) return Results.Accepted();
         return Results.BadRequest();
     }
 
@@ -28,22 +29,25 @@ public class EventController : Controller
 
     [HttpPost]
     [LoggedInFilter]
-    public async Task<IResult> PostEvent([FromBody] Event e){
-        if(await eventService.AppendEvent(e)) return Results.Accepted();
+    public async Task<IResult> PostEvent([FromBody] Event e)
+    {
+        if (await eventService.AppendEvent(e)) return Results.Accepted();
         return Results.BadRequest();
     }
 
     [HttpPut]
     [LoggedInFilter]
-    public async Task<IResult> UpdateEvent([FromBody] Event e){
-        if(await eventService.UpdateEvent(e)) return Results.Accepted();
+    public async Task<IResult> UpdateEvent([FromBody] Event e)
+    {
+        if (await eventService.UpdateEvent(e)) return Results.Accepted();
         return Results.BadRequest();
     }
 
     [HttpDelete]
     [LoggedInFilter]
-    public async Task<IResult> DeleteEvent([FromQuery] Guid id){
-        if(await eventService.DeleteEvent(id)) return Results.Accepted();
+    public async Task<IResult> DeleteEvent([FromQuery] Guid id)
+    {
+        if (await eventService.DeleteEvent(id)) return Results.Accepted();
         return Results.BadRequest();
     }
 }
