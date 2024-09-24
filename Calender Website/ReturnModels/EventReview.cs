@@ -1,9 +1,11 @@
-public class EventReview{
-    Event E;
-    List<EventAttendance> Reviews;
+public class EventReview
+{
+    public Event Event { get; set; }
+    public List<EventAttendance> Reviews { get; set; }
 
-    public EventReview(Event e, List<EventAttendance> reviews){
-        E = e;
+    public EventReview(Event @event, List<EventAttendance> reviews)
+    {
+        Event = @event;
         Reviews = reviews;
     }
 }

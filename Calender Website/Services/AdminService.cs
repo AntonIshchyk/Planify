@@ -62,4 +62,10 @@ public class AdminService
         }
         return specificAdmins.ToArray();
     }
+
+    public async Task<bool> IsLoggedIn(){
+        List<Admin> allAdmins = await AccesJson.ReadJson<Admin>();
+        if(allAdmins.Any(x => x.LoggedIn == true)) return true;
+        return false;
+    }
 }
