@@ -13,7 +13,6 @@ public class EventController : Controller
         EventReview eventReview = await eventService.GetEventReviews(id);
         if(eventReview is null) return Results.BadRequest();
         return Results.Ok(eventReview);
-
     }
 
 

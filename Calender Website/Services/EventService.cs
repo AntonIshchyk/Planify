@@ -21,12 +21,12 @@ public class EventService
         {
         return false;
         }
-
         List<Event> events = await AccesJson.ReadJson<Event>();
         if (events.Any(x => x.Id == e.Id)) return false;
         events.Add(e);
         AccesJson.WriteJsonList<Event>(events);
-        return true;;
+        return true;
+        }
     }
     public async Task<bool> UpdateEvent(Event e)
     {
