@@ -8,7 +8,6 @@ public class EventController : Controller
     {
         eventService = eventservice;
     }
-
     [HttpGet]
     public async Task<IResult> GetEvent([FromQuery] Guid id)
     {

@@ -13,6 +13,7 @@ public class EventService
         if (events.Any(x => x.Id == id)) return new EventReview(await GetEvent(id), await GetReviews(id));
         return null!;
     }
+
     public async Task<bool> AppendEvent(Event e)
     {
         if (e == null) return false;
@@ -23,6 +24,7 @@ public class EventService
         AccesJson.WriteJsonList(events);
         return true;
     }
+
     public async Task<bool> UpdateEvent(Event e)
     {
         List<Event> events = await AccesJson.ReadJson<Event>();
@@ -41,6 +43,7 @@ public class EventService
         AccesJson.WriteJsonList(events);
         return true;
     }
+
     public async Task<bool> AddReview(EventAttendance review)
     {
         if (GetEvent(review.EventId) is null) return false;
