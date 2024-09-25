@@ -5,7 +5,15 @@ public static class AccesJson
 {
     public async static Task<List<T>> ReadJson<T>()
     {
-        string path = $"Data/{typeof(T).Name}s.json";
+        string folderPath = "Data";
+        string path = $"{folderPath}/{typeof(T).Name}s.json";
+
+        // Ensure the folder exists, create otherwise
+        if (!Directory.Exists(folderPath))
+        {
+            Directory.CreateDirectory(folderPath);
+        }
+
         StreamReader reader;
         List<T> items = [];
 
