@@ -1,15 +1,12 @@
 using Microsoft.AspNetCore.Mvc;
 
-[Route("Calender-Website")]
+[Route("Calender-Website")] 
 public class LoginControllers : Controller
 {
     readonly AdminService AS;
-    readonly SessionService _sessionService;
-
-    public LoginControllers(AdminService adminService, SessionService sessionService)
+    public LoginControllers(AdminService adminService)
     {
         AS = adminService;
-        _sessionService = sessionService;
     }
 
     [HttpPost("login")]
@@ -25,10 +22,7 @@ public class LoginControllers : Controller
             }
             existingAdmin.LastLogIn = DateTime.Now;
             existingAdmin.LoggedIn = true;
-
-            var session = new Session(existingAdmin.Id);
-
-            await _sessionService.CreateSession(session);
+            HttpContext.Session.SetString("UserId", admin.Id.ToString());
             await AS.UpdateAdmin(existingAdmin);
 
             return Ok($"Welcome {existingAdmin.Username}!");
@@ -54,23 +48,16 @@ public class LoginControllers : Controller
     [HttpPost("logout")]
     public async Task<IActionResult> Logout([FromBody] Admin admin)
     {
+        if(admin.Id.ToString() != HttpContext.Session.GetString("UserId")) return BadRequest("This Admin is not Logged in on this Session!");
         var existingAdmin = await AS.AdminExists(admin);
         if (existingAdmin is null) return BadRequest("Admin not found");
         else
         {
-            var session = await _sessionService.GetSessionByPersonId(existingAdmin.Id);
-            if (session == null || !session.LoggedIn)
-            {
-                return BadRequest("Admin is already offline");
-            }
             existingAdmin.LastLogOut = DateTime.Now;
-            session.LogOutDate = DateTime.Now;
-
             existingAdmin.LoggedIn = false;
-            session.LoggedIn = false;
-
             await AS.UpdateAdmin(existingAdmin);
-            await _sessionService.UpdateSession(session);
+
+            HttpContext.Session.Clear();
 
             return Ok($"See you later {existingAdmin.Username}!");
 
