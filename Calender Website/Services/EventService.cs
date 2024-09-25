@@ -10,7 +10,7 @@ public class EventService
     public async Task<EventReview> GetEventReviews(Guid id)
     {
         List<Event> events = await AccesJson.ReadJson<Event>();
-        if (events.Any(x => x.Id == id)) return new EventReview(await GetEvent(id), await GetReviews(id));
+        if (events.Any(x => x.Id == id)) return new EventReview(await GetEvent(id), await GetReviewsFromEventId(id));
         return null!;
     }
 
@@ -52,10 +52,22 @@ public class EventService
         return true;
     }
 
-    public async Task<List<EventAttendance>> GetReviews(Guid eventId)
+    public async Task<List<EventAttendance>> GetReviewsFromEventId(Guid eventId)
     {
         List<EventAttendance> reviews = await AccesJson.ReadJson<EventAttendance>();
         if (!reviews.Any(r => r.EventId == eventId)) return [];
         return reviews.FindAll(r => r.EventId == eventId).ToList();
+    }
+
+    public async Task<List<Event>> GetAllEvents()
+    {
+        List<Event> events = await AccesJson.ReadJson<Event>();
+        return events.ToList();
+    }
+
+    public async Task<List<EventAttendance>> GetAllReviews()
+    {
+        List<EventAttendance> reviews = await AccesJson.ReadJson<EventAttendance>();
+        return reviews;
     }
 }

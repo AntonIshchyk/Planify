@@ -1,4 +1,3 @@
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
 [Route("Calender-Website")]
@@ -18,35 +17,26 @@ public class SessionControllers : Controller
     {
         await _sessionService.DeleteSession(Id);
 
-        var exists = await _sessionService.SessionExists(Id);
-        if (exists)
-        {
-            return BadRequest("Session was not deleted");
-        }
+        bool exists = await _sessionService.SessionExists(Id);
+        if (exists) return BadRequest("Session was not deleted");
         return Ok("Session was deleted");
     }
 
     [HttpGet("get-session-id")]
     public async Task<IActionResult> GetSession([FromQuery] Guid Id)
     {
-        var session = await _sessionService.GetSessionById(Id);
+        Session session = await _sessionService.GetSessionById(Id);
         if (session is not null)
         {
-            var admin = await _adminService.GetAdmin(session.PersonId);
+            Admin admin = await _adminService.GetAdmin(session.PersonId);
             return Ok($"{admin.LoggedIn} -> {admin.Username}");
         }
         return BadRequest("Session was not found");
     }
 
     [HttpGet("get-session")]
-    public async Task<IActionResult> GetSession([FromBody] Session session)
-    {
-        return await GetSession(session.Id);
-    }
+    public async Task<IActionResult> GetSession([FromBody] Session session) => await GetSession(session.Id);
 
     [HttpGet("get-all-sessions")]
-    public async Task<IActionResult> GetAllSessions()
-    {
-        return Ok(await _sessionService.GetAllSessions());
-    }
+    public async Task<IActionResult> GetAllSessions() => Ok(await _sessionService.GetAllSessions());
 }

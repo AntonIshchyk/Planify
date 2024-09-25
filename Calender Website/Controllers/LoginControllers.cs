@@ -15,18 +15,16 @@ public class LoginControllers : Controller
     [HttpPost("login")]
     public async Task<IActionResult> Login([FromBody] Admin admin)
     {
-        var existingAdmin = await AS.AdminExists(admin);
+        Admin existingAdmin = await AS.AdminExists(admin);
         if (existingAdmin is null) return BadRequest("Admin not found");
         else
         {
-            if (existingAdmin.LoggedIn)
-            {
-                return BadRequest("Admin is already online");
-            }
+            if (existingAdmin.LoggedIn) return BadRequest("Admin is already online");
+
             existingAdmin.LastLogIn = DateTime.Now;
             existingAdmin.LoggedIn = true;
 
-            var session = new Session(existingAdmin.Id);
+            Session session = new(existingAdmin.Id);
 
             await _sessionService.CreateSession(session);
             await AS.UpdateAdmin(existingAdmin);
@@ -44,25 +42,18 @@ public class LoginControllers : Controller
         admin.Id = Guid.NewGuid();
         bool doesAdminExist = await AS.SaveAdmin(admin);
         if (doesAdminExist) return BadRequest("Admin is already registered");
-        else
-        {
-            return Ok("Admin registered");
-        }
-
+        else return Ok("Admin registered");
     }
 
     [HttpPost("logout")]
     public async Task<IActionResult> Logout([FromBody] Admin admin)
     {
-        var existingAdmin = await AS.AdminExists(admin);
+        Admin existingAdmin = await AS.AdminExists(admin);
         if (existingAdmin is null) return BadRequest("Admin not found");
         else
         {
-            var session = await _sessionService.GetSessionByPersonId(existingAdmin.Id);
-            if (session == null || !session.LoggedIn)
-            {
-                return BadRequest("Admin is already offline");
-            }
+            Session session = await _sessionService.GetSessionByPersonId(existingAdmin.Id);
+            if (session == null || !session.LoggedIn) return BadRequest("Admin is already offline");
             existingAdmin.LastLogOut = DateTime.Now;
             session.LogOutDate = DateTime.Now;
 
