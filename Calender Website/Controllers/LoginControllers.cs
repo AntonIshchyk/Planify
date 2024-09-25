@@ -5,11 +5,13 @@ public class LoginControllers : Controller
 {
     readonly AdminService AS;
     readonly SessionService _sessionService;
+    readonly UserService US;
 
-    public LoginControllers(AdminService adminService, SessionService sessionService)
+    public LoginControllers(AdminService adminService, SessionService sessionService, UserService userService)
     {
         AS = adminService;
         _sessionService = sessionService;
+        US = userService;
     }
 
     [HttpPost("login")]
@@ -33,9 +35,11 @@ public class LoginControllers : Controller
         }
     }
 
-    [HttpPost("register")]
+    [HttpPost("register-admin")]
+    [LoggedInFilter]
     public async Task<IActionResult> Register([FromBody] Admin admin)
     {
+        if (admin is null) return BadRequest("This is not an admin. ");
         if (admin.Username == "Unknown" || admin.Email == "None" || admin.Password == "None") return BadRequest("Data is not complete");
         // don`t trust id`s from abroad, so...
         // create a new id, for safety reasons
@@ -43,6 +47,18 @@ public class LoginControllers : Controller
         bool doesAdminExist = await AS.SaveAdmin(admin);
         if (doesAdminExist) return BadRequest("Admin is already registered");
         else return Ok("Admin registered");
+    }
+
+    [HttpPost("register")]
+    public async Task<IActionResult> Register([FromBody] User user)
+    {
+        if (user is null) return BadRequest("This is not a user.");
+        if (user.Email == "None" || user.FirstName == "None" || user.LastName == "None" || user.Password == "None") return BadRequest("Data is not complete.");
+
+        user.Id = Guid.NewGuid();
+        bool IsUserWritenToJson = await US.SaveUser(user);
+        if (!IsUserWritenToJson) return BadRequest("User already exists");
+        else return Ok("User registered");
     }
 
     [HttpPost("logout")]

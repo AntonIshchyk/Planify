@@ -7,6 +7,7 @@ builder.Services.AddControllers();
 builder.Services.AddTransient<EventService>();
 builder.Services.AddTransient<AdminService>();
 builder.Services.AddTransient<SessionService>();
+builder.Services.AddTransient<UserService>();
 
 var app = builder.Build();
 

@@ -5,5 +5,12 @@
     "LogInDate": "2024-09-24T11:03:58.1419526+02:00",
     "LogOutDate": "2024-09-24T13:12:54.8198331+02:00",
     "LoggedIn": false
+  },
+  {
+    "Id": "3665de63-de27-46bf-89e2-e85e00a0e9fa",
+    "PersonId": "ccc5e86e-37ca-41c5-9245-2458677f4527",
+    "LogInDate": "2024-09-25T15:32:43.3620981+02:00",
+    "LogOutDate": null,
+    "LoggedIn": true
   }
 ]

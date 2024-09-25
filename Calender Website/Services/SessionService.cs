@@ -2,7 +2,7 @@ public class SessionService
 {
     public async Task<Session?> GetSessionByPersonId(Guid id)
     {
-        List<Session> sessions = await AccesJson.ReadJson<Session>();
+        List<Session> sessions = await AccessJson.ReadJson<Session>();
         return sessions.FirstOrDefault(s => s.PersonId == id && s.LoggedIn == true);
     }
 
