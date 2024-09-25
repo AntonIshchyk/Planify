@@ -33,7 +33,7 @@ public static class AccesJson
         writer.Dispose();
     }
 
-    public async static void WriteJsonList<T>(List<T> items)
+    public static void WriteJsonList<T>(List<T> items)
     {
         string path = $"Data/{typeof(T).Name}s.json";
         StreamWriter writer = new(path);
