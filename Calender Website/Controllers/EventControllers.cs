@@ -28,10 +28,13 @@ public class EventController : Controller
 
     [HttpPost("create-event")]
     [LoggedInFilter]
-    public async Task<IResult> PostEvent([FromBody] Event e)
+    public async Task<IActionResult> PostEvent([FromBody] Event e)
     {
-        if (await eventService.AppendEvent(e)) return Results.Accepted();
-        return Results.BadRequest();
+        if (e is null) return BadRequest("The event you gave us is null");
+        if (e.Description == "None" || e.Title == "None" || e.Location == "None") return BadRequest("The event is still null");
+        e.Id = Guid.NewGuid();
+        if (await eventService.AppendEvent(e)) return Accepted();
+        return BadRequest("Something went wrong");
     }
 
     [HttpPut("update-event")]
