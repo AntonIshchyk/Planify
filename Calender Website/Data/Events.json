@@ -1,12 +1,12 @@
 [
   {
-    "Id": "c719bd35-0b84-4378-b2d2-ecb8af0be0a8",
-    "Title": "TestUsername",
-    "Description": "TestPassword",
-    "Date": "2024-10-10",
-    "StartTime": "18:00",
-    "EndTime": "22:00",
-    "Location": "Amsterdam",
+    "Id": "00000000-0000-0000-0000-000000000000",
+    "Title": "Annual Conference",
+    "Description": "This is a detailed banana of the event.",
+    "Date": "2024-09-25T00:00:00",
+    "StartTime": "2024-09-25T09:00:00",
+    "EndTime": "2024-09-25T17:00:00",
+    "Location": "Convention Center, City",
     "AdminApproval": false
   }
 ]
