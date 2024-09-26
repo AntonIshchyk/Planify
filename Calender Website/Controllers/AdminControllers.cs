@@ -14,7 +14,7 @@ public class AdminControllers : Controller
     [LoggedInFilter]
     public async Task<IActionResult> DeleteAdmin([FromQuery] Guid Id)
     {
-        bool doesExist = await AS.AdminExists(Id);
+        bool doesExist = await AS.DoesAdminExist(Id);
 
         if (!doesExist) return BadRequest("Admin does not exist");
         return Ok("Admin is deleted");

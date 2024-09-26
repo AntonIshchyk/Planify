@@ -7,7 +7,7 @@ public class Attendance : IHasId
     public Attendance() { }
     public Attendance(Guid userId, DateTime date)
     {
-        Id = new Guid();
+        Id = Guid.NewGuid();
         UserId = userId;
         Date = date;
     }

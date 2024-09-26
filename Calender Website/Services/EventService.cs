@@ -3,8 +3,7 @@ public class EventService
     public async Task<Event> GetEvent(Guid id)
     {
         List<Event> events = await AccessJson.ReadJson<Event>();
-        if (events.Any(x => x.Id == id)) return events.Find(x => x.Id == id)!;
-        return null!;
+        return events.Find(x => x.Id == id)!;
     }
 
     public async Task<EventReview> GetEventReviews(Guid id)
@@ -27,8 +26,9 @@ public class EventService
     public async Task<bool> UpdateEvent(Event e)
     {
         List<Event> events = await AccessJson.ReadJson<Event>();
-        if (!events.Any(x => x.Id == e.Id)) return false;
-        events[events.FindIndex(e => e == events.Find(x => x.Id == e.Id))] = e;
+        int index = events.FindIndex(searchEvent => searchEvent.Id == e.Id);
+        if (index < 0) return false;
+        events[index] = e;
         AccessJson.WriteJsonList(events);
         return true;
     }
