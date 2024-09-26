@@ -4,14 +4,16 @@ using Microsoft.AspNetCore.Mvc;
 public class LoginControllers : Controller
 {
     readonly AdminService AS;
-    readonly SessionService _sessionService;
     readonly UserService US;
 
-    public LoginControllers(AdminService adminService, SessionService sessionService, UserService userService)
+    public LoginControllers(AdminService adminService, UserService userService)
     {
         AS = adminService;
-        _sessionService = sessionService;
         US = userService;
+    }
+    public LoginControllers(AdminService adminService)
+    {
+        AS = adminService;
     }
 
     [HttpPost("login")]
@@ -25,10 +27,7 @@ public class LoginControllers : Controller
 
             existingAdmin.LastLogIn = DateTime.Now;
             existingAdmin.LoggedIn = true;
-
-            Session session = new(existingAdmin.Id);
-
-            await _sessionService.CreateSession(session);
+            HttpContext.Session.SetString("UserId", admin.Id.ToString());
             await AS.UpdateAdmin(existingAdmin);
 
             return Ok($"Welcome {existingAdmin.Username}!");
@@ -64,20 +63,16 @@ public class LoginControllers : Controller
     [HttpPost("logout")]
     public async Task<IActionResult> Logout([FromBody] Admin admin)
     {
-        Admin existingAdmin = await AS.AdminExists(admin);
+        if (admin.Id.ToString() != HttpContext.Session.GetString("UserId")) return BadRequest("This Admin is not Logged in on this Session!");
+        var existingAdmin = await AS.AdminExists(admin);
         if (existingAdmin is null) return BadRequest("Admin not found");
         else
         {
-            Session session = await _sessionService.GetSessionByPersonId(existingAdmin.Id);
-            if (session == null || !session.LoggedIn) return BadRequest("Admin is already offline");
             existingAdmin.LastLogOut = DateTime.Now;
-            session.LogOutDate = DateTime.Now;
-
             existingAdmin.LoggedIn = false;
-            session.LoggedIn = false;
-
             await AS.UpdateAdmin(existingAdmin);
-            await _sessionService.UpdateSession(session);
+
+            HttpContext.Session.Clear();
 
             return Ok($"See you later {existingAdmin.Username}!");
 
