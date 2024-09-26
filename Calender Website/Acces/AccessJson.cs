@@ -1,7 +1,7 @@
 using Newtonsoft.Json;
 
 
-public static class AccesJson
+public static class AccessJson
 {
     public async static Task<List<T>> ReadJson<T>()
     {

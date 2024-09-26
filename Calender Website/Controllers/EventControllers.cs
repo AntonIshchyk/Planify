@@ -8,48 +8,53 @@ public class EventController : Controller
     {
         eventService = eventservice;
     }
+
     [HttpGet("event")]
-    public async Task<IResult> GetEvent([FromQuery] Guid id)
+    public async Task<IActionResult> GetEvent([FromQuery] Guid id)
     {
         EventReview eventReview = await eventService.GetEventReviews(id);
-        if (eventReview is null) return Results.BadRequest();
-        return Results.Ok(eventReview);
+        if (eventReview is null) return BadRequest();
+        return Ok(eventReview);
     }
 
+    [HttpGet("get-all-events")]
+    public async Task<IActionResult> GetAllEvents() => Ok(await eventService.GetAllEvents());
+
     [HttpPost("review")]
-    public async Task<IResult> AddReview([FromBody] EventAttendance review)
+    public async Task<IActionResult> AddReview([FromBody] EventAttendance review)
     {
-        if (await eventService.AddReview(review)) return Results.Accepted();
-        return Results.BadRequest();
+        if (await eventService.AddReview(review)) return Accepted();
+        return BadRequest();
     }
 
     [HttpGet("review")]
-    public async Task<IResult> GetReviews([FromQuery] Guid id) => Results.Ok(await eventService.GetReviews(id));
+    public async Task<IActionResult> GetReview([FromQuery] Guid id) => Ok(await eventService.GetReviewsFromEventId(id));
+
+    public async Task<IActionResult> GetAllReviews() => Ok(await GetAllReviews());
 
     [HttpPost("create-event")]
     [LoggedInFilter]
     public async Task<IActionResult> PostEvent([FromBody] Event e)
     {
-        if (e is null) return BadRequest("The event you gave us is null");
-        if (e.Description == "None" || e.Title == "None" || e.Location == "None") return BadRequest("The event is still null");
+        if (e is null || e.Description == "None" || e.Title == "None" || e.Location == "None") return BadRequest("There is not enough info to make an event");
         e.Id = Guid.NewGuid();
-        if (await eventService.AppendEvent(e)) return Accepted();
+        if (await eventService.AppendEvent(e)) return Created();
         return BadRequest("Something went wrong");
     }
 
     [HttpPut("update-event")]
     [LoggedInFilter]
-    public async Task<IResult> UpdateEvent([FromBody] Event e)
+    public async Task<IActionResult> UpdateEvent([FromBody] Event e)
     {
-        if (await eventService.UpdateEvent(e)) return Results.Accepted();
-        return Results.BadRequest();
+        if (await eventService.UpdateEvent(e)) return Accepted();
+        return BadRequest();
     }
 
     [HttpDelete("delete-event")]
     [LoggedInFilter]
-    public async Task<IResult> DeleteEvent([FromQuery] Guid id)
+    public async Task<IActionResult> DeleteEvent([FromQuery] Guid id)
     {
-        if (await eventService.DeleteEvent(id)) return Results.Accepted();
-        return Results.BadRequest();
+        if (await eventService.DeleteEvent(id)) return Accepted();
+        return BadRequest();
     }
 }

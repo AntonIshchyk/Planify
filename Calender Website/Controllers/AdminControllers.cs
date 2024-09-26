@@ -28,11 +28,18 @@ public class AdminControllers : Controller
         return Ok(admin);
     }
 
-    [HttpGet("get-all-admins")]
-    public async Task<IActionResult> GetAllAdmin([FromQuery] Guid[] ids)
+    [HttpGet("get-many-admins")]
+    public async Task<IActionResult> GetManyAdmins([FromQuery] Guid[] ids)
     {
         Admin[] admins = await AS.GetManyAdmins(ids);
         if (admins.Length <= 0) return BadRequest("There were no admins with one of these ids");
         return Ok(admins);
+    }
+
+    [HttpGet("get-all-admins")]
+    public async Task<IActionResult> GetAllAdmins()
+    {
+        List<Admin> admins = await AS.GetAllAdmin();
+        return Ok(admins.ToArray());
     }
 }
