@@ -1,4 +1,4 @@
-public class Admin : IUser
+public class Admin : IHasId
 {
     public Guid Id { get; set; }
     public string Username { get; set; } = "Unknown";

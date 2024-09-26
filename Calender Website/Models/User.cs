@@ -1,4 +1,4 @@
-public class User : IUser
+public class User : IHasId
 {
     public Guid Id { get; set; }
     public string FirstName { get; set; } = "None";
@@ -6,8 +6,6 @@ public class User : IUser
     public string Email { get; set; } = "None";
     public string Password { get; set; } = "None";
     public int RecurringDays { get; set; }
-
-    public User() { }
 
     public User(string firstName, string lastName, string email, string password, int recurringDays)
     {

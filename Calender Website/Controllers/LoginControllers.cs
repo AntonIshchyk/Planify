@@ -11,10 +11,6 @@ public class LoginControllers : Controller
         AS = adminService;
         US = userService;
     }
-    public LoginControllers(AdminService adminService)
-    {
-        AS = adminService;
-    }
 
     [HttpPost("login")]
     public async Task<IActionResult> Login([FromBody] Admin admin)
