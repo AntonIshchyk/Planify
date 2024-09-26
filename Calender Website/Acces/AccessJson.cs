@@ -9,10 +9,7 @@ public static class AccessJson
         string path = $"{folderPath}/{typeof(T).Name}s.json";
 
         // Ensure the folder exists, create otherwise
-        if (!Directory.Exists(folderPath))
-        {
-            Directory.CreateDirectory(folderPath);
-        }
+        if (!Directory.Exists(folderPath)) Directory.CreateDirectory(folderPath);
 
         StreamReader reader;
         List<T> items = [];

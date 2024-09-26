@@ -39,8 +39,8 @@ public class LoginControllers : Controller
         // don`t trust id`s from abroad, so...
         // create a new id, for safety reasons
         admin.Id = Guid.NewGuid();
-        bool doesAdminExist = await AS.SaveAdmin(admin);
-        if (doesAdminExist) return BadRequest("Admin is already registered");
+        bool IsAdminWritenToJson = await AS.SaveAdmin(admin);
+        if (!IsAdminWritenToJson) return BadRequest("Admin is already registered");
         else return Ok("Admin registered");
     }
 

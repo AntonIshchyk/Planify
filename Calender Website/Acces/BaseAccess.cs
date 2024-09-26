@@ -20,16 +20,15 @@ public abstract class BaseAccess<T> where T : IHasId
         return allItems;
     }
 
-    public static async Task Update(T data)
+    public static async Task<bool> Update(T data)
     {
         List<T> allItems = await AccessJson.ReadJson<T>();
         int index = allItems.FindIndex(item => item.Id == data.Id);
+        if (index < 0) return false;
 
-        if (index >= 0)
-        {
-            allItems[index] = data;
-            AccessJson.WriteJsonList(allItems);
-        }
+        allItems[index] = data;
+        AccessJson.WriteJsonList(allItems);
+        return true;
     }
 
     public static async Task AddAll(List<T> data)
@@ -46,25 +45,25 @@ public abstract class BaseAccess<T> where T : IHasId
         AccessJson.WriteJsonList(allItems);
     }
 
-    public static async Task Remove(Guid id)
+    public static async Task<bool> Remove(Guid id)
     {
         List<T> allItems = await AccessJson.ReadJson<T>();
         T itemToRemove = allItems.FirstOrDefault(x => x.Id == id)!;
-        if (itemToRemove != null)
-        {
-            allItems.Remove(itemToRemove);
-            AccessJson.WriteJsonList(allItems);
-        }
+        if (itemToRemove is null) return false;
+
+        allItems.Remove(itemToRemove);
+        AccessJson.WriteJsonList(allItems);
+        return true;
     }
 
-    public static async Task Remove(T data)
+    public static async Task<bool> Remove(T data)
     {
         List<T> allItems = await AccessJson.ReadJson<T>();
         T itemToRemove = allItems.FirstOrDefault(x => x.Id == data.Id)!;
-        if (itemToRemove != null)
-        {
-            allItems.Remove(itemToRemove);
-            AccessJson.WriteJsonList(allItems);
-        }
+        if (itemToRemove is null) return false;
+
+        allItems.Remove(itemToRemove);
+        AccessJson.WriteJsonList(allItems);
+        return true;
     }
 }

@@ -21,6 +21,7 @@ public class AdminControllers : Controller
     }
 
     [HttpGet("get-admin")]
+    [LoggedInFilter]
     public async Task<IActionResult> GetAdmin([FromQuery] Guid Id)
     {
         Admin admin = await AS.GetAdmin(Id);
@@ -29,6 +30,7 @@ public class AdminControllers : Controller
     }
 
     [HttpGet("get-many-admins")]
+    [LoggedInFilter]
     public async Task<IActionResult> GetManyAdmins([FromQuery] Guid[] ids)
     {
         Admin[] admins = await AS.GetManyAdmins(ids);
@@ -37,9 +39,19 @@ public class AdminControllers : Controller
     }
 
     [HttpGet("get-all-admins")]
+    [LoggedInFilter]
     public async Task<IActionResult> GetAllAdmins()
     {
         List<Admin> admins = await AS.GetAllAdmin();
         return Ok(admins.ToArray());
+    }
+
+    [HttpPut("update-admin")]
+    [LoggedInFilter]
+    public async Task<IActionResult> UpdateAdmin([FromBody] Admin admin)
+    {
+        bool updatedAdmin = await AS.UpdateAdmin(admin);
+        if (!updatedAdmin) return NotFound("Admin was not found");
+        return Ok("Admin has been updated");
     }
 }

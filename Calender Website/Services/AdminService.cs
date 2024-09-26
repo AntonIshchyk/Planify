@@ -13,12 +13,12 @@ public class AdminService
     public async Task<bool> SaveAdmin(Admin admin)
     {
         List<Admin> admins = await AccessJson.ReadJson<Admin>();
-        if (admins.Find(a => a.Email == admin.Email && a.Username == admin.Username && a.Password == admin.Password) is not null) return true;
+        if (admins.Find(a => a.Email == admin.Email && a.Username == admin.Username && a.Password == admin.Password) is not null) return false;
         await AccessJson.WriteJson(admin);
-        return false;
+        return true;
     }
 
-    public async Task UpdateAdmin(Admin admin) => await AdminAccess.Update(admin);
+    public async Task<bool> UpdateAdmin(Admin admin) => await AdminAccess.Update(admin);
 
     public async Task DeleteAdmin(Guid Id) => await AdminAccess.Remove(Id);
 

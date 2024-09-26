@@ -4,6 +4,7 @@ public class Attendance : IHasId
     public Guid UserId { get; set; }
     public DateTime Date { get; }
 
+    public Attendance() { }
     public Attendance(Guid userId, DateTime date)
     {
         Id = new Guid();
