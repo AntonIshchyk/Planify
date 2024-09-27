@@ -6,7 +6,7 @@ public class UserService
         return users.FirstOrDefault(u => u.Id == Id)!;
     }
 
-    public async Task<List<User>> GetAllUsers() => await AccessJson.ReadJson<User>();
+    public async Task<List<User>> GetAllUsers() => await UserAccess.LoadAll();
 
     public async Task<bool> SaveUser(User user)
     {

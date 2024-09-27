@@ -15,7 +15,7 @@ public class LoginControllers : Controller
     [HttpPost("login")]
     public async Task<IActionResult> Login([FromBody] Admin admin)
     {
-        Admin existingAdmin = await AS.AdminExists(admin);
+        Admin existingAdmin = await AS.GetAdmin(admin);
         if (existingAdmin is null) return BadRequest("Admin not found");
         else
         {
@@ -60,7 +60,7 @@ public class LoginControllers : Controller
     public async Task<IActionResult> Logout([FromBody] Admin admin)
     {
         if (admin.Id.ToString() != HttpContext.Session.GetString("UserId")) return BadRequest("This Admin is not Logged in on this Session!");
-        var existingAdmin = await AS.AdminExists(admin);
+        var existingAdmin = await AS.GetAdmin(admin);
         if (existingAdmin is null) return BadRequest("Admin not found");
         else
         {

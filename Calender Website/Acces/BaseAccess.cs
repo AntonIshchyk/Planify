@@ -17,7 +17,7 @@ public abstract class BaseAccess<T> where T : IHasId
 
     public static async Task<T> Get(T data) => await Get(data.Id);
 
-    public static async Task<List<T>>? LoadAll() => await AccessJson.ReadJson<T>();
+    public static async Task<List<T>> LoadAll() => await AccessJson.ReadJson<T>();
 
     public static async Task<bool> Update(T data)
     {
@@ -51,4 +51,15 @@ public abstract class BaseAccess<T> where T : IHasId
     }
 
     public static async Task<bool> Remove(T data) => await Remove(data.Id);
+
+    public static async Task<T[]> GetMany(Guid[] ids)
+    {
+        List<T> specificItems = [];
+        foreach (Guid id in ids)
+        {
+            T item = await Get(id);
+            if (item is not null) specificItems.Add(item);
+        }
+        return specificItems.ToArray();
+    }
 }

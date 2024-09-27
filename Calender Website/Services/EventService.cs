@@ -1,10 +1,6 @@
 public class EventService
 {
-    public async Task<Event> GetEvent(Guid id)
-    {
-        List<Event> events = await AccessJson.ReadJson<Event>();
-        return events.Find(x => x.Id == id)!;
-    }
+    public async Task<Event> GetEvent(Guid id) => await EventAccess.Get(id);
 
     public async Task<EventReview> GetEventReviews(Guid id)
     {
@@ -36,10 +32,9 @@ public class EventService
 
     public async Task<bool> DeleteEvent(Guid id)
     {
-        List<Event> events = await AccessJson.ReadJson<Event>();
-        if (!events.Any(e => e.Id == id)) return false;
-        events.Remove(events.First(e => e.Id == id));
-        AccessJson.WriteJsonList(events);
+        Event @event = await EventAccess.Get(id);
+        if (@event is null) return false;
+        await EventAccess.Remove(@event);
         return true;
     }
 
@@ -55,19 +50,10 @@ public class EventService
     public async Task<List<EventAttendance>> GetReviewsFromEventId(Guid eventId)
     {
         List<EventAttendance> reviews = await AccessJson.ReadJson<EventAttendance>();
-        if (!reviews.Any(r => r.EventId == eventId)) return [];
         return reviews.FindAll(r => r.EventId == eventId).ToList();
     }
 
-    public async Task<List<Event>> GetAllEvents()
-    {
-        List<Event> events = await AccessJson.ReadJson<Event>();
-        return events.ToList();
-    }
+    public async Task<List<Event>> GetAllEvents() => await EventAccess.LoadAll();
 
-    public async Task<List<EventAttendance>> GetAllReviews()
-    {
-        List<EventAttendance> reviews = await AccessJson.ReadJson<EventAttendance>();
-        return reviews;
-    }
+    public async Task<List<EventAttendance>> GetAllReviews() => await EventAttendanceAccess.LoadAll();
 }
