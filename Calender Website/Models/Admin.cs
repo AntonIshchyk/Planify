@@ -12,7 +12,6 @@ public class Admin : IHasId
 
     public Admin(string username, string password, string email)
     {
-        Id = Guid.NewGuid();
         Username = username;
         Password = password;
         Email = email;

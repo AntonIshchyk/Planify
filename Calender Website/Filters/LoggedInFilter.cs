@@ -4,7 +4,6 @@ public class LoggedInFilter : Attribute, IAsyncActionFilter
 {
     public async Task OnActionExecutionAsync(ActionExecutingContext actioncontext, ActionExecutionDelegate next)
     {
-
         // Example: Get a specific query parameter by key (e.g., "id")
         if (!actioncontext.HttpContext.Session.TryGetValue("UserId", out var idValue))
         {

@@ -1,11 +1,6 @@
 public class EventService
 {
-    public async Task<Event> GetEvent(Guid id)
-    {
-        List<Event> events = await AccessJson.ReadJson<Event>();
-        if (events.Any(x => x.Id == id)) return events.Find(x => x.Id == id)!;
-        return null!;
-    }
+    public async Task<Event> GetEvent(Guid id) => await EventAccess.Get(id);
 
     public async Task<EventReview> GetEventReviews(Guid id)
     {
@@ -27,21 +22,14 @@ public class EventService
     public async Task<bool> UpdateEvent(Event e)
     {
         List<Event> events = await AccessJson.ReadJson<Event>();
-        if (!events.Any(x => x.Id == e.Id)) return false;
-        events[events.FindIndex(e => e == events.Find(x => x.Id == e.Id))] = e;
+        int index = events.FindIndex(searchEvent => searchEvent.Id == e.Id);
+        if (index < 0) return false;
+        events[index] = e;
         AccessJson.WriteJsonList(events);
         return true;
     }
 
-
-    public async Task<bool> DeleteEvent(Guid id)
-    {
-        List<Event> events = await AccessJson.ReadJson<Event>();
-        if (!events.Any(e => e.Id == id)) return false;
-        events.Remove(events.First(e => e.Id == id));
-        AccessJson.WriteJsonList(events);
-        return true;
-    }
+    public async Task<bool> DeleteEvent(Guid id) => await EventAccess.Remove(id);
 
     public async Task<bool> AddReview(EventAttendance review)
     {
@@ -55,19 +43,14 @@ public class EventService
     public async Task<List<EventAttendance>> GetReviewsFromEventId(Guid eventId)
     {
         List<EventAttendance> reviews = await AccessJson.ReadJson<EventAttendance>();
-        if (!reviews.Any(r => r.EventId == eventId)) return [];
         return reviews.FindAll(r => r.EventId == eventId).ToList();
     }
 
-    public async Task<List<Event>> GetAllEvents()
-    {
-        List<Event> events = await AccessJson.ReadJson<Event>();
-        return events.ToList();
-    }
+    public async Task<List<Event>> GetAllEvents() => await EventAccess.LoadAll();
 
-    public async Task<List<EventAttendance>> GetAllReviews()
-    {
-        List<EventAttendance> reviews = await AccessJson.ReadJson<EventAttendance>();
-        return reviews;
-    }
+    public async Task<List<EventAttendance>> GetAllReviews() => await EventAttendanceAccess.LoadAll();
+
+    public async Task<Event[]> GetManyEvents(Guid[] ids) => await EventAccess.GetMany(ids);
+
+    public async Task<EventAttendance[]> GetManyReviews(Guid[] ids) => await EventAttendanceAccess.GetMany(ids);
 }

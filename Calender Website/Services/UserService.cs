@@ -1,5 +1,3 @@
-using Microsoft.AspNetCore.Mvc;
-
 public class UserService
 {
     public async Task<User> GetUserById(Guid Id)
@@ -8,6 +6,8 @@ public class UserService
         return users.FirstOrDefault(u => u.Id == Id)!;
     }
 
+    public async Task<List<User>> GetAllUsers() => await UserAccess.LoadAll();
+
     public async Task<bool> SaveUser(User user)
     {
         List<User> users = await AccessJson.ReadJson<User>();
@@ -15,4 +15,12 @@ public class UserService
         await AccessJson.WriteJson(user);
         return true;
     }
+
+    public async Task<User[]> GetManyUsers(Guid[] Ids) => await UserAccess.GetMany(Ids);
+
+    public async Task<bool> UpdateUser(User user) => await UserAccess.Update(user);
+
+    public async Task<bool> DeleteUserById(Guid Id) => await UserAccess.Remove(Id);
+
+    public async Task<bool> DeleteUserWithUser(User user) => await UserAccess.Remove(user);
 }

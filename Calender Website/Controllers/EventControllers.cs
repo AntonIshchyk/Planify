@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Mvc; 
+using Microsoft.AspNetCore.Mvc;
 
 [Route("Calender-Website")]
 public class EventController : Controller
@@ -13,7 +13,7 @@ public class EventController : Controller
     public async Task<IActionResult> GetEvent([FromQuery] Guid id)
     {
         EventReview eventReview = await eventService.GetEventReviews(id);
-        if (eventReview is null) return BadRequest();
+        if (eventReview is null) return NotFound("Review could not be found. ");
         return Ok(eventReview);
     }
 
@@ -23,8 +23,8 @@ public class EventController : Controller
     [HttpPost("review")]
     public async Task<IActionResult> AddReview([FromBody] EventAttendance review)
     {
-        if (await eventService.AddReview(review)) return Accepted();
-        return BadRequest();
+        if (await eventService.AddReview(review)) return Accepted("Review added. ");
+        return BadRequest("Review could not be added. ");
     }
 
     [HttpGet("review")]
@@ -36,7 +36,7 @@ public class EventController : Controller
     [LoggedInFilter]
     public async Task<IActionResult> PostEvent([FromBody] Event e)
     {
-        if (e is null || e.Description == "None" || e.Title == "None" || e.Location == "None") return BadRequest("There is not enough info to make an event");
+        if (e is null || e.Description == "None" || e.Title == "None" || e.Location == "None") return BadRequest("There is not enough info to make an event. ");
         e.Id = Guid.NewGuid();
         if (await eventService.AppendEvent(e)) return Created();
         return BadRequest("Something went wrong");
@@ -46,15 +46,15 @@ public class EventController : Controller
     [LoggedInFilter]
     public async Task<IActionResult> UpdateEvent([FromBody] Event e)
     {
-        if (await eventService.UpdateEvent(e)) return Accepted();
-        return BadRequest();
+        if (await eventService.UpdateEvent(e)) return Accepted("Event updated. ");
+        return NotFound("Event could not be found. ");
     }
 
     [HttpDelete("delete-event")]
     [LoggedInFilter]
     public async Task<IActionResult> DeleteEvent([FromQuery] Guid id)
     {
-        if (await eventService.DeleteEvent(id)) return Accepted();
-        return BadRequest();
+        if (await eventService.DeleteEvent(id)) return Accepted("Event deleted. ");
+        return BadRequest("Event not found. ");
     }
 }

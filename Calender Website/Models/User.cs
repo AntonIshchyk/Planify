@@ -7,9 +7,9 @@ public class User : IHasId
     public string Password { get; set; } = "None";
     public int RecurringDays { get; set; }
 
+    public User() { }
     public User(string firstName, string lastName, string email, string password, int recurringDays)
     {
-        Id = Guid.NewGuid();
         FirstName = firstName;
         LastName = lastName;
         Email = email;
