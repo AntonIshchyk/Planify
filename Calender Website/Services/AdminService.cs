@@ -24,16 +24,7 @@ public class AdminService
 
     public async Task<List<Admin>> GetAllAdmin() => await AdminAccess.LoadAll()!;
 
-    public async Task<Admin[]> GetManyAdmins(Guid[] ids)
-    {
-        List<Admin> specificAdmins = [];
-        foreach (Guid id in ids)
-        {
-            Admin admin = await GetAdmin(id);
-            if (admin is not null) specificAdmins.Add(admin);
-        }
-        return specificAdmins.ToArray();
-    }
+    public async Task<Admin[]> GetManyAdmins(Guid[] Ids) => await AdminAccess.GetMany(Ids);
 
     public async Task<bool> IsLoggedIn()
     {

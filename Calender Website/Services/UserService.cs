@@ -16,17 +16,7 @@ public class UserService
         return true;
     }
 
-    public async Task<User[]> GetManyUsers(Guid[] Ids)
-    {
-        List<User> users = await AccessJson.ReadJson<User>();
-        List<User> foundUsers = [];
-        foreach (Guid id in Ids)
-        {
-            User user = users.Find(u => u.Id == id)!;
-            if (user is not null) foundUsers.Add(user);
-        }
-        return foundUsers.ToArray();
-    }
+    public async Task<User[]> GetManyUsers(Guid[] Ids) => await UserAccess.GetMany(Ids);
 
     public async Task<bool> UpdateUser(User user) => await UserAccess.Update(user);
 

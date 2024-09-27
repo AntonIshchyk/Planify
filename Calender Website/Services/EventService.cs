@@ -29,14 +29,7 @@ public class EventService
         return true;
     }
 
-
-    public async Task<bool> DeleteEvent(Guid id)
-    {
-        Event @event = await EventAccess.Get(id);
-        if (@event is null) return false;
-        await EventAccess.Remove(@event);
-        return true;
-    }
+    public async Task<bool> DeleteEvent(Guid id) => await EventAccess.Remove(id);
 
     public async Task<bool> AddReview(EventAttendance review)
     {
@@ -56,4 +49,8 @@ public class EventService
     public async Task<List<Event>> GetAllEvents() => await EventAccess.LoadAll();
 
     public async Task<List<EventAttendance>> GetAllReviews() => await EventAttendanceAccess.LoadAll();
+
+    public async Task<Event[]> GetManyEvents(Guid[] ids) => await EventAccess.GetMany(ids);
+
+    public async Task<EventAttendance[]> GetManyReviews(Guid[] ids) => await EventAttendanceAccess.GetMany(ids);
 }
