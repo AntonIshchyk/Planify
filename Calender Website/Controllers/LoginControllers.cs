@@ -1,3 +1,4 @@
+using System.Text.Json;
 using Microsoft.AspNetCore.Mvc;
 
 [Route("Calender-Website")]
@@ -12,22 +13,48 @@ public class LoginControllers : Controller
         US = userService;
     }
 
-    [HttpPost("login")]
-    public async Task<IActionResult> Login([FromBody] Admin admin)
+    [HttpPost("login")] 
+    public async Task<IActionResult> Login([FromBody] JsonElement obj)
     {
-        Admin existingAdmin = await AS.GetAdmin(admin);
-        if (existingAdmin is null) return BadRequest("Admin not found");
-        else
+        if(!obj.TryGetProperty("Id", out _)) return BadRequest("No Id is given!");
+
+        //only the admin has an UserName. In this way we test if it is an admin. 
+        if (obj.TryGetProperty("Username", out _))
         {
-            if (existingAdmin.LoggedIn) return BadRequest("Admin is already online");
 
-            existingAdmin.LastLogIn = DateTime.Now;
-            existingAdmin.LoggedIn = true;
-            HttpContext.Session.SetString("UserId", admin.Id.ToString());
-            await AS.UpdateAdmin(existingAdmin);
+            var admin = JsonSerializer.Deserialize<Admin>(obj.ToString());
+            if(admin != null && !string.IsNullOrEmpty(admin.Username)){
+                Admin existingAdmin = await AS.GetAdmin(admin);
+                if (existingAdmin == null) return BadRequest("Admin not found");
+                if (existingAdmin.LoggedIn) return BadRequest("Admin is already online");
 
-            return Ok($"Welcome {existingAdmin.Username}!");
+                existingAdmin.LastLogIn = DateTime.Now;
+                existingAdmin.LoggedIn = true;
+                HttpContext.Session.SetString("UserId", admin.Id.ToString());
+                HttpContext.Session.SetInt32("IsAdmin" , 1);
+                await AS.UpdateAdmin(existingAdmin);
+
+                return Ok($"Welcome {existingAdmin.Username}!");
+                
+            }
         }
+         
+        //Only a user has FirstName. The code below is for the User.
+        if (obj.TryGetProperty("FirstName", out _))
+        {
+
+            var user = JsonSerializer.Deserialize<User>(obj.ToString());
+            if(user != null && !string.IsNullOrEmpty(user.FirstName)){
+                User existingUser = await US.GetUserById(user.Id);
+                if (existingUser is null) return BadRequest("User not found");
+                HttpContext.Session.SetString("UserId", user.Id.ToString());
+
+                return Ok($"Welcome {user.FirstName + " " + user.LastName}!");
+            }
+        }
+
+        //If it cannot convert rightly to an Admin or User, we get a badrequest
+        return BadRequest("No User or Admin Found!");
     }
 
     [HttpPost("register-admin")]
@@ -57,12 +84,15 @@ public class LoginControllers : Controller
     }
 
     [HttpPost("logout")]
-    public async Task<IActionResult> Logout([FromBody] Admin admin)
+    public async Task<IActionResult> Logout([FromBody] JsonElement obj)
     {
-        if (admin.Id.ToString() != HttpContext.Session.GetString("UserId")) return BadRequest("This Admin is not Logged in on this Session!");
-        var existingAdmin = await AS.GetAdmin(admin);
-        if (existingAdmin is null) return BadRequest("Admin not found");
-        else
+        if (obj.TryGetProperty("Username", out _))
+        {
+            var admin = JsonSerializer.Deserialize<Admin>(obj.ToString());
+            if (admin.Id.ToString() != HttpContext.Session.GetString("UserId")) return BadRequest("This Admin is not Logged in on this Session!");
+            var existingAdmin = await AS.GetAdmin(admin);
+            if (existingAdmin is null) return BadRequest("Admin not found");
+            else
         {
             existingAdmin.LastLogOut = DateTime.Now;
             existingAdmin.LoggedIn = false;
@@ -73,5 +103,36 @@ public class LoginControllers : Controller
             return Ok($"See you later {existingAdmin.Username}!");
 
         }
+        }
+        if (obj.TryGetProperty("Username", out _))
+        {
+            var admin = JsonSerializer.Deserialize<Admin>(obj.ToString());
+            if (admin.Id.ToString() != HttpContext.Session.GetString("UserId")) return BadRequest("This Admin is not Logged in on this Session!");
+            var existingAdmin = await AS.GetAdmin(admin);
+            if (existingAdmin is null) return BadRequest("Admin not found");
+            else
+        {
+            existingAdmin.LastLogOut = DateTime.Now;
+            existingAdmin.LoggedIn = false;
+            await AS.UpdateAdmin(existingAdmin);
+
+            HttpContext.Session.Clear();
+
+            return Ok($"See you later {existingAdmin.Username}!");
+
+        }
+        }
+        if (obj.TryGetProperty("FirstName", out _))
+        {
+            var user = JsonSerializer.Deserialize<User>(obj.ToString());
+            if (user.Id.ToString() != HttpContext.Session.GetString("UserId")) return BadRequest("This User is not Logged in on this Session!");
+            var existingUser = await US.GetUserById(user.Id);
+            if (existingUser is null) return BadRequest("User not found");
+
+            HttpContext.Session.Clear();
+
+            return Ok($"See you later {existingUser.FirstName + " " + existingUser.LastName}!");
+        }
+        return BadRequest("Json is not either Admin or User!");
     }
 }

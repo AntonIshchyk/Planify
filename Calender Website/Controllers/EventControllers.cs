@@ -33,7 +33,7 @@ public class EventController : Controller
     public async Task<IActionResult> GetAllReviews() => Ok(await GetAllReviews());
 
     [HttpPost("create-event")]
-    [LoggedInFilter]
+    [AdminFilter]
     public async Task<IActionResult> PostEvent([FromBody] Event e)
     {
         if (e is null || e.Description == "None" || e.Title == "None" || e.Location == "None") return BadRequest("There is not enough info to make an event. ");
@@ -43,7 +43,7 @@ public class EventController : Controller
     }
 
     [HttpPut("update-event")]
-    [LoggedInFilter]
+    [AdminFilter]
     public async Task<IActionResult> UpdateEvent([FromBody] Event e)
     {
         if (await eventService.UpdateEvent(e)) return Accepted("Event updated. ");
@@ -51,7 +51,7 @@ public class EventController : Controller
     }
 
     [HttpDelete("delete-event")]
-    [LoggedInFilter]
+    [AdminFilter]
     public async Task<IActionResult> DeleteEvent([FromQuery] Guid id)
     {
         if (await eventService.DeleteEvent(id)) return Accepted("Event deleted. ");
