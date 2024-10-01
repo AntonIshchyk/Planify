@@ -22,6 +22,8 @@ public class AdminService
 
     public async Task<Admin> GetAdmin(Admin admin) => await AdminAccess.Get(admin);
 
+    public async Task<Admin> GetAdminByLogIn(Admin admin) => await AdminAccess.GetLogIn(admin);
+
     public async Task<List<Admin>> GetAllAdmin() => await AdminAccess.LoadAll()!;
 
     public async Task<Admin[]> GetManyAdmins(Guid[] Ids) => await AdminAccess.GetMany(Ids);

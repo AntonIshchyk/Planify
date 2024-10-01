@@ -5,6 +5,7 @@ public class UserService
         List<User> users = await AccessJson.ReadJson<User>();
         return users.FirstOrDefault(u => u.Id == Id)!;
     }
+    public async Task<User> GetUser(User user) => await UserAccess.GetLogIn(user);
 
     public async Task<List<User>> GetAllUsers() => await UserAccess.LoadAll();
 
