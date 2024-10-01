@@ -5,13 +5,14 @@ public class UserService
         List<User> users = await AccessJson.ReadJson<User>();
         return users.FirstOrDefault(u => u.Id == Id)!;
     }
+    public async Task<User> GetUser(User user) => await UserAccess.GetLogIn(user);
 
     public async Task<List<User>> GetAllUsers() => await UserAccess.LoadAll();
 
     public async Task<bool> SaveUser(User user)
     {
         List<User> users = await AccessJson.ReadJson<User>();
-        if (users.Find(u => u.Email == user.Email && u.FirstName == user.FirstName && u.LastName == u.LastName && u.Password == user.Password) is not null) return false;
+        if (users.Find(u => u.Email == user.Email || (u.FirstName == user.FirstName && u.LastName == u.LastName))is not null) return false;
         await AccessJson.WriteJson(user);
         return true;
     }

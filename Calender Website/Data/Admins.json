@@ -4,8 +4,8 @@
     "Username": "TestUsername",
     "Password": "TestPassword",
     "Email": "TestEmail",
-    "LastLogIn": "2024-10-01T11:59:49.0469566+02:00",
-    "LastLogOut": "2024-10-01T12:00:38.8801401+02:00",
+    "LastLogIn": "2024-10-01T13:46:16.6276549+02:00",
+    "LastLogOut": "2024-10-01T13:50:35.3026034+02:00",
     "LoggedIn": false
   },
   {
@@ -24,6 +24,15 @@
     "Email": "TestEmail2",
     "LastLogIn": "0001-01-01T00:00:00",
     "LastLogOut": "2024-09-26T13:27:48.3525423+02:00",
+    "LoggedIn": false
+  },
+  {
+    "Id": "2692cef4-92f9-4562-b866-e85fd5cf357f",
+    "Username": "TestUsername100",
+    "Password": "TestPassword",
+    "Email": "TestEmail0o234",
+    "LastLogIn": "0001-01-01T00:00:00",
+    "LastLogOut": "0001-01-01T00:00:00",
     "LoggedIn": false
   }
 ]
