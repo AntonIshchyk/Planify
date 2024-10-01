@@ -1,29 +1,29 @@
 [
   {
-    "Id": "a579df4e-cbc0-4ef1-9887-fd781c372472",
-    "Username": "matts",
-    "Password": "123",
-    "Email": "matts@gmail.com",
-    "LastLogIn": "2024-09-25T14:51:09.7071128+02:00",
-    "LastLogOut": "2024-09-25T14:50:36.5988903+02:00",
-    "LoggedIn": true
+    "Id": "3062f683-a110-4813-8f2e-67116bc87448",
+    "Username": "TestUsername",
+    "Password": "TestPassword",
+    "Email": "TestEmail",
+    "LastLogIn": "2024-09-26T13:27:22.0997183+02:00",
+    "LastLogOut": "0001-01-01T00:00:00",
+    "LoggedIn": false
   },
   {
-    "Id": "ed3793d0-aff6-44f7-902e-795de956d798",
-    "Username": "adminUser",
-    "Password": "securePassword123",
-    "Email": "admin@example.com",
-    "LastLogIn": "2024-09-24T13:30:44.5614296+02:00",
-    "LastLogOut": "2024-09-20T18:00:00",
-    "LoggedIn": true
+    "Id": "116dd004-9289-44de-8b16-8eb9ea784ec5",
+    "Username": "TestUsername1",
+    "Password": "TestPassword1",
+    "Email": "TestEmail1",
+    "LastLogIn": "0001-01-01T00:00:00",
+    "LastLogOut": "0001-01-01T00:00:00",
+    "LoggedIn": false
   },
   {
-    "Id": "bbf36a97-bafc-48ce-98a8-e5b2fa4ebb8b",
-    "Username": "Levi",
-    "Password": "123",
-    "Email": "Levi@gmail.com",
-    "LastLogIn": "2024-09-25T14:55:41.5576037+02:00",
-    "LastLogOut": "2024-09-25T14:56:01.3015488+02:00",
+    "Id": "7cf70ef0-0944-462a-b1ba-e6739573eb4f",
+    "Username": "TestUsername2",
+    "Password": "TestPassword2",
+    "Email": "TestEmail2",
+    "LastLogIn": "0001-01-01T00:00:00",
+    "LastLogOut": "2024-09-26T13:27:48.3525423+02:00",
     "LoggedIn": false
   }
 ]

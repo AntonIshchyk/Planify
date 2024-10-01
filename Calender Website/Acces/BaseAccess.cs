@@ -2,72 +2,64 @@ public abstract class BaseAccess<T> where T : IHasId
 {
     public static async Task<bool> Exists(Guid id)
     {
-        var allItems = await AccesJson.ReadJson<T>();
-        var found = allItems.FirstOrDefault(x => x.Id == id);
-        if (found is null)
-        {
-            return false;
-        }
+        T found = await Get(id);
+        if (found is null) return false;
         return true;
     }
 
+    public static async Task<bool> Exists(T data) => await Exists(data.Id);
+
     public static async Task<T> Get(Guid id)
     {
-        var allItems = await AccesJson.ReadJson<T>();
+        List<T> allItems = await LoadAll()!;
         return allItems.FirstOrDefault(x => x.Id == id)!;
     }
 
-    public static async Task<List<T>>? LoadAll()
-    {
-        var allItems = await AccesJson.ReadJson<T>();
-        return allItems ?? new();
-    }
+    public static async Task<T> Get(T data) => await Get(data.Id);
 
-    public static async Task Update(T data)
-    {
-        var allItems = await AccesJson.ReadJson<T>();
-        var index = allItems.FindIndex(item => item.Id == data.Id);
+    public static async Task<List<T>> LoadAll() => await AccessJson.ReadJson<T>();
 
-        if (index >= 0)
-        {
-            allItems[index] = data;
-            AccesJson.WriteJsonList(allItems);
-        }
+    public static async Task<bool> Update(T data)
+    {
+        List<T> allItems = await LoadAll()!;
+        int index = allItems.FindIndex(item => item.Id == data.Id);
+        if (index < 0) return false;
+
+        allItems[index] = data;
+        AccessJson.WriteJsonList(allItems);
+        return true;
     }
 
     public static async Task AddAll(List<T> data)
     {
-        var allItems = await AccesJson.ReadJson<T>();
+        List<T> allItems = await LoadAll()!;
         allItems.AddRange(data);
-        AccesJson.WriteJsonList(allItems);
+        AccessJson.WriteJsonList(allItems);
     }
 
-    public static async Task Add(T item)
+    public static async Task Add(T item) => await AccessJson.WriteJson(item);
+
+    public static async Task<bool> Remove(Guid id)
     {
-        var allItems = await AccesJson.ReadJson<T>();
-        allItems.Add(item);
-        AccesJson.WriteJsonList(allItems);
+        List<T> allItems = await LoadAll()!;
+        T itemToRemove = allItems.FirstOrDefault(x => x.Id == id)!;
+        if (itemToRemove is null) return false;
+
+        allItems.Remove(itemToRemove);
+        AccessJson.WriteJsonList(allItems);
+        return true;
     }
 
-    public static async Task Remove(Guid id)
+    public static async Task<bool> Remove(T data) => await Remove(data.Id);
+
+    public static async Task<T[]> GetMany(Guid[] ids)
     {
-        var allItems = await AccesJson.ReadJson<T>();
-        var itemToRemove = allItems.FirstOrDefault(x => x.Id == id);
-        if (itemToRemove != null)
+        List<T> specificItems = [];
+        foreach (Guid id in ids)
         {
-            allItems.Remove(itemToRemove);
-            AccesJson.WriteJsonList(allItems);
+            T item = await Get(id);
+            if (item is not null) specificItems.Add(item);
         }
-    }
-
-    public static async Task Remove(T data)
-    {
-        var allItems = await AccesJson.ReadJson<T>();
-        var itemToRemove = allItems.FirstOrDefault(x => x.Id == data.Id);
-        if (itemToRemove != null)
-        {
-            allItems.Remove(itemToRemove);
-            AccesJson.WriteJsonList(allItems);
-        }
+        return specificItems.ToArray();
     }
 }
