@@ -30,5 +30,21 @@
     "Email": "TestEmail",
     "Password": "TestPassword1",
     "RecurringDays": 0
+  },
+  {
+    "Id": "cd8bf3f3-04da-4c5c-a403-7d0fdee2a836",
+    "FirstName": "TestUsername2232323",
+    "LastName": "TestUsername2",
+    "Email": "Test23435",
+    "Password": "TestPassword2",
+    "RecurringDays": 0
+  },
+  {
+    "Id": "57fb5e2e-01aa-4ed4-9183-9f25f9656227",
+    "FirstName": "TestUsername22232323",
+    "LastName": "TestUsername2",
+    "Email": "Test",
+    "Password": "TestPassword2",
+    "RecurringDays": 0
   }
 ]

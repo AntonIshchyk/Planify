@@ -7,7 +7,8 @@ public class AdminService
     //Save admin to json
     public async Task<bool> SaveAdmin(Admin admin)
     {
-        if (GetAdmin(admin) is not null) return false;
+        List<Admin> admins = await AccessJson.ReadJson<Admin>();
+        if (admins.Find(a => a.Email == admin.Email || a.Username == admin.Username) is not null) return false;
         await AccessJson.WriteJson(admin);
         return true;
     }

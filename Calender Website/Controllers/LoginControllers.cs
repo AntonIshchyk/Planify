@@ -38,7 +38,7 @@ public class LoginControllers : Controller
         }
          
         //Only a user has FirstName. The code below is for the User.
-        if (obj.TryGetProperty("FirstName", out _))
+        if (obj.TryGetProperty("Email", out _))
         {
 
             var user = JsonSerializer.Deserialize<User>(obj.ToString());
@@ -102,7 +102,7 @@ public class LoginControllers : Controller
 
             }
         }
-        if (obj.TryGetProperty("FirstName", out _))
+        if (obj.TryGetProperty("Email", out _))
         {
             var user = JsonSerializer.Deserialize<User>(obj.ToString());
             var existingUser = await US.GetUser(user);
