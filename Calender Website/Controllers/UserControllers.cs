@@ -81,4 +81,32 @@ public class UserController : Controller
 
         return Ok(user.FriendRequests);
     }
+
+    [HttpPost("send-friend-request")]
+    [LoggedInFilter]
+    public async Task<IActionResult> SendFriendRequest([FromQuery] Guid toId)
+    {
+        // check if the sender exists 
+        string sessionIdString = HttpContext.Session.GetString("UserId")!;
+        Guid sessionId = Guid.Parse(sessionIdString);
+
+        User user = await UserAccess.Get(sessionId);
+        if (user is null) return NotFound();
+
+        // make sure user doesn`t send a friend request to himself
+        if (toId == user.Id)
+        {
+            return BadRequest("You cannot send a friend request to yourself");
+        }
+
+        // check if potential friend exists
+        User friend = await UserAccess.Get(toId);
+        if (friend is null) return BadRequest("Have not found your friend");
+
+        // add a friend request to the friend
+        friend.FriendRequests.Add(user.Id);
+
+        await US.UpdateUser(friend);
+        return Ok("Friend request was send");
+    }
 }

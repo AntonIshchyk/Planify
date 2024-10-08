@@ -2,10 +2,10 @@ POST http://localhost:5027/Calender-Website/register
 content-type: application/json
 
 {
-    "FirstName" : "John",
-    "LastName" : "Doe",
-    "Email" : "testemail.com",
-    "Password" : "TestPassword",
+    "FirstName" : "Jokhn",
+    "LastName" : "Dooe",
+    "Email" : "testemaisdfdsfsdfl.com",
+    "Password" : "TestPassdsdsgsdgword",
     "RecurringDays" : 0
 }
 ###
@@ -25,3 +25,15 @@ GET http://localhost:5027/Calender-Website/friends
 
 ###
 GET http://localhost:5027/Calender-Website/friend-requests
+
+###
+POST http://localhost:5027/Calender-Website/send-friend-request/?toId=ab3747e2-2efa-4493-8afa-b93aed7fafda
+
+###
+POST http://localhost:5027/Calender-Website/login
+content-type: application/json
+
+{
+    "Email" : "TESTEMAIL.BLAR",
+    "Password" : "PasSw0ord"
+}
