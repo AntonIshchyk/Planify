@@ -22,3 +22,6 @@ content-type: application/json
 
 ###
 GET http://localhost:5027/Calender-Website/friends
+
+###
+GET http://localhost:5027/Calender-Website/friend-requests
