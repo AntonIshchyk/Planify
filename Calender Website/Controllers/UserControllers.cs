@@ -54,4 +54,18 @@ public class UserController : Controller
         if (!userIsDeleted) return NotFound("User not found");
         return Ok("User is deleted");
     }
+
+
+    [HttpGet("friends")]
+    [LoggedInFilter]
+    public async Task<IActionResult> GetAllFriends()
+    {
+        string sessionIdString = HttpContext.Session.GetString("UserId")!;
+        Guid sessionId = Guid.Parse(sessionIdString);
+
+        User user = await UserAccess.Get(sessionId);
+        if (user is null) return NotFound();
+
+        return Ok(user.Friends);
+    }
 }

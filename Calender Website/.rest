@@ -1,0 +1,24 @@
+POST http://localhost:5027/Calender-Website/register
+content-type: application/json
+
+{
+    "FirstName" : "John",
+    "LastName" : "Doe",
+    "Email" : "testemail.com",
+    "Password" : "TestPassword",
+    "RecurringDays" : 0
+}
+###
+
+// getting Welcome None None! instead of real name
+// issue with login method
+POST http://localhost:5027/Calender-Website/login
+content-type: application/json
+
+{
+    "Email" : "testemail.com",
+    "Password" : "TestPassword"
+}
+
+###
+GET http://localhost:5027/Calender-Website/friends
