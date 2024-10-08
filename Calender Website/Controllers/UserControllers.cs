@@ -103,6 +103,11 @@ public class UserController : Controller
         User friend = await UserAccess.Get(toId);
         if (friend is null) return BadRequest("Have not found your friend");
 
+        if (friend.FriendRequests.Contains(user.Id))
+        {
+            return Ok("You have already sent a friend request");
+        }
+
         // add a friend request to the friend
         friend.FriendRequests.Add(user.Id);
 
