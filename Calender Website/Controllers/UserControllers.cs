@@ -68,4 +68,17 @@ public class UserController : Controller
 
         return Ok(user.Friends);
     }
+
+    [HttpGet("friend-requests")]
+    [LoggedInFilter]
+    public async Task<IActionResult> GetAllFriendRequests()
+    {
+        string sessionIdString = HttpContext.Session.GetString("UserId")!;
+        Guid sessionId = Guid.Parse(sessionIdString);
+
+        User user = await UserAccess.Get(sessionId);
+        if (user is null) return NotFound();
+
+        return Ok(user.FriendRequests);
+    }
 }
