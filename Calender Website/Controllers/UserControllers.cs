@@ -117,6 +117,7 @@ public class UserController : Controller
 
 
     [HttpGet("search")]
+    [LoggedInFilter]
     public async Task<IActionResult> Search(string str)
     {
         List<Event> allEvents = await EventAccess.LoadAll();
