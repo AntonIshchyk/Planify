@@ -55,6 +55,25 @@ public class UserController : Controller
         return Ok("User is deleted");
     }
 
+    [HttpDelete("delete-friend")]
+    [LoggedInFilter]
+    public async Task<IActionResult> DeleteFriend(Guid id)
+    {
+        string sessionIdString = HttpContext.Session.GetString("UserId")!;
+        Guid sessionId = Guid.Parse(sessionIdString);
+
+        User user = await UserAccess.Get(sessionId);
+        if (user is null) return NotFound();
+
+        if (!user.Friends.Contains(id))
+        {
+            return BadRequest("Friend not found");
+        }
+        user.Friends.Remove(id);
+        await US.UpdateUser(user);
+        return Ok("Friend deleted");
+    }
+
 
     [HttpGet("friends")]
     [LoggedInFilter]
@@ -188,7 +207,7 @@ public class UserController : Controller
 + Based on provided String: Create a GET endpoint which allows User to search for Events and Users.
 + Based on an User Id: Create a POST endpoint which lets User to send a friend request.
 + Create a GET endpoint which lets User to see all friend requests he got.
-- Based on an User Id: Create a POST endpoint which lets User to approve or deny a friend request.
++ Based on an User Id: Create a POST endpoint which lets User to approve or deny a friend request.
     To use a bool as a parameter could be an ok solution. False for deny, true for approve 
 + Create a GET endpoint which lets User to see all his friends.
 - Based on an User Id: Create a POST endpoint which lets User to delete a person from friends.

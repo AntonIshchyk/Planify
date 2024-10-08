@@ -57,3 +57,6 @@ POST http://localhost:5027/Calender-Website/send-friend-request/?toId=485490e1-8
 
 ### Manage Friend Request manage-friend-request
 POST http://localhost:5027/Calender-Website/manage-friend-request/?id=603156f2-2f13-460a-8fcc-92f1341f48bf&approve=false
+
+### Delete friend
+DELETE http://localhost:5027/Calender-Website/delete-friend/?id=603156f2-2f13-460a-8fcc-92f1341f48bf
