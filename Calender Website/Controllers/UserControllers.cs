@@ -114,4 +114,43 @@ public class UserController : Controller
         await US.UpdateUser(friend);
         return Ok("Friend request was send");
     }
+
+
+    [HttpGet("search")]
+    public async Task<IActionResult> Search(string str)
+    {
+        List<Event> allEvents = await EventAccess.LoadAll();
+        List<User> allUsers = await UserAccess.LoadAll();
+
+        str = str.ToLower();
+        List<Event> foundEvents = allEvents
+        .Where(e => e.Title.ToLower().Contains(str))
+        .ToList();
+
+        List<User> foundUsers = allUsers
+        .Where(u => u.FirstName.ToLower().Contains(str) ||
+                     u.LastName.ToLower().Contains(str))
+        .ToList();
+
+        List<object> result = new();
+
+        result.AddRange(foundEvents);
+        result.AddRange(foundUsers);
+
+        return Ok(result);
+    }
 }
+
+
+
+/*
+3.1 User can see which friends are going to attend an event.
++ In order to make all the steps below, User must be logged in.
+- Based on provided String: Create a GET endpoint which allows User to search for Events and Users.
++ Based on an User Id: Create a POST endpoint which lets User to send a friend request.
++ Create a GET endpoint which lets User to see all friend requests he got.
+- Based on an User Id: Create a POST endpoint which lets User to approve or deny a friend request.
++ Create a GET endpoint which lets User to see all his friends.
+- Based on an User Id: Create a POST endpoint which lets User to delete a person from friends.
+- Based on an Event Id: Create a GET endpoint which lets User to see all of friends that are signed up for the event.
+*/

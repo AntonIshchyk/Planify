@@ -23,6 +23,9 @@ content-type: application/json
 ###
 GET http://localhost:5027/Calender-Website/friends
 
+### Search endpoint
+GET http://localhost:5027/Calender-Website/search?str=ann
+
 ###
 GET http://localhost:5027/Calender-Website/friend-requests
 ###
