@@ -28,6 +28,7 @@ GET http://localhost:5027/Calender-Website/search?str=ann
 
 ###
 GET http://localhost:5027/Calender-Website/friend-requests
+
 ###
 
 POST http://localhost:5027/Calender-Website/register
@@ -52,3 +53,7 @@ content-type: application/json
 
 ###
 POST http://localhost:5027/Calender-Website/send-friend-request/?toId=485490e1-8dd8-4222-91b5-606fa009f675
+
+
+### Manage Friend Request manage-friend-request
+POST http://localhost:5027/Calender-Website/manage-friend-request/?id=603156f2-2f13-460a-8fcc-92f1341f48bf&approve=false

@@ -82,6 +82,42 @@ public class UserController : Controller
         return Ok(user.FriendRequests);
     }
 
+
+    [HttpPost("manage-friend-request")]
+    [LoggedInFilter]
+    public async Task<IActionResult> ManageFriendRequest([FromQuery] Guid id, [FromQuery] bool approve)
+    {
+        string sessionIdString = HttpContext.Session.GetString("UserId")!;
+        Guid sessionId = Guid.Parse(sessionIdString);
+
+        User user = await UserAccess.Get(sessionId);
+        if (user is null) return NotFound();
+
+        if (!user.FriendRequests.Contains(id))
+        {
+            return BadRequest("Request not found");
+        }
+
+        if (user.Friends.Contains(id))
+        {
+            return BadRequest("You are already friends");
+        }
+
+        if (approve)
+        {
+            user.FriendRequests.Remove(id);
+            user.Friends.Add(id);
+            await US.UpdateUser(user);
+            return Ok("Friend request was approved");
+        }
+        else
+        {
+            user.FriendRequests.Remove(id);
+            await US.UpdateUser(user);
+            return Ok("Friend request was denied");
+        }
+    }
+
     [HttpPost("send-friend-request")]
     [LoggedInFilter]
     public async Task<IActionResult> SendFriendRequest([FromQuery] Guid toId)
