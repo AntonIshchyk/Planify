@@ -140,6 +140,8 @@ public class UserController : Controller
 
         return Ok(result);
     }
+
+
 }
 
 
@@ -147,10 +149,11 @@ public class UserController : Controller
 /*
 3.1 User can see which friends are going to attend an event.
 + In order to make all the steps below, User must be logged in.
-- Based on provided String: Create a GET endpoint which allows User to search for Events and Users.
++ Based on provided String: Create a GET endpoint which allows User to search for Events and Users.
 + Based on an User Id: Create a POST endpoint which lets User to send a friend request.
 + Create a GET endpoint which lets User to see all friend requests he got.
 - Based on an User Id: Create a POST endpoint which lets User to approve or deny a friend request.
+    To use a bool as a parameter could be an ok solution. False for deny, true for approve 
 + Create a GET endpoint which lets User to see all his friends.
 - Based on an User Id: Create a POST endpoint which lets User to delete a person from friends.
 - Based on an Event Id: Create a GET endpoint which lets User to see all of friends that are signed up for the event.
