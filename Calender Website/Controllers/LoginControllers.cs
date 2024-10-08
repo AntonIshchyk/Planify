@@ -89,7 +89,7 @@ public class LoginControllers : Controller
         if (obj.TryGetProperty("Username", out _))
         {
             var admin = JsonSerializer.Deserialize<Admin>(obj.ToString());
-            var existingAdmin = await AS.GetAdminByLogIn(admin);
+            var existingAdmin = await AS.GetAdminByLogIn(admin!);
             if (existingAdmin is null) return BadRequest("Admin not found");
             if (existingAdmin.Id.ToString() != HttpContext.Session.GetString("UserId")) return BadRequest("This Admin is not Logged in on this Session!");
             else
@@ -107,7 +107,7 @@ public class LoginControllers : Controller
         if (obj.TryGetProperty("Email", out _))
         {
             var user = JsonSerializer.Deserialize<User>(obj.ToString());
-            var existingUser = await US.GetUser(user);
+            var existingUser = await US.GetUser(user!);
             if (existingUser is null) return BadRequest("User not found");
             if (existingUser.Id.ToString() != HttpContext.Session.GetString("UserId")) return BadRequest("This User is not Logged in on this Session!");
 
