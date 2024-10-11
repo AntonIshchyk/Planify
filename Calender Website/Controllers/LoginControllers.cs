@@ -66,37 +66,28 @@ public class LoginControllers : Controller
 
     [HttpPost("logout")]
     [LoggedInFilter]
-    public async Task<IActionResult> Logout([FromQuery] Guid Id)
+    public async Task<IActionResult> Logout()
     {
-        List<Admin> admins = await AccessJson.ReadJson<Admin>();
-        Admin existingAdmin = admins.FirstOrDefault(a => a.Id == Id)!;
+        string sessionIdString = HttpContext.Session.GetString("UserId")!;
+        Guid sessionId = Guid.Parse(sessionIdString);
 
-        List<User> users = await AccessJson.ReadJson<User>();
-        User existingUser = users.FirstOrDefault(u => u.Id == Id)!;
-
-        if (existingAdmin is null && existingUser is null) return BadRequest("Nobody has the given id. ");
-
-        if (existingAdmin is not null && existingAdmin.Id.ToString() != HttpContext.Session.GetString("UserId")) return BadRequest("Admin is not logged in on this session! ");
-
-        if (existingUser is not null && existingUser.Id.ToString() != HttpContext.Session.GetString("UserId"))
+        Admin admin = await AdminAccess.Get(sessionId);
+        if (admin != null)
         {
-            return BadRequest("User is not logged in on this session! ");
-        }
-
-        if (existingAdmin is not null)
-        {
-            existingAdmin.LastLogOut = DateTime.Now;
-            existingAdmin.LoggedIn = false;
-            await AS.UpdateAdmin(existingAdmin);
+            admin.LastLogOut = DateTime.Now;
+            admin.LoggedIn = false;
+            await AS.UpdateAdmin(admin);
 
             HttpContext.Session.Clear();
-            return Ok($"See you later {existingAdmin.Username}!");
+            return Ok($"See you later {admin.Username}!");
         }
-        else if (existingUser is not null)
+
+        User user = await UserAccess.Get(sessionId);
+        if (user != null)
         {
             HttpContext.Session.Clear();
-            return Ok($"See you later {existingUser.FirstName + " " + existingUser.LastName}!");
+            return Ok($"See you later {user.FirstName + " " + user.LastName}!");
         }
-        else return BadRequest();
+        return BadRequest("No data found");
     }
 }
