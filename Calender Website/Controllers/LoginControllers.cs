@@ -17,9 +17,9 @@ public class LoginControllers : Controller
     {
         Admin existingAdmin = await AS.GetAdminByLogIn(admin);
         if (existingAdmin is null) return BadRequest("Admin not found");
-        if (existingAdmin.LoggedIn) return BadRequest("Admin is already online");
+
+        if (HttpContext.Session.GetString("UserId") == existingAdmin.Id.ToString()) return BadRequest("Admin is already online");
         existingAdmin.LastLogIn = DateTime.Now;
-        existingAdmin.LoggedIn = true;
         HttpContext.Session.SetString("UserId", existingAdmin.Id.ToString());
         HttpContext.Session.SetInt32("IsAdmin", 1);
         await AS.UpdateAdmin(existingAdmin);
@@ -75,7 +75,6 @@ public class LoginControllers : Controller
         if (admin != null)
         {
             admin.LastLogOut = DateTime.Now;
-            admin.LoggedIn = false;
             await AS.UpdateAdmin(admin);
 
             HttpContext.Session.Clear();

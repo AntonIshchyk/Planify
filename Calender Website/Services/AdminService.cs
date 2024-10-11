@@ -28,10 +28,4 @@ public class AdminService
     public async Task<List<Admin>> GetAllAdmin() => await AdminAccess.LoadAll()!;
 
     public async Task<Admin[]> GetManyAdmins(Guid[] Ids) => await AdminAccess.GetMany(Ids);
-
-    public async Task<bool> IsLoggedIn()
-    {
-        List<Admin> allAdmins = await GetAllAdmin();
-        return allAdmins.Any(x => x.LoggedIn);
-    }
 }

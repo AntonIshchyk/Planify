@@ -27,7 +27,7 @@ content-type: application/json
 }
 
 ### 4. logout admin
-POST http://localhost:5027/Calender-Website/logout?Id=062f683-a110-4813-8f2e-67116bc87448 HTTP/1.1
+POST http://localhost:5027/Calender-Website/logout HTTP/1.1
 
 ### 5. register user
 POST http://localhost:5027/Calender-Website/register HTTP/1.1
@@ -51,4 +51,4 @@ content-type: application/json
 }
 
 ### 7. logout user
-POST http://localhost:5027/Calender-Website/logout?Id=2849cce7-07fa-4cea-97c4-c345cfe80168 HTTP/1.1
+POST http://localhost:5027/Calender-Website/logout HTTP/1.1
