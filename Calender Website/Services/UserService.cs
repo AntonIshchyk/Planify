@@ -12,7 +12,9 @@ public class UserService
     public async Task<bool> SaveUser(User user)
     {
         List<User> users = await AccessJson.ReadJson<User>();
+        List<Admin> admins = await AccessJson.ReadJson<Admin>();
         if (users.Find(u => u.Email == user.Email) is not null) return false;
+        if (admins.Find(u => u.Email == user.Email) is not null) return false;
         await AccessJson.WriteJson(user);
         return true;
     }

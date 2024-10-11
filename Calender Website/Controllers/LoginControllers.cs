@@ -48,8 +48,8 @@ public class LoginControllers : Controller
         // create a new id, for safety reasons
         admin.Id = Guid.NewGuid();
         bool IsAdminWritenToJson = await AS.SaveAdmin(admin);
-        if (!IsAdminWritenToJson) return BadRequest("Admin is already registered");
-        else return Ok("Admin registered");
+        if (!IsAdminWritenToJson) return BadRequest("Invalid Data");
+        return Ok("Admin registered");
     }
 
     [HttpPost("register")]
@@ -60,8 +60,8 @@ public class LoginControllers : Controller
 
         user.Id = Guid.NewGuid();
         bool IsUserWritenToJson = await US.SaveUser(user);
-        if (!IsUserWritenToJson) return BadRequest("User already exists");
-        else return Ok("User registered");
+        if (!IsUserWritenToJson) return BadRequest("Invalid Data");
+        return Ok("User registered");
     }
 
     [HttpPost("logout")]

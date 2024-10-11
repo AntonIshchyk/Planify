@@ -8,7 +8,10 @@ public class AdminService
     public async Task<bool> SaveAdmin(Admin admin)
     {
         List<Admin> admins = await AccessJson.ReadJson<Admin>();
-        if (admins.Find(a => a.Email == admin.Email || a.Username == admin.Username) is not null) return false;
+        List<User> users = await AccessJson.ReadJson<User>();
+
+        if (admins.Find(a => a.Email == admin.Email) is not null) return false;
+        if (users.Find(a => a.Email == admin.Email) is not null) return false;
         await AccessJson.WriteJson(admin);
         return true;
     }
