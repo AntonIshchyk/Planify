@@ -7,6 +7,9 @@ public class User : IHasId
     public string Password { get; set; } = "None";
     public int RecurringDays { get; set; }
 
+    public List<Guid> Friends { get; set; } = new();
+    public List<Guid> FriendRequests { get; set; } = new();
+
     public User() { }
     public User(string firstName, string lastName, string email, string password, int recurringDays)
     {

@@ -15,6 +15,16 @@ builder.Services.AddTransient<UserService>();
 
 var app = builder.Build();
 
+app.Use(async (context, next) =>
+{
+    if (context.Request.Path == "/Calender-Website/login-admin")
+    {
+        Console.WriteLine("Implement seperate login for admin");
+        Console.WriteLine("Check for an API key");
+    }
+    await next.Invoke();
+});
+
 if (app.Environment.IsDevelopment())
 {
     app.UseDeveloperExceptionPage();
