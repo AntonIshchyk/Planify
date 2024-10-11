@@ -1,1 +1,22 @@
-[]
+[
+  {
+    "Id": "0be5ec7d-2de0-4259-a149-0b254907086d",
+    "FirstName": "John",
+    "LastName": "Doe",
+    "Email": "testemail.com",
+    "Password": "testpassword",
+    "RecurringDays": 0,
+    "Friends": [],
+    "FriendRequests": []
+  },
+  {
+    "Id": "078049bb-4d88-4972-9642-9c7af0402360",
+    "FirstName": "Bob",
+    "LastName": "Bobby",
+    "Email": "Mail.com",
+    "Password": "Password",
+    "RecurringDays": 0,
+    "Friends": [],
+    "FriendRequests": []
+  }
+]

@@ -26,7 +26,7 @@ public class LoginControllers : Controller
 
         return Ok($"Welcome {existingAdmin.Username}!");
     }
-
+    
     [HttpPost("login-user")]
     public async Task<IActionResult> LoginUser([FromBody] User user)
     {
@@ -80,7 +80,7 @@ public class LoginControllers : Controller
             HttpContext.Session.Clear();
             return Ok($"See you later {admin.Username}!");
         }
-
+  
         User user = await UserAccess.Get(sessionId);
         if (user != null)
         {
