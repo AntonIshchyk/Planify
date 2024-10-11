@@ -67,42 +67,6 @@ public class LoginControllers : Controller
 
     [HttpPost("logout")]
     [LoggedInFilter]
-    public async Task<IActionResult> Logout([FromBody] JsonElement obj)
-    {
-        if (obj.TryGetProperty("Username", out _))
-        {
-            Admin admin = JsonSerializer.Deserialize<Admin>(obj.ToString())!;
-            Admin existingAdmin = await AS.GetAdminByLogIn(admin);
-            if (existingAdmin is null) return BadRequest("Admin not found");
-            if (existingAdmin.Id.ToString() != HttpContext.Session.GetString("UserId")) return BadRequest("This Admin is not Logged in on this Session!");
-            else
-            {
-                existingAdmin.LastLogOut = DateTime.Now;
-                existingAdmin.LoggedIn = false;
-                await AS.UpdateAdmin(existingAdmin);
-
-                HttpContext.Session.Clear();
-
-                return Ok($"See you later {existingAdmin.Username}!");
-
-            }
-        }
-        if (obj.TryGetProperty("Email", out _))
-        {
-            User user = JsonSerializer.Deserialize<User>(obj.ToString())!;
-            User existingUser = await US.GetUser(user);
-            if (existingUser is null) return BadRequest("User not found");
-            if (existingUser.Id.ToString() != HttpContext.Session.GetString("UserId")) return BadRequest("This User is not Logged in on this Session!");
-
-            HttpContext.Session.Clear();
-
-            return Ok($"See you later {existingUser.FirstName + " " + existingUser.LastName}!");
-        }
-        return BadRequest("Json is not either Admin or User!");
-    }
-
-    [HttpPost("test-logout")]
-    [LoggedInFilter]
     public async Task<IActionResult> Logout([FromQuery] Guid Id)
     {
         List<Admin> admins = await AccessJson.ReadJson<Admin>();
