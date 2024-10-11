@@ -106,6 +106,13 @@ public class UserController : Controller
     [LoggedInFilter]
     public async Task<IActionResult> ManageFriendRequest([FromQuery] Guid id, [FromQuery] bool approve)
     {
+        User friend = await UserAccess.Get(id);
+
+        if (friend is null)
+        {
+            return BadRequest("User not found");
+        }
+
         string sessionIdString = HttpContext.Session.GetString("UserId")!;
         Guid sessionId = Guid.Parse(sessionIdString);
 
@@ -114,7 +121,7 @@ public class UserController : Controller
 
         if (!user.FriendRequests.Contains(id))
         {
-            return BadRequest("Request not found");
+            return BadRequest("Friend Request not found");
         }
 
         if (user.Friends.Contains(id))
@@ -126,7 +133,9 @@ public class UserController : Controller
         {
             user.FriendRequests.Remove(id);
             user.Friends.Add(id);
+            friend.Friends.Add(user.Id);
             await US.UpdateUser(user);
+            await US.UpdateUser(friend);
             return Ok("Friend request was approved");
         }
         else
@@ -167,7 +176,7 @@ public class UserController : Controller
         friend.FriendRequests.Add(user.Id);
 
         await US.UpdateUser(friend);
-        return Ok("Friend request was send");
+        return Ok("Friend request was sent");
     }
 
 

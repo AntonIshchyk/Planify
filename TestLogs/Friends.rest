@@ -1,29 +1,32 @@
 ### 1. Create User 1
+
 POST http://localhost:5027/Calender-Website/register
 content-type: application/json
 
 {
-    "FirstName" : "John",
-    "LastName" : "Doe",
-    "Email" : "testemail.com",
-    "Password" : "testpassword",
-    "RecurringDays" : 0
+"FirstName" : "John",
+"LastName" : "Doe",
+"Email" : "testemail.com",
+"Password" : "testpassword",
+"RecurringDays" : 0
 }
 
 ### 2. Login
+
 POST http://localhost:5027/Calender-Website/login
 content-type: application/json
 
 {
-    "Email" : "testemail.com",
-    "Password" : "testpassword"
+"Email" : "testemail.com",
+"Password" : "testpassword"
 }
 
 ### 3. Get all Friends - has to be nothing cuz new user
+
 GET http://localhost:5027/Calender-Website/friends
 
-
 ### 4. See all friend-requests - has to be nothing cuz new user
+
 GET http://localhost:5027/Calender-Website/friend-requests
 
 ### 5. Create User 2 to send him a friend request in the next step
@@ -32,42 +35,49 @@ POST http://localhost:5027/Calender-Website/register
 content-type: application/json
 
 {
-    "FirstName" : "Bob",
-    "LastName" : "Bobby",
-    "Email" : "Mail.com",
-    "Password" : "Password",
-    "RecurringDays" : 0
+"FirstName" : "Bob",
+"LastName" : "Bobby",
+"Email" : "Mail.com",
+"Password" : "Password",
+"RecurringDays" : 0
 }
 
 ### 6. Send a friend request to User 2 using his id...
+
 POST http://localhost:5027/Calender-Website/send-friend-request/?toId=078049bb-4d88-4972-9642-9c7af0402360
 
-### 7. Login as a second User 
+### 7. Login as a second User
+
 POST http://localhost:5027/Calender-Website/login
 content-type: application/json
 
 {
-    "Email" : "Mail.com",
-    "Password" : "Password"
+"Email" : "Mail.com",
+"Password" : "Password"
 }
 
 ### 8. See if you got a friend request from User 1
+
 GET http://localhost:5027/Calender-Website/friend-requests
 
-
 ### 8. Approve a friend request
+
 POST http://localhost:5027/Calender-Website/manage-friend-request/?id=0be5ec7d-2de0-4259-a149-0b254907086d&approve=true
 
 ### 9. See if you became friends
+
 GET http://localhost:5027/Calender-Website/friends
 
 ### 10. Delete friend using User 1 id
+
 DELETE http://localhost:5027/Calender-Website/delete-friend/?id=0be5ec7d-2de0-4259-a149-0b254907086d
 
 ### 11. See if friend was deleted
+
 GET http://localhost:5027/Calender-Website/friends
 
 ### 12. Search user of event
+
 GET http://localhost:5027/Calender-Website/search?str=john
 
-### 13. 
+### 13.
