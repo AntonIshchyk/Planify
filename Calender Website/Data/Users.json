@@ -1,18 +1,16 @@
 [
   {
-    "Id": "485490e1-8dd8-4222-91b5-606fa009f675",
-    "FirstName": "ann",
+    "Id": "0be5ec7d-2de0-4259-a149-0b254907086d",
+    "FirstName": "John",
     "LastName": "Doe",
     "Email": "testemail.com",
     "Password": "testpassword",
     "RecurringDays": 0,
     "Friends": [],
-    "FriendRequests": [
-      "603156f2-2f13-460a-8fcc-92f1341f48bf"
-    ]
+    "FriendRequests": []
   },
   {
-    "Id": "603156f2-2f13-460a-8fcc-92f1341f48bf",
+    "Id": "078049bb-4d88-4972-9642-9c7af0402360",
     "FirstName": "Bob",
     "LastName": "Bobby",
     "Email": "Mail.com",
