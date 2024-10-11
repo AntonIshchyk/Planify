@@ -46,5 +46,13 @@
     "Email": "Test",
     "Password": "TestPassword2",
     "RecurringDays": 0
+  },
+  {
+    "Id": "2849cce7-07fa-4cea-97c4-c345cfe80168",
+    "FirstName": "TestUsername2000",
+    "LastName": "TestUsername2000",
+    "Email": "Test2000",
+    "Password": "TestPassword2000",
+    "RecurringDays": 0
   }
 ]

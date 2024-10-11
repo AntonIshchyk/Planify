@@ -1,4 +1,3 @@
-using System.Text.Json;
 using Microsoft.AspNetCore.Mvc;
 
 [Route("Calender-Website")]
@@ -36,7 +35,7 @@ public class LoginControllers : Controller
         if (HttpContext.Session.GetString("UserId") == existingUser.Id.ToString()) return BadRequest("User is already logged in. ");
 
         HttpContext.Session.SetString("UserId", existingUser.Id.ToString());
-        return Ok($"Welcome {user.FirstName + " " + user.LastName}!");
+        return Ok($"Welcome {existingUser.FirstName + " " + existingUser.LastName}!");
     }
 
     [HttpPost("register-admin")]
@@ -81,9 +80,6 @@ public class LoginControllers : Controller
 
         if (existingUser is not null && existingUser.Id.ToString() != HttpContext.Session.GetString("UserId"))
         {
-            Console.WriteLine($"Given id: {Id}");
-            Console.WriteLine($"Logged in user id: {existingUser.Id}");
-            Console.WriteLine($"session id in use: {HttpContext.Session.GetString("UserId")}");
             return BadRequest("User is not logged in on this session! ");
         }
 
@@ -98,9 +94,6 @@ public class LoginControllers : Controller
         }
         else if (existingUser is not null)
         {
-            Console.WriteLine($"Given id: {Id}");
-            Console.WriteLine($"Logged in user id: {existingUser.Id}");
-            Console.WriteLine($"session id in use: {HttpContext.Session.GetString("UserId")}");
             HttpContext.Session.Clear();
             return Ok($"See you later {existingUser.FirstName + " " + existingUser.LastName}!");
         }
