@@ -4,35 +4,7 @@
     "Username": "TestUsername",
     "Password": "TestPassword",
     "Email": "TestEmail",
-    "LastLogIn": "2024-10-01T13:46:16.6276549+02:00",
-    "LastLogOut": "2024-10-01T13:50:35.3026034+02:00",
-    "LoggedIn": false
-  },
-  {
-    "Id": "116dd004-9289-44de-8b16-8eb9ea784ec5",
-    "Username": "TestUsername1",
-    "Password": "TestPassword1",
-    "Email": "TestEmail1",
-    "LastLogIn": "0001-01-01T00:00:00",
-    "LastLogOut": "0001-01-01T00:00:00",
-    "LoggedIn": false
-  },
-  {
-    "Id": "7cf70ef0-0944-462a-b1ba-e6739573eb4f",
-    "Username": "TestUsername2",
-    "Password": "TestPassword2",
-    "Email": "TestEmail2",
-    "LastLogIn": "0001-01-01T00:00:00",
-    "LastLogOut": "2024-09-26T13:27:48.3525423+02:00",
-    "LoggedIn": false
-  },
-  {
-    "Id": "2692cef4-92f9-4562-b866-e85fd5cf357f",
-    "Username": "TestUsername100",
-    "Password": "TestPassword",
-    "Email": "TestEmail0o234",
-    "LastLogIn": "0001-01-01T00:00:00",
-    "LastLogOut": "0001-01-01T00:00:00",
-    "LoggedIn": false
+    "LastLogIn": "2024-10-11T15:22:11.0195609+02:00",
+    "LastLogOut": "2024-10-11T15:22:19.5868106+02:00"
   }
 ]

@@ -6,7 +6,6 @@ public class Admin : IHasId
     public string Email { get; set; } = "None";
     public DateTime LastLogIn { get; set; }
     public DateTime LastLogOut { get; set; }
-    public bool LoggedIn { get; set; }
 
     public Admin() { }
 
