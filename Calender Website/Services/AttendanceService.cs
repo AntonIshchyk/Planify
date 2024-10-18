@@ -12,4 +12,11 @@ public class AttendanceService
         await AccessJson.WriteJson(attendance);
         return true;
     }
+
+    public async Task<List<Attendance>> GetAttendancesOfUser(Guid id)
+    {
+        List<Attendance> attendances = await AccessJson.ReadJson<Attendance>();
+        List<Attendance> attendancesOfUser = attendances.FindAll(a => a.UserId == id);
+        return attendancesOfUser;
+    }
 }

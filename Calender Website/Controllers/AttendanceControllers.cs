@@ -10,6 +10,7 @@ public class AttendanceControllers : Controller
     }
 
     [HttpPost("attend")]
+    [LoggedInFilter]
     public async Task<IActionResult> MakeAttendance(Attendance attendance)
     {
         if (attendance is null) return BadRequest("No data found. ");
@@ -24,5 +25,17 @@ public class AttendanceControllers : Controller
         bool IsAttendanceSaved = await AS.SaveAttendance(attendance);
         if (!IsAttendanceSaved) return BadRequest("Attendance is not saved. ");
         return Created();
+    }
+
+    [HttpGet("check-own-attendances")]
+    [LoggedInFilter]
+    public async Task<IActionResult> GetOwnAttendances()
+    {
+        Guid Id;
+        bool converted = Guid.TryParse(HttpContext.Session.GetString("UserId"), out Id);
+        if (!converted) return BadRequest("Something went wrong. ");
+
+        List<Attendance> attendancesOfUser = await AS.GetAttendancesOfUser(Id);
+        return Ok(attendancesOfUser.ToArray());
     }
 }
