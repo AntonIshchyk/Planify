@@ -16,7 +16,7 @@ public class EventAttendanceControllers : Controller
     public async Task<IActionResult> CreateAttendance([FromBody] JsonElement obj){
         if(obj.TryGetProperty("UserId", out _) && obj.TryGetProperty("EventId", out _)){
             var attendance = JsonSerializer.Deserialize<EventAttendance>(obj.ToString());
-            if(!await EAS.TestExistence(attendance)) return BadRequest("You already attend this Event!");
+            if(await EAS.TestExistence(attendance)) return BadRequest("You already attend this Event!");
             Event evt = await ES.GetEvent(attendance.EventId);  
             if(!await EAS.TestDate(evt)) return BadRequest("Because of the date of this event, you can no longer attend these.");
             if(await EAS.AppendEventAttendance(attendance, evt)) return Ok(evt);
@@ -32,7 +32,7 @@ public class EventAttendanceControllers : Controller
         return Ok(eal);
     }
 
-    [HttpGet("EventAttendance")]
+    [HttpGet("EventAttendanceofEvent")]
     [LoggedInFilter]
     public async Task<IActionResult> GetAttendanceOnEvent([FromQuery] Guid Id){
         //the function of this endpoint is very unclear in the description. For now I do not use any filter.
