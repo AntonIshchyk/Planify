@@ -7,7 +7,7 @@ public class EventAttendanceService
         await AccessJson.WriteJson(ea);
         return true;
     }
-    public async Task<bool> TestDate(Event evt)
+    public async Task<bool> ValidateDate(Event evt)
     {
         if (DateOnly.Parse(evt.Date) < DateOnly.FromDateTime(DateTime.Now)) return false;
         return true;

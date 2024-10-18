@@ -19,7 +19,7 @@ public class EventAttendanceControllers : Controller
             var attendance = JsonSerializer.Deserialize<EventAttendance>(obj.ToString());
             if(await EAS.TestExistence(attendance)) return BadRequest("You already attend this Event!");
             Event evt = await ES.GetEvent(attendance.EventId);  
-            if(!await EAS.TestDate(evt)) return BadRequest("Because of the date of this event, you can no longer attend these.");
+            if(!await EAS.ValidateDate(evt)) return BadRequest("Because of the date of this event, you can no longer attend these.");
             if(await EAS.AppendEventAttendance(attendance, evt)) return Ok(evt);
         }
         return BadRequest("This attendance cannot be added!");
