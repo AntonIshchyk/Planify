@@ -11,7 +11,7 @@ public class EventService
 
     public async Task<bool> AppendEvent(Event e)
     {
-        if (e == null) return false;
+        if (e is null) return false;
         List<Event> events = await AccessJson.ReadJson<Event>();
         if (events.Any(x => x.Id == e.Id && x.Title == e.Title)) return false;
         events.Add(e);
