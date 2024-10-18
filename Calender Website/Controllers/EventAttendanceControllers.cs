@@ -14,9 +14,8 @@ public class EventAttendanceControllers : Controller
 
     [HttpPost("EventAttendance")]
     [LoggedInFilter]
-    public async Task<IActionResult> CreateAttendance([FromBody] JsonElement obj){
-        if(obj.TryGetProperty("UserId", out _) && obj.TryGetProperty("EventId", out _)){
-            var attendance = JsonSerializer.Deserialize<EventAttendance>(obj.ToString());
+    public async Task<IActionResult> CreateAttendance([FromBody] EventAttendance attendance){
+        if(attendance.UserId.ToString() != "00000000-0000-0000-0000-000000000000" && attendance.EventId.ToString() != "00000000-0000-0000-0000-000000000000"){
             if(await EAS.TestExistence(attendance)) return BadRequest("You already attend this Event!");
             Event evt = await ES.GetEvent(attendance.EventId);  
             if(!await EAS.ValidateDate(evt)) return BadRequest("Because of the date of this event, you can no longer attend these.");
