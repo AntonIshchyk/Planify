@@ -19,4 +19,6 @@ public class AttendanceService
         List<Attendance> attendancesOfUser = attendances.FindAll(a => a.UserId == id);
         return attendancesOfUser;
     }
+
+    public async Task<bool> UpdateAttendance(Attendance attendance) => await AttendanceAccess.Update(attendance);
 }

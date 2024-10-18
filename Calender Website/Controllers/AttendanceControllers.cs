@@ -11,7 +11,7 @@ public class AttendanceControllers : Controller
 
     [HttpPost("attend")]
     [LoggedInFilter]
-    public async Task<IActionResult> MakeAttendance(Attendance attendance)
+    public async Task<IActionResult> MakeAttendance([FromBody] Attendance attendance)
     {
         if (attendance is null) return BadRequest("No data found. ");
         if (attendance.Date == "") return BadRequest("Please, give a date next time. ");
@@ -37,5 +37,19 @@ public class AttendanceControllers : Controller
 
         List<Attendance> attendancesOfUser = await AS.GetAttendancesOfUser(Id);
         return Ok(attendancesOfUser.ToArray());
+    }
+
+    [HttpPut("update-attendance")]
+    [LoggedInFilter]
+    public async Task<IActionResult> UpdateAttendance([FromBody] Attendance attendance)
+    {
+        if (attendance is null) return BadRequest("Data not complete. ");
+        if (attendance.Id.ToString() == "00000000-0000-0000-0000-000000000000" || attendance.UserId.ToString() == "00000000-0000-0000-0000-000000000000") return BadRequest("Data is not complete. ");
+        DateTime date;
+        if (!DateTime.TryParse(attendance.Date, out date)) return BadRequest("Data isn't complete. ");
+
+        bool updated = await AS.UpdateAttendance(attendance);
+        if (!updated) return BadRequest("Attendance could not be updated. ");
+        return Ok("Attendance updated. ");
     }
 }
