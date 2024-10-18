@@ -14,12 +14,15 @@ public class EventAttendanceControllers : Controller
 
     [HttpPost("EventAttendance")]
     [LoggedInFilter]
-    public async Task<IActionResult> CreateAttendance([FromBody] EventAttendance attendance){
-        if(attendance.UserId.ToString() != "00000000-0000-0000-0000-000000000000" && attendance.EventId.ToString() != "00000000-0000-0000-0000-000000000000"){
-            if(await EAS.TestExistence(attendance)) return BadRequest("You already attend this Event!");
-            Event evt = await ES.GetEvent(attendance.EventId);  
-            if(!await EAS.ValidateDate(evt)) return BadRequest("Because of the date of this event, you can no longer attend these.");
-            if(await EAS.AppendEventAttendance(attendance, evt)) return Ok(evt);
+    public async Task<IActionResult> CreateAttendance([FromBody] EventAttendance attendance)
+    {
+        if (attendance is null) return BadRequest("Data not complete. ");
+        if (attendance.UserId.ToString() != "00000000-0000-0000-0000-000000000000" && attendance.EventId.ToString() != "00000000-0000-0000-0000-000000000000")
+        {
+            if (await EAS.TestExistence(attendance)) return BadRequest("You already attend this Event!");
+            Event evt = await ES.GetEvent(Guid.Parse(attendance.EventId));
+            if (!await EAS.ValidateDate(evt)) return BadRequest("Because of the date of this event, you can no longer attend these.");
+            if (await EAS.AppendEventAttendance(attendance, evt)) return Ok(evt);
         }
         return BadRequest("This attendance cannot be added!");
     }
@@ -39,7 +42,7 @@ public class EventAttendanceControllers : Controller
     {
         //the function of this endpoint is very unclear in the description. For now I do not use any filter.
         List<EventAttendance> eventAttendances = await AccessJson.ReadJson<EventAttendance>();
-        List<EventAttendance> foundEventAttendances = eventAttendances.FindAll(x => x.EventId == Id).ToList();
+        List<EventAttendance> foundEventAttendances = eventAttendances.FindAll(x => Guid.Parse(x.EventId) == Id).ToList();
         return Ok(foundEventAttendances);
     }
 
