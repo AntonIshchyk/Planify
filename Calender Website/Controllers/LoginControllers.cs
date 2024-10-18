@@ -11,19 +11,16 @@ public class LoginControllers : Controller
         AS = adminService;
         US = userService;
     }
-
     [HttpPost("login-admin")]
     public async Task<IActionResult> LoginAdmin([FromBody] Admin admin)
     {
         Admin existingAdmin = await AS.GetAdminByLogIn(admin);
         if (existingAdmin is null) return BadRequest("Admin not found");
-
         if (HttpContext.Session.GetString("UserId") == existingAdmin.Id.ToString()) return BadRequest("Admin is already online");
         existingAdmin.LastLogIn = DateTime.Now;
         HttpContext.Session.SetString("UserId", existingAdmin.Id.ToString());
         HttpContext.Session.SetInt32("IsAdmin", 1);
         await AS.UpdateAdmin(existingAdmin);
-
         return Ok($"Welcome {existingAdmin.Username}!");
     }
     
