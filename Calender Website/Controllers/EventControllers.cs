@@ -17,6 +17,15 @@ public class EventController : Controller
         return Ok(eventReview);
     }
 
+    // to do
+    // [HttpGet("event-friends")]
+    // public async Task<IActionResult> GetFriendsParticipatingEvent([FromQuery] Guid id)
+    // {
+    //     EventReview eventReview = await eventService.GetEventReviews(id);
+    //     if (eventReview is null) return NotFound("Review could not be found. ");
+    //     return Ok(eventReview);
+    // }
+
     [HttpGet("get-all-events")]
     public async Task<IActionResult> GetAllEvents() => Ok(await eventService.GetAllEvents());
 

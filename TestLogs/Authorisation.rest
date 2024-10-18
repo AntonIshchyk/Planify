@@ -1,0 +1,54 @@
+### 1. login admin
+POST http://localhost:5027/Calender-Website/login-admin HTTP/1.1
+content-type: application/json
+
+{
+  "Username": "TestUsername",
+  "Password": "TestPassword"
+}
+
+### 2. register admin
+POST http://localhost:5027/Calender-Website/register-admin HTTP/1.1
+content-type: application/json
+
+{
+    "Username": "TestUsername1000",
+    "Password": "TestPassword1000",
+    "Email": "TestEmail1000"
+}
+
+### 3. login admin
+POST http://localhost:5027/Calender-Website/login-admin HTTP/1.1
+content-type: application/json
+
+{
+    "Username": "TestUsername1000",
+    "Password": "TestPassword1000"
+}
+
+### 4. logout admin
+POST http://localhost:5027/Calender-Website/logout HTTP/1.1
+
+### 5. register user
+POST http://localhost:5027/Calender-Website/register HTTP/1.1
+content-type: application/json
+
+{
+    "FirstName": "TestUsername2000",
+    "LastName": "TestUsername2000",
+    "Email": "Test2000",
+    "Password": "TestPassword2000",
+    "RecurringDays": 0
+}
+
+### 6. login user
+POST http://localhost:5027/Calender-Website/login-user HTTP/1.1
+content-type: application/json
+
+{
+    "Email": "Test2000",
+    "Password": "TestPassword2000"
+}
+
+### 7. logout user
+POST http://localhost:5027/Calender-Website/logout HTTP/1.1

@@ -6,7 +6,8 @@ public class EventAttendanceControllers : Controller
 {
     EventAttendanceService EAS;
     EventService ES;
-    public EventAttendanceControllers(EventAttendanceService eas, EventService es){
+    public EventAttendanceControllers(EventAttendanceService eas, EventService es)
+    {
         EAS = eas;
         ES = es;
     }
@@ -26,26 +27,29 @@ public class EventAttendanceControllers : Controller
 
     [HttpGet("EventAttendance")]
     [LoggedInFilter]
-    public async Task<IActionResult> GetAttendance(){
+    public async Task<IActionResult> GetAttendance()
+    {
         //the function of this endpoint is very unclear in the description. An endpoint with filter is given below this endpoint.
-        List<EventAttendance> eal = await AccessJson.ReadJson<EventAttendance>();
-        return Ok(eal);
+        List<EventAttendance> eventAttendances = await AccessJson.ReadJson<EventAttendance>();
+        return Ok(eventAttendances);
     }
 
     [HttpGet("EventAttendanceofEvent")]
     [LoggedInFilter]
-    public async Task<IActionResult> GetAttendanceOnEvent([FromQuery] Guid Id){
+    public async Task<IActionResult> GetAttendancesOnEvent([FromQuery] Guid Id)
+    {
         //the function of this endpoint is very unclear in the description. For now I do not use any filter.
-        List<EventAttendance> eal = await AccessJson.ReadJson<EventAttendance>();
-        List<EventAttendance> ealf = eal.FindAll(x => x.EventId == Id).ToList();
-        return Ok(ealf);
+        List<EventAttendance> eventAttendances = await AccessJson.ReadJson<EventAttendance>();
+        List<EventAttendance> foundEventAttendances = eventAttendances.FindAll(x => x.EventId == Id).ToList();
+        return Ok(foundEventAttendances);
     }
 
-    [HttpDelete("EventAttendance")]
+    [HttpDelete("delete-event-attendance")]
     [LoggedInFilter]
-    public async Task<IActionResult> DeleteEventAttendance([FromQuery] Guid Id){
-        var userIdString = HttpContext.Session.GetString("UserId");
-        if(await EAS.DeleteEventAttendance(Id, userIdString)) return Ok("EventAttendance deleted successfully");
+    public async Task<IActionResult> DeleteEventAttendance([FromQuery] Guid Id)
+    {
+        string userIdString = HttpContext.Session.GetString("UserId")!;
+        if (await EAS.DeleteEventAttendance(Id, userIdString)) return Ok("EventAttendance deleted successfully");
         return BadRequest("Could not find EventAttendance");
     }
 }
