@@ -3,9 +3,9 @@
     "Id": "eff33a52-4358-4018-8dd6-cfc1122f114c",
     "Title": "Annual Conference",
     "Description": "This is a detailed description of the event.",
-    "Date": "2024-09-25T00:00:00",
-    "StartTime": "2024-09-25T09:00:00",
-    "EndTime": "2024-09-25T17:00:00",
+    "Date": "2024-12-25T00:00:00",
+    "StartTime": "2024-12-25T09:00:00",
+    "EndTime": "2024-12-25T17:00:00",
     "Location": "Convention Center, City",
     "AdminApproval": false
   },

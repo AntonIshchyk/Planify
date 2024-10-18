@@ -35,7 +35,13 @@ public class EventService
     {
         if (GetEvent(review.EventId) is null) return false;
         List<EventAttendance> reviews = await AccessJson.ReadJson<EventAttendance>();
+        if(reviews.Exists(x => x.EventId == review.EventId && x.UserId == review.UserId)){
         reviews.Add(review);
+        }
+        else{
+        reviews.First(x => x.EventId == review.EventId && x.UserId == review.UserId).Rating = review.Rating;
+        reviews.First(x => x.EventId == review.EventId && x.UserId == review.UserId).Feedback = review.Feedback;
+        }
         AccessJson.WriteJsonList(reviews);
         return true;
     }
@@ -44,6 +50,11 @@ public class EventService
     {
         List<EventAttendance> reviews = await AccessJson.ReadJson<EventAttendance>();
         return reviews.FindAll(r => r.EventId == eventId).ToList();
+    }
+
+    public async Task<double> GetAverageRating(Guid eventId){
+        List<EventAttendance> reviews = await AccessJson.ReadJson<EventAttendance>();
+        return reviews.FindAll(x => x.EventId == eventId).ToList().Average(x => x.Rating);
     }
 
     public async Task<List<Event>> GetAllEvents() => await EventAccess.LoadAll();
