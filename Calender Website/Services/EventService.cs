@@ -5,7 +5,7 @@ public class EventService
     public async Task<EventReview> GetEventReviews(Guid id)
     {
         List<Event> events = await AccessJson.ReadJson<Event>();
-        if (events.Any(x => x.Id == id)) return new EventReview(await GetEvent(id), await GetReviewsFromEventId(id));
+        if (events.Any(x => x.Id == id)) return new EventReview(await GetEvent(id), await GetReviewsFromEventId(id), await GetAverageRating(id));
         return null!;
     }
 
