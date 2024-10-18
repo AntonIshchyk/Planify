@@ -66,4 +66,14 @@ public class AttendanceControllers : Controller
         if (!removed) return BadRequest("Something went wrong. ");
         return Ok("Attendance is deleted. ");
     }
+
+    [HttpGet("see-all-attendances-of-date")]
+    [AdminFilter]
+    public async Task<IActionResult> SeeAllAttendancesOfDate([FromQuery] DateTime date)
+    {
+        if (date == DateTime.MinValue || date == DateTime.MaxValue) return BadRequest("Data not given. ");
+        List<Attendance> attendances = await AS.GetAllAttendancesOfDate(date);
+        if (attendances.Count <= 0) return BadRequest("Nobody is attending on the office today. ");
+        return Ok(attendances);
+    }
 }

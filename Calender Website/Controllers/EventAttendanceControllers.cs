@@ -21,7 +21,7 @@ public class EventAttendanceControllers : Controller
         {
             if (await EAS.TestExistence(attendance)) return BadRequest("You already attend this Event!");
             Event evt = await ES.GetEvent(Guid.Parse(attendance.EventId));
-            if (!await EAS.ValidateDate(evt)) return BadRequest("Because of the date of this event, you can no longer attend these.");
+            if (!EAS.ValidateDate(evt)) return BadRequest("Because of the date of this event, you can no longer attend these.");
             if (await EAS.AppendEventAttendance(attendance, evt)) return Ok(evt);
         }
         return BadRequest("This attendance cannot be added!");
@@ -51,7 +51,7 @@ public class EventAttendanceControllers : Controller
     public async Task<IActionResult> DeleteEventAttendance([FromQuery] Guid Id)
     {
         string userIdString = HttpContext.Session.GetString("UserId")!;
-        if (await EAS.DeleteEventAttendance(Id, userIdString)) return Ok("EventAttendance deleted successfully");
+        if (await EAS.DeleteEventAttendance(Id, Guid.Parse(userIdString))) return Ok("EventAttendance deleted successfully");
         return BadRequest("Could not find EventAttendance");
     }
 }

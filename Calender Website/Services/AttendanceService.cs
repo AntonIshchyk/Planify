@@ -23,4 +23,11 @@ public class AttendanceService
     public async Task<bool> UpdateAttendance(Attendance attendance) => await AttendanceAccess.Update(attendance);
 
     public async Task<bool> DeleteAttendance(Guid id) => await AttendanceAccess.Remove(id);
+
+    public async Task<List<Attendance>> GetAllAttendancesOfDate(DateTime date)
+    {
+        List<Attendance> attendances = await AccessJson.ReadJson<Attendance>();
+        List<Attendance> foundAttendances = attendances.FindAll(a => DateTime.Parse(a.Date).Year == date.Year && DateTime.Parse(a.Date).Month == date.Month && DateTime.Parse(a.Date).Day == date.Day);
+        return foundAttendances;
+    }
 }
