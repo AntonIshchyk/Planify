@@ -21,4 +21,6 @@ public class AttendanceService
     }
 
     public async Task<bool> UpdateAttendance(Attendance attendance) => await AttendanceAccess.Update(attendance);
+
+    public async Task<bool> DeleteAttendance(Guid id) => await AttendanceAccess.Remove(id);
 }

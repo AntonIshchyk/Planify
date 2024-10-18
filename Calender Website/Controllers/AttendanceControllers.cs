@@ -41,15 +41,29 @@ public class AttendanceControllers : Controller
 
     [HttpPut("update-attendance")]
     [LoggedInFilter]
-    public async Task<IActionResult> UpdateAttendance([FromBody] Attendance attendance)
+    public async Task<IActionResult> UpdateAttendance([FromBody] Attendance attendance, [FromQuery] Guid id)
     {
         if (attendance is null) return BadRequest("Data not complete. ");
-        if (attendance.Id.ToString() == "00000000-0000-0000-0000-000000000000" || attendance.UserId.ToString() == "00000000-0000-0000-0000-000000000000") return BadRequest("Data is not complete. ");
+        if (id != Guid.Empty) return BadRequest("Data is not complete. ");
         DateTime date;
         if (!DateTime.TryParse(attendance.Date, out date)) return BadRequest("Data isn't complete. ");
+        if (date.Day <= DateTime.Now.Day) return BadRequest("You can't adjust data in the past or on the current day. ");
 
+        attendance.Id = id;
+        attendance.UserId = Guid.Parse(HttpContext.Session.GetString("UserId")!);
         bool updated = await AS.UpdateAttendance(attendance);
         if (!updated) return BadRequest("Attendance could not be updated. ");
         return Ok("Attendance updated. ");
+    }
+
+    [HttpDelete("delete-attendance")]
+    [LoggedInFilter]
+    public async Task<IActionResult> DeleteAttendance([FromQuery] Guid id)
+    {
+        if (id == Guid.Empty) return BadRequest("Data not complete. ");
+
+        bool removed = await AS.DeleteAttendance(id);
+        if (!removed) return BadRequest("Something went wrong. ");
+        return Ok("Attendance is deleted. ");
     }
 }
