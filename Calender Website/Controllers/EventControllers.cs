@@ -47,7 +47,7 @@ public class EventController : Controller
     {
         if (e is null || e.Description == "None" || e.Title == "None" || e.Location == "None") return BadRequest("There is not enough info to make an event. ");
         e.Id = Guid.NewGuid();
-        if (await eventService.AppendEvent(e)) return Created();
+        if (await eventService.AppendEvent(e)) return Ok("Event Created");
         return BadRequest("Something went wrong");
     }
 
