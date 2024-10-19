@@ -22,6 +22,10 @@ public class AttendanceControllers : Controller
         attendance.UserId = UserId;
         attendance.Id = Guid.NewGuid();
 
+        DateTime date;
+        if (!DateTime.TryParse(attendance.Date, out date)) return BadRequest("Date is in wrong format. ");
+        if (date < DateTime.Now) return BadRequest("Date is in the past. ");
+
         bool IsAttendanceSaved = await AS.SaveAttendance(attendance);
         if (!IsAttendanceSaved) return BadRequest("Attendance is not saved. ");
         return Created();
