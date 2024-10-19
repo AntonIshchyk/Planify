@@ -27,7 +27,7 @@ public class AttendanceControllers : Controller
         if (date < DateTime.Now) return BadRequest("Date is in the past. ");
 
         bool IsAttendanceSaved = await AS.SaveAttendance(attendance);
-        if (!IsAttendanceSaved) return BadRequest("Attendance is not saved. ");
+        if (!IsAttendanceSaved) return BadRequest("You already have an attendance for this date");
         return Ok("Attendance Created");
     }
 
