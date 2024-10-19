@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-[Route("Calender - Website")]
+[Route("Calender-Website")]
 public class AttendanceControllers : Controller
 {
     readonly AttendanceService AS;
@@ -41,15 +41,15 @@ public class AttendanceControllers : Controller
 
     [HttpPut("update-attendance")]
     [LoggedInFilter]
-    public async Task<IActionResult> UpdateAttendance([FromBody] Attendance attendance, [FromQuery] Guid id)
+    public async Task<IActionResult> UpdateAttendance([FromBody] Attendance attendance, [FromQuery] Guid attendanceId)
     {
         if (attendance is null) return BadRequest("Data not complete. ");
-        if (id != Guid.Empty) return BadRequest("Data is not complete. ");
+        if (attendanceId != Guid.Empty) return BadRequest("Data is not complete. ");
         DateTime date;
         if (!DateTime.TryParse(attendance.Date, out date)) return BadRequest("Data isn't complete. ");
         if (date.Day <= DateTime.Now.Day) return BadRequest("You can't adjust data in the past or on the current day. ");
 
-        attendance.Id = id;
+        attendance.Id = attendanceId;
         attendance.UserId = Guid.Parse(HttpContext.Session.GetString("UserId")!);
         bool updated = await AS.UpdateAttendance(attendance);
         if (!updated) return BadRequest("Attendance could not be updated. ");

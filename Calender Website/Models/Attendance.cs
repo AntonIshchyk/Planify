@@ -7,7 +7,7 @@ public class Attendance : IHasId
     {
         get
         {
-            return _date.ToString("yyyy-MM-dd HH:MM");
+            return _date.ToString("yyyy-MM-dd HH:mm");
         }
         set
         {

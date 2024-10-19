@@ -33,14 +33,16 @@ public class EventService
 
     public async Task<bool> AddReview(EventAttendance review)
     {
-        if (GetEvent(review.EventId) is null) return false;
+        if (GetEvent(Guid.Parse(review.EventId)) is null) return false;
         List<EventAttendance> reviews = await AccessJson.ReadJson<EventAttendance>();
-        if(reviews.Exists(x => x.EventId == review.EventId && x.UserId == review.UserId)){
-        reviews.Add(review);
+        if (reviews.Exists(x => x.EventId == review.EventId && x.UserId == review.UserId))
+        {
+            reviews.Add(review);
         }
-        else{
-        reviews.First(x => x.EventId == review.EventId && x.UserId == review.UserId).Rating = review.Rating;
-        reviews.First(x => x.EventId == review.EventId && x.UserId == review.UserId).Feedback = review.Feedback;
+        else
+        {
+            reviews.First(x => x.EventId == review.EventId && x.UserId == review.UserId).Rating = review.Rating;
+            reviews.First(x => x.EventId == review.EventId && x.UserId == review.UserId).Feedback = review.Feedback;
         }
         AccessJson.WriteJsonList(reviews);
         return true;
@@ -49,12 +51,13 @@ public class EventService
     public async Task<List<EventAttendance>> GetReviewsFromEventId(Guid eventId)
     {
         List<EventAttendance> reviews = await AccessJson.ReadJson<EventAttendance>();
-        return reviews.FindAll(r => r.EventId == eventId).ToList();
+        return reviews.FindAll(r => Guid.Parse(r.EventId) == eventId).ToList();
     }
 
-    public async Task<double> GetAverageRating(Guid eventId){
+    public async Task<double> GetAverageRating(Guid eventId)
+    {
         List<EventAttendance> reviews = await AccessJson.ReadJson<EventAttendance>();
-        return reviews.FindAll(x => x.EventId == eventId).ToList().Average(x => x.Rating);
+        return reviews.FindAll(x => Guid.Parse(x.EventId) == eventId).ToList().Average(x => x.Rating);
     }
 
     public async Task<List<Event>> GetAllEvents() => await EventAccess.LoadAll();
