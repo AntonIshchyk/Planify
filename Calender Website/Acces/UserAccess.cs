@@ -6,4 +6,3 @@ public class UserAccess : BaseAccess<User>
         return allItems.FirstOrDefault(x => x.Email == user.Email && x.Password == user.Password)!;
     }
 }
-

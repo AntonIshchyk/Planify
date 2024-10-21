@@ -49,10 +49,11 @@ public class EventAttendanceControllers : Controller
 
     [HttpDelete("delete-event-attendance")]
     [LoggedInFilter]
-    public async Task<IActionResult> DeleteEventAttendance([FromQuery] Guid Id)
+    public async Task<IActionResult> DeleteEventAttendance([FromQuery] Guid eventId)
     {
+        if (eventId == Guid.Empty) return BadRequest("Event with the given id can not be deleted. ");
         string userIdString = HttpContext.Session.GetString("UserId")!;
-        if (await EAS.DeleteEventAttendance(Id, Guid.Parse(userIdString))) return Ok("EventAttendance deleted successfully");
+        if (await EAS.DeleteEventAttendance(eventId, Guid.Parse(userIdString))) return Ok("EventAttendance deleted successfully");
         return BadRequest("Could not find EventAttendance");
     }
 

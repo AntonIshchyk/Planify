@@ -35,10 +35,7 @@ public class EventService
     {
         if (GetEvent(Guid.Parse(review.EventId)) is null) return false;
         List<EventAttendance> reviews = await AccessJson.ReadJson<EventAttendance>();
-        if (reviews.Exists(x => x.EventId == review.EventId && x.UserId == review.UserId))
-        {
-            reviews.Add(review);
-        }
+        if (reviews.Exists(x => x.EventId == review.EventId && x.UserId == review.UserId)) reviews.Add(review);
         else
         {
             reviews.First(x => x.EventId == review.EventId && x.UserId == review.UserId).Rating = review.Rating;

@@ -27,10 +27,7 @@ app.Use(async (context, next) =>
     await next.Invoke();
 });
 
-if (app.Environment.IsDevelopment())
-{
-    app.UseDeveloperExceptionPage();
-}
+if (app.Environment.IsDevelopment()) app.UseDeveloperExceptionPage();
 else
 {
     app.UseExceptionHandler("/Home/Error");

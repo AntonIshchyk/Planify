@@ -65,10 +65,7 @@ public class UserController : Controller
         User user = await UserAccess.Get(sessionId);
         if (user is null) return NotFound();
 
-        if (!user.Friends.Contains(id))
-        {
-            return BadRequest("Friend not found");
-        }
+        if (!user.Friends.Contains(id)) return BadRequest("Friend not found");
         user.Friends.Remove(id);
         await US.UpdateUser(user);
         return Ok("Friend deleted");
@@ -108,10 +105,7 @@ public class UserController : Controller
     {
         User friend = await UserAccess.Get(id);
 
-        if (friend is null)
-        {
-            return BadRequest("User not found");
-        }
+        if (friend is null) return BadRequest("User not found");
 
         string sessionIdString = HttpContext.Session.GetString("UserId")!;
         Guid sessionId = Guid.Parse(sessionIdString);
@@ -119,15 +113,9 @@ public class UserController : Controller
         User user = await UserAccess.Get(sessionId);
         if (user is null) return NotFound();
 
-        if (!user.FriendRequests.Contains(id))
-        {
-            return BadRequest("Friend Request not found");
-        }
+        if (!user.FriendRequests.Contains(id)) return BadRequest("Friend Request not found");
 
-        if (user.Friends.Contains(id))
-        {
-            return BadRequest("You are already friends");
-        }
+        if (user.Friends.Contains(id)) return BadRequest("You are already friends");
 
         if (approve)
         {
@@ -158,19 +146,13 @@ public class UserController : Controller
         if (user is null) return NotFound();
 
         // make sure user doesn`t send a friend request to himself
-        if (toId == user.Id)
-        {
-            return BadRequest("You cannot send a friend request to yourself");
-        }
+        if (toId == user.Id) return BadRequest("You cannot send a friend request to yourself");
 
         // check if potential friend exists
         User friend = await UserAccess.Get(toId);
         if (friend is null) return BadRequest("Have not found your friend");
 
-        if (friend.FriendRequests.Contains(user.Id))
-        {
-            return Ok("You have already sent a friend request");
-        }
+        if (friend.FriendRequests.Contains(user.Id)) return Ok("You have already sent a friend request");
 
         // add a friend request to the friend
         friend.FriendRequests.Add(user.Id);
