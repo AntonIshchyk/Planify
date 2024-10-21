@@ -1,4 +1,3 @@
-using System.Text.Json;
 using Microsoft.AspNetCore.Mvc;
 
 [Route("Calender-Website")]
@@ -55,5 +54,17 @@ public class EventAttendanceControllers : Controller
         string userIdString = HttpContext.Session.GetString("UserId")!;
         if (await EAS.DeleteEventAttendance(Id, Guid.Parse(userIdString))) return Ok("EventAttendance deleted successfully");
         return BadRequest("Could not find EventAttendance");
+    }
+
+    [HttpGet("list-of-attendees")]
+    [LoggedInFilter]
+    public async Task<IActionResult> GetListOfAttendeesOnEvent([FromQuery] Guid eventId)
+    {
+        if (eventId == Guid.Empty) return BadRequest("This id is not reliable. ");
+        Event foundEvent = await ES.GetEvent(eventId);
+        if (foundEvent is null) return BadRequest("Event not found. ");
+        List<object> usersAndAdmins = await EAS.GetListOfAttendees(eventId);
+        if (usersAndAdmins.Count <= 0) return BadRequest("There are no attendees. ");
+        return Ok(usersAndAdmins.ToArray());
     }
 }
