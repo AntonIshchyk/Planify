@@ -13,6 +13,7 @@ builder.Services.AddTransient<EventService>();
 builder.Services.AddTransient<AdminService>();
 builder.Services.AddTransient<UserService>();
 builder.Services.AddTransient<AttendanceService>();
+builder.Services.AddTransient<EventAttendanceService>();
 
 var app = builder.Build();
 

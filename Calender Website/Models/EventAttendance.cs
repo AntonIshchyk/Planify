@@ -31,7 +31,6 @@ public class EventAttendance : IHasId
     public EventAttendance() { }
     public EventAttendance(string userId, string eventId, double rating, string feedback)
     {
-        Id = Guid.NewGuid();
         UserId = userId;
         EventId = eventId;
         Rating = rating;

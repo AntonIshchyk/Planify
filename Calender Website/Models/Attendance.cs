@@ -19,7 +19,6 @@ public class Attendance : IHasId
     public Attendance() { }
     public Attendance(Guid userId, DateTime date)
     {
-        Id = Guid.NewGuid();
         UserId = userId;
         Date = date.ToString("yyyy-MM-dd HH:MM");
     }
