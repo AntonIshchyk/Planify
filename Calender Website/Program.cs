@@ -12,6 +12,7 @@ builder.Services.AddSession(options =>
 builder.Services.AddTransient<EventService>();
 builder.Services.AddTransient<AdminService>();
 builder.Services.AddTransient<UserService>();
+builder.Services.AddTransient<AttendanceService>();
 builder.Services.AddTransient<EventAttendanceService>();
 
 var app = builder.Build();
@@ -26,10 +27,7 @@ app.Use(async (context, next) =>
     await next.Invoke();
 });
 
-if (app.Environment.IsDevelopment())
-{
-    app.UseDeveloperExceptionPage();
-}
+if (app.Environment.IsDevelopment()) app.UseDeveloperExceptionPage();
 else
 {
     app.UseExceptionHandler("/Home/Error");
