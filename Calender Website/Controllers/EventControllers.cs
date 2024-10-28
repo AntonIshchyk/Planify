@@ -30,14 +30,16 @@ public class EventController : Controller
     public async Task<IActionResult> GetAllEvents() => Ok(await eventService.GetAllEvents());
 
     [HttpPost("review")]
+    [LoggedInFilter]
     public async Task<IActionResult> AddReview([FromBody] EventAttendance review)
     {
-        if (await eventService.AddReview(review)) return Accepted("Review added. ");
+        string userIdString = HttpContext.Session.GetString("UserId");
+        if (await eventService.AddReview(review, userIdString)) return Accepted("Review added. ");
         return BadRequest("Review could not be added. ");
     }
 
     [HttpGet("review")]
-    public async Task<IActionResult> GetReview([FromQuery] Guid id) => Ok(await eventService.GetReviewsFromEventId(id));
+    public async Task<IActionResult> GetReviewsOfEvent([FromQuery] Guid id) => Ok(await eventService.GetReviewsFromEventId(id));
 
     public async Task<IActionResult> GetAllReviews() => Ok(await GetAllReviews());
 
@@ -53,9 +55,9 @@ public class EventController : Controller
 
     [HttpPut("update-event")]
     [AdminFilter]
-    public async Task<IActionResult> UpdateEvent([FromBody] Event e)
+    public async Task<IActionResult> UpdateEvent([FromBody] Event e, [FromQuery] Guid id)
     {
-        if (await eventService.UpdateEvent(e)) return Accepted("Event updated. ");
+        if (await eventService.UpdateEvent(e, id)) return Accepted("Event updated. ");
         return NotFound("Event could not be found. ");
     }
 

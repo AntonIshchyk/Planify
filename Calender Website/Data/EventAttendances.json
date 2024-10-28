@@ -5,5 +5,12 @@
     "EventId": "eff33a52-4358-4018-8dd6-cfc1122f114c",
     "Rating": 0.0,
     "Feedback": "None"
+  },
+  {
+    "Id": "00000000-0000-0000-0000-000000000000",
+    "UserId": "00000000-0000-0000-0000-000000000000",
+    "EventId": "eff33a52-4358-4018-8dd6-cfc1122f114c",
+    "Rating": 5.0,
+    "Feedback": "Pretty good."
   }
 ]

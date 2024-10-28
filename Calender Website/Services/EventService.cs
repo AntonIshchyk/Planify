@@ -19,10 +19,10 @@ public class EventService
         return true;
     }
 
-    public async Task<bool> UpdateEvent(Event e)
+    public async Task<bool> UpdateEvent(Event e, Guid id)
     {
         List<Event> events = await AccessJson.ReadJson<Event>();
-        int index = events.FindIndex(searchEvent => searchEvent.Id == e.Id);
+        int index = events.FindIndex(searchEvent => searchEvent.Id.ToString() == id.ToString());
         if (index < 0) return false;
         events[index] = e;
         AccessJson.WriteJsonList(events);
@@ -31,15 +31,19 @@ public class EventService
 
     public async Task<bool> DeleteEvent(Guid id) => await EventAccess.Remove(id);
 
-    public async Task<bool> AddReview(EventAttendance review)
+    public async Task<bool> AddReview(EventAttendance review, string userIdString)
     {
         if (GetEvent(Guid.Parse(review.EventId)) is null) return false;
         List<EventAttendance> reviews = await AccessJson.ReadJson<EventAttendance>();
-        if (reviews.Exists(x => x.EventId == review.EventId && x.UserId == review.UserId)) reviews.Add(review);
+        if (!reviews.Exists(x => x.EventId == review.EventId && x.UserId == userIdString))
+        {
+            review.Id = Guid.NewGuid();
+            reviews.Add(review);
+        }
         else
         {
-            reviews.First(x => x.EventId == review.EventId && x.UserId == review.UserId).Rating = review.Rating;
-            reviews.First(x => x.EventId == review.EventId && x.UserId == review.UserId).Feedback = review.Feedback;
+            reviews.First(x => x.EventId == review.EventId && x.UserId == userIdString).Rating = review.Rating;
+            reviews.First(x => x.EventId == review.EventId && x.UserId == userIdString).Feedback = review.Feedback;
         }
         AccessJson.WriteJsonList(reviews);
         return true;
