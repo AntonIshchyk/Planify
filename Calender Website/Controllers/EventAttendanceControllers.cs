@@ -15,7 +15,7 @@ public class EventAttendanceControllers : Controller
     [LoggedInFilter]
     public async Task<IActionResult> CreateAttendance([FromBody] EventAttendance attendance)
     {
-        if (attendance is null) return BadRequest("Data not complete. ");
+        if (attendance is null) return BadRequest("Data not complete.");
         if (attendance.EventId == Guid.Empty) return BadRequest("This attendance cannot be added!");
         else
         {
@@ -32,7 +32,7 @@ public class EventAttendanceControllers : Controller
             attendance.Id = Guid.NewGuid();
             if (await EAS.AppendEventAttendance(attendance, evt)) return Ok(evt);
         }
-        return BadRequest("Something went wrong. ");
+        return BadRequest("Something went wrong.");
     }
 
     [HttpGet("EventAttendance")]
@@ -58,7 +58,7 @@ public class EventAttendanceControllers : Controller
     [LoggedInFilter]
     public async Task<IActionResult> DeleteEventAttendance([FromQuery] Guid eventId)
     {
-        if (eventId == Guid.Empty) return BadRequest("Event with the given id can not be deleted. ");
+        if (eventId == Guid.Empty) return BadRequest("Event with the given id can not be deleted.");
         string userIdString = HttpContext.Session.GetString("UserId")!;
         if (await EAS.DeleteEventAttendance(eventId, Guid.Parse(userIdString))) return Ok("EventAttendance deleted successfully");
         return BadRequest("Could not find EventAttendance");
@@ -68,11 +68,11 @@ public class EventAttendanceControllers : Controller
     [LoggedInFilter]
     public async Task<IActionResult> GetListOfAttendeesOnEvent([FromQuery] Guid eventId)
     {
-        if (eventId == Guid.Empty) return BadRequest("This id is not reliable. ");
+        if (eventId == Guid.Empty) return BadRequest("This id is not reliable.");
         Event foundEvent = await ES.GetEvent(eventId);
-        if (foundEvent is null) return BadRequest("Event not found. ");
+        if (foundEvent is null) return BadRequest("Event not found.");
         List<object> usersAndAdmins = await EAS.GetListOfAttendees(eventId);
-        if (usersAndAdmins.Count <= 0) return BadRequest("There are no attendees. ");
-        return Ok(usersAndAdmins.ToArray());
+        if (usersAndAdmins.Count <= 0) return BadRequest("There are no attendees.");
+        return Ok(usersAndAdmins);
     }
 }

@@ -40,44 +40,44 @@ public class AttendanceControllers : Controller
         if (!converted) return BadRequest("Something went wrong. ");
 
         List<Attendance> attendancesOfUser = await AS.GetAttendancesOfUser(Id);
-        return Ok(attendancesOfUser.ToArray());
+        return Ok(attendancesOfUser);
     }
 
     [HttpPut("update-attendance")]
     [LoggedInFilter]
     public async Task<IActionResult> UpdateAttendance([FromBody] Attendance attendance, [FromQuery] Guid attendanceId)
     {
-        if (attendance is null) return BadRequest("Data not complete. ");
-        if (attendanceId != Guid.Empty) return BadRequest("Data is not complete. ");
+        if (attendance is null) return BadRequest("Data not complete.");
+        if (attendanceId != Guid.Empty) return BadRequest("Data is not complete.");
         DateTime date;
-        if (!DateTime.TryParse(attendance.Date, out date)) return BadRequest("Data isn't complete. ");
-        if (date.Day <= DateTime.Now.Day) return BadRequest("You can't adjust data in the past or on the current day. ");
+        if (!DateTime.TryParse(attendance.Date, out date)) return BadRequest("Data isn't complete.");
+        if (date.Day <= DateTime.Now.Day) return BadRequest("You can't adjust data in the past or on the current day.");
 
         attendance.Id = attendanceId;
         attendance.UserId = Guid.Parse(HttpContext.Session.GetString("UserId")!);
         bool updated = await AS.UpdateAttendance(attendance);
-        if (!updated) return BadRequest("Attendance could not be updated. ");
-        return Ok("Attendance updated. ");
+        if (!updated) return BadRequest("Attendance could not be updated.");
+        return Ok("Attendance updated.");
     }
 
     [HttpDelete("delete-attendance")]
     [LoggedInFilter]
     public async Task<IActionResult> DeleteAttendance([FromQuery] Guid id)
     {
-        if (id == Guid.Empty) return BadRequest("Data not complete. ");
+        if (id == Guid.Empty) return BadRequest("Data not complete.");
 
         bool removed = await AS.DeleteAttendance(id);
-        if (!removed) return BadRequest("Something went wrong. ");
-        return Ok("Attendance is deleted. ");
+        if (!removed) return BadRequest("Something went wrong.");
+        return Ok("Attendance is deleted.");
     }
 
     [HttpGet("see-all-attendances-of-date")]
     [AdminFilter]
     public async Task<IActionResult> SeeAllAttendancesOfDate([FromQuery] DateTime date)
     {
-        if (date == DateTime.MinValue || date == DateTime.MaxValue) return BadRequest("Data not given. ");
+        if (date == DateTime.MinValue || date == DateTime.MaxValue) return BadRequest("Data not given.");
         List<Attendance> attendances = await AS.GetAllAttendancesOfDate(date);
-        if (attendances.Count <= 0) return BadRequest("Nobody is attending on the office today. ");
+        if (attendances.Count <= 0) return BadRequest("Nobody is attending on the office today.");
         return Ok(attendances);
     }
 }
