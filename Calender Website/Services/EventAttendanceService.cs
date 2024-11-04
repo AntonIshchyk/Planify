@@ -3,7 +3,7 @@ public class EventAttendanceService
     public async Task<bool> AppendEventAttendance(EventAttendance ea, Event evt)
     {
         List<EventAttendance> eventattendances = await AccessJson.ReadJson<EventAttendance>();
-        if (eventattendances.Find(a => a.EventId == ea.EventId || a.UserId == ea.UserId) is not null) return false;
+        if (eventattendances.Find(a => a.EventId == ea.EventId && a.UserId == ea.UserId) is not null) return false;
         await AccessJson.WriteJson(ea);
         return true;
     }
