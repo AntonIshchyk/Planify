@@ -32,7 +32,7 @@ public class EventAttendanceService
     {
         List<EventAttendance> eventAttendances = await AccessJson.ReadJson<EventAttendance>();
         List<Guid> userIds = eventAttendances.FindAll(ea => ea.EventId == eventId).Select(ea => ea.UserId).ToList();
-        List<object> usersAndAdmins = [];
+        List<object> usersAndAdmins = new();
         List<User> users = await AccessJson.ReadJson<User>();
         List<Admin> admins = await AccessJson.ReadJson<Admin>();
         foreach (Guid id in userIds) foreach (User user in users) if (id == user.Id) usersAndAdmins.Add(user);

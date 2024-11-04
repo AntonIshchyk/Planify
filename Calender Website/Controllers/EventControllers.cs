@@ -4,9 +4,11 @@ using Microsoft.AspNetCore.Mvc;
 public class EventController : Controller
 {
     EventService eventService;
-    public EventController(EventService eventservice)
+    EventAttendanceService eventAttendanceService;
+    public EventController(EventService eventservice, EventAttendanceService eAS)
     {
         eventService = eventservice;
+        eventAttendanceService = eAS;
     }
 
     [HttpGet("event")]
@@ -17,14 +19,33 @@ public class EventController : Controller
         return Ok(eventReview);
     }
 
-    // to do
-    // [HttpGet("event-friends")]
-    // public async Task<IActionResult> GetFriendsParticipatingEvent([FromQuery] Guid id)
-    // {
-    //     EventReview eventReview = await eventService.GetEventReviews(id);
-    //     if (eventReview is null) return NotFound("Review could not be found. ");
-    //     return Ok(eventReview);
-    // }
+
+    [HttpGet("event-friends")]
+    [LoggedInFilter]
+    public async Task<IActionResult> GetFriendsParticipatingEvent([FromQuery] Guid eventId)
+    {
+        string userIdString = HttpContext.Session.GetString("UserId")!;
+
+        if (string.IsNullOrEmpty(userIdString) || !Guid.TryParse(userIdString, out Guid userId))
+        {
+            return BadRequest("User ID is invalid or not available in session.");
+        }
+
+        List<object> attendees = await eventAttendanceService.GetListOfAttendees(eventId);
+        List<User> friends = new();
+        foreach (object attendee in attendees)
+        {
+            // Since friends can be users only
+            if (attendee is User user)
+            {
+                if (user.Friends.Contains(userId))
+                {
+                    friends.Add(user);
+                }
+            }
+        }
+        return Ok(friends);
+    }
 
     [HttpGet("get-all-events")]
     public async Task<IActionResult> GetAllEvents() => Ok(await eventService.GetAllEvents());

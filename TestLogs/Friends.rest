@@ -1,24 +1,29 @@
-### 1. Create User 1
-
-POST http://localhost:5027/Calender-Website/register
+### 1. Register user
+POST http://localhost:5027/Calender-Website/register HTTP/1.1
 content-type: application/json
 
 {
-"FirstName" : "John",
-"LastName" : "Doe",
-"Email" : "testemail.com",
-"Password" : "testpassword",
-"RecurringDays" : 0
+    "FirstName": "TestUsername2000",
+    "LastName": "TestUsername2000",
+    "Email": "Mail.com",
+    "Password": "Password",
+    "RecurringDays": 0
 }
 
-### 2. Login
-
-POST http://localhost:5027/Calender-Website/login
+### 2. login user
+POST http://localhost:5027/Calender-Website/login-user HTTP/1.1
 content-type: application/json
 
 {
-"Email" : "testemail.com",
-"Password" : "testpassword"
+    "Email": "Mail.com",
+    "Password": "Password"
+}
+### POST EventAttendance for Event
+POST http://localhost:5027/Calender-Website/EventAttendance HTTP/1.1
+content-type: application/json
+
+{
+    "EventId": "a8ad48c9-aee8-495b-b86a-6be42874b6fd"
 }
 
 ### 3. Get all Friends - has to be nothing cuz new user
@@ -31,29 +36,29 @@ GET http://localhost:5027/Calender-Website/friend-requests
 
 ### 5. Create User 2 to send him a friend request in the next step
 
-POST http://localhost:5027/Calender-Website/register
+POST http://localhost:5027/Calender-Website/register HTTP/1.1
 content-type: application/json
 
 {
-"FirstName" : "Bob",
-"LastName" : "Bobby",
-"Email" : "Mail.com",
-"Password" : "Password",
-"RecurringDays" : 0
+    "FirstName": "TestName",
+    "LastName": "TestLastName",
+    "Email": "SecondMail.com",
+    "Password": "Password1",
+    "RecurringDays": 0
 }
 
 ### 6. Send a friend request to User 2 using his id...
 
-POST http://localhost:5027/Calender-Website/send-friend-request/?toId=078049bb-4d88-4972-9642-9c7af0402360
+POST http://localhost:5027/Calender-Website/send-friend-request/?toId=333bb2e8-2b02-4ada-9686-8627c5fabd5a
 
 ### 7. Login as a second User
 
-POST http://localhost:5027/Calender-Website/login
+POST http://localhost:5027/Calender-Website/login-user HTTP/1.1
 content-type: application/json
 
 {
-"Email" : "Mail.com",
-"Password" : "Password"
+    "Email": "SecondMail.com",
+    "Password": "Password1"
 }
 
 ### 8. See if you got a friend request from User 1
@@ -62,22 +67,24 @@ GET http://localhost:5027/Calender-Website/friend-requests
 
 ### 8. Approve a friend request
 
-POST http://localhost:5027/Calender-Website/manage-friend-request/?id=0be5ec7d-2de0-4259-a149-0b254907086d&approve=true
+POST http://localhost:5027/Calender-Website/manage-friend-request/?id=078049bb-4d88-4972-9642-9c7af0402360&approve=true
 
 ### 9. See if you became friends
 
 GET http://localhost:5027/Calender-Website/friends
 
-### 10. Delete friend using User 1 id
+### 11. Delete friend using User 1 id
 
 DELETE http://localhost:5027/Calender-Website/delete-friend/?id=0be5ec7d-2de0-4259-a149-0b254907086d
 
-### 11. See if friend was deleted
+### 12. See if friend was deleted
 
 GET http://localhost:5027/Calender-Website/friends
 
-### 12. Search user of event
+### 13. Search user of event
 
 GET http://localhost:5027/Calender-Website/search?str=john
 
-### 13.
+
+### 14. See who from your friends are attending an event  
+GET http://localhost:5027/Calender-Website/event-friends?eventId=a8ad48c9-aee8-495b-b86a-6be42874b6fd
