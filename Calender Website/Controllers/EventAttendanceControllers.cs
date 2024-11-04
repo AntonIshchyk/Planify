@@ -16,9 +16,10 @@ public class EventAttendanceControllers : Controller
     public async Task<IActionResult> CreateAttendance([FromBody] EventAttendance attendance)
     {
         if (attendance is null) return BadRequest("Data not complete. ");
-        if (attendance.UserId == Guid.Empty.ToString() && attendance.EventId == Guid.Empty.ToString()) return BadRequest("This attendance cannot be added!");
+        if (attendance.EventId == Guid.Empty.ToString()) return BadRequest("This attendance cannot be added!");
         else
         {
+            attendance.UserId = HttpContext.Session.GetString("UserId");
             if (await EAS.TestExistence(attendance)) return BadRequest("You already attend this Event!");
             Event evt = await ES.GetEvent(Guid.Parse(attendance.EventId));
             if (!EAS.ValidateDate(evt)) return BadRequest("Because of the date of this event, you can no longer attend these.");

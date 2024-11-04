@@ -7,9 +7,10 @@ content-type: application/json
   "Password": "TestPassword"
 }
 
-#Create Event
+### Create Event
 POST http://localhost:5027/Calender-Website/create-event HTTP/1.1
 content-type: application/json
+
 {
     "Title": "Annual Conference",
     "Description": "This is a detailed description of the event.",
@@ -20,16 +21,17 @@ content-type: application/json
     "AdminApproval": false
 }
 
-#Get Event
+### Get Event
 GET http://localhost:5027/Calender-Website/event?id=a8ad48c9-aee8-495b-b86a-6be42874b6fd
 
-#Delete Event
+### Delete Event
 DELETE http://localhost:5027/Calender-Website/delete-event?id=a8ad48c9-aee8-495b-b86a-6be42874b6fd
 
 
-#Create Event (For Update)
+### Create Event (For Update)
 POST http://localhost:5027/Calender-Website/create-event HTTP/1.1
 content-type: application/json
+
 {
     "Title": "Annual Conference",
     "Description": "This is a detailed description of the event.",
@@ -40,9 +42,10 @@ content-type: application/json
     "AdminApproval": false
 }
 
-#Update Event
+### Update Event
 PUT http://localhost:5027/Calender-Website/update-event?id=a8ad48c9-aee8-495b-b86a-6be42874b6fd HTTP/1.1
 content-type: application/json
+
 {
     "Title": "Weekly Conference",
     "Description": "This is a detailed description of the event.",
@@ -53,22 +56,24 @@ content-type: application/json
     "AdminApproval": false
 }
 
-#Post Review
+### Post Review
 POST http://localhost:5027/Calender-Website/review HTTP/1.1
 content-type: application/json
+
 {
   "EventId" : "a8ad48c9-aee8-495b-b86a-6be42874b6fd",
   "Rating" : 5.0,
   "Feedback" : "Pretty good."
 }
 
-#Get Reviews of Event
+###Get Reviews of Event
 GET http://localhost:5027/Calender-Website/review?id=a8ad48c9-aee8-495b-b86a-6be42874b6fd
 
-#Add Extra Event
+###Add Extra Event
 
 POST http://localhost:5027/Calender-Website/create-event HTTP/1.1
 content-type: application/json
+
 {
     "Title": "Annual Conference",
     "Description": "This is a detailed description of the event.",
@@ -79,5 +84,5 @@ content-type: application/json
     "AdminApproval": false
   }
 
-#Get all Events
+###Get all Events
 GET http://localhost:5027/Calender-Website/get-all-events

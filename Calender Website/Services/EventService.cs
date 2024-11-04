@@ -1,3 +1,5 @@
+using System.Reflection.Metadata.Ecma335;
+
 public class EventService
 {
     public async Task<Event> GetEvent(Guid id) => await EventAccess.Get(id);
@@ -38,6 +40,7 @@ public class EventService
         if (!reviews.Exists(x => x.EventId == review.EventId && x.UserId == userIdString))
         {
             review.Id = Guid.NewGuid();
+            review.UserId = userIdString;
             reviews.Add(review);
         }
         else
@@ -58,7 +61,9 @@ public class EventService
     public async Task<double> GetAverageRating(Guid eventId)
     {
         List<EventAttendance> reviews = await AccessJson.ReadJson<EventAttendance>();
-        return reviews.FindAll(x => Guid.Parse(x.EventId) == eventId).ToList().Average(x => x.Rating);
+        List<EventAttendance> filtered = reviews.FindAll(x => Guid.Parse(x.EventId) == eventId).ToList();
+        if (filtered.Count() == 0) return 0;
+        return filtered.Average(x => x.Rating);
     }
 
     public async Task<List<Event>> GetAllEvents() => await EventAccess.LoadAll();
