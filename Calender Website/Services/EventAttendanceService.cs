@@ -15,7 +15,7 @@ public class EventAttendanceService
     public async Task<bool> DeleteEventAttendance(Guid eventId, Guid userId)
     {
         List<EventAttendance> eventattendances = await AccessJson.ReadJson<EventAttendance>();
-        EventAttendance evta = eventattendances.Find(x => Guid.Parse(x.EventId) == eventId && Guid.Parse(x.UserId) == userId)!;
+        EventAttendance evta = eventattendances.Find(x => x.EventId == eventId && x.UserId == userId)!;
         if (evta is null) return false;
         eventattendances.Remove(evta);
         AccessJson.WriteJsonList(eventattendances);
@@ -31,7 +31,7 @@ public class EventAttendanceService
     public async Task<List<object>> GetListOfAttendees(Guid eventId)
     {
         List<EventAttendance> eventAttendances = await AccessJson.ReadJson<EventAttendance>();
-        List<Guid> userIds = eventAttendances.FindAll(ea => Guid.Parse(ea.EventId) == eventId).Select(ea => Guid.Parse(ea.UserId)).ToList();
+        List<Guid> userIds = eventAttendances.FindAll(ea => ea.EventId == eventId).Select(ea => ea.UserId).ToList();
         List<object> usersAndAdmins = [];
         List<User> users = await AccessJson.ReadJson<User>();
         List<Admin> admins = await AccessJson.ReadJson<Admin>();

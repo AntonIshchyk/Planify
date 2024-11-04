@@ -33,8 +33,8 @@ public class EventController : Controller
     [LoggedInFilter]
     public async Task<IActionResult> AddReview([FromBody] EventAttendance review)
     {
-        string userIdString = HttpContext.Session.GetString("UserId");
-        if (await eventService.AddReview(review, userIdString)) return Accepted("Review added. ");
+        string userIdString = HttpContext.Session.GetString("UserId")!;
+        if (await eventService.AddReview(review, Guid.Parse(userIdString))) return Accepted("Review added. ");
         return BadRequest("Review could not be added. ");
     }
 

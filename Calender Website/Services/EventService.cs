@@ -33,20 +33,20 @@ public class EventService
 
     public async Task<bool> DeleteEvent(Guid id) => await EventAccess.Remove(id);
 
-    public async Task<bool> AddReview(EventAttendance review, string userIdString)
+    public async Task<bool> AddReview(EventAttendance review, Guid userId)
     {
-        if (GetEvent(Guid.Parse(review.EventId)) is null) return false;
+        if (GetEvent(review.EventId) is null) return false;
         List<EventAttendance> reviews = await AccessJson.ReadJson<EventAttendance>();
-        if (!reviews.Exists(x => x.EventId == review.EventId && x.UserId == userIdString))
+        if (!reviews.Exists(x => x.EventId == review.EventId && x.UserId == userId))
         {
             review.Id = Guid.NewGuid();
-            review.UserId = userIdString;
+            review.UserId = userId;
             reviews.Add(review);
         }
         else
         {
-            reviews.First(x => x.EventId == review.EventId && x.UserId == userIdString).Rating = review.Rating;
-            reviews.First(x => x.EventId == review.EventId && x.UserId == userIdString).Feedback = review.Feedback;
+            reviews.First(x => x.EventId == review.EventId && x.UserId == userId).Rating = review.Rating;
+            reviews.First(x => x.EventId == review.EventId && x.UserId == userId).Feedback = review.Feedback;
         }
         AccessJson.WriteJsonList(reviews);
         return true;
@@ -55,13 +55,13 @@ public class EventService
     public async Task<List<EventAttendance>> GetReviewsFromEventId(Guid eventId)
     {
         List<EventAttendance> reviews = await AccessJson.ReadJson<EventAttendance>();
-        return reviews.FindAll(r => Guid.Parse(r.EventId) == eventId).ToList();
+        return reviews.FindAll(r => r.EventId == eventId).ToList();
     }
 
     public async Task<double> GetAverageRating(Guid eventId)
     {
         List<EventAttendance> reviews = await AccessJson.ReadJson<EventAttendance>();
-        List<EventAttendance> filtered = reviews.FindAll(x => Guid.Parse(x.EventId) == eventId).ToList();
+        List<EventAttendance> filtered = reviews.FindAll(x => x.EventId == eventId).ToList();
         if (filtered.Count() == 0) return 0;
         return filtered.Average(x => x.Rating);
     }

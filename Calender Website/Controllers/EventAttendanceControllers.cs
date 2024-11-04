@@ -16,12 +16,18 @@ public class EventAttendanceControllers : Controller
     public async Task<IActionResult> CreateAttendance([FromBody] EventAttendance attendance)
     {
         if (attendance is null) return BadRequest("Data not complete. ");
-        if (attendance.EventId == Guid.Empty.ToString()) return BadRequest("This attendance cannot be added!");
+        if (attendance.EventId == Guid.Empty) return BadRequest("This attendance cannot be added!");
         else
         {
-            attendance.UserId = HttpContext.Session.GetString("UserId");
+            string userIdString = HttpContext.Session.GetString("UserId")!;
+            if (string.IsNullOrEmpty(userIdString) || !Guid.TryParse(userIdString, out Guid userId))
+            {
+                return BadRequest("User ID is invalid or not available in session.");
+            }
+            attendance.UserId = userId;
+
             if (await EAS.TestExistence(attendance)) return BadRequest("You already attend this Event!");
-            Event evt = await ES.GetEvent(Guid.Parse(attendance.EventId));
+            Event evt = await ES.GetEvent(attendance.EventId);
             if (!EAS.ValidateDate(evt)) return BadRequest("Because of the date of this event, you can no longer attend these.");
             attendance.Id = Guid.NewGuid();
             if (await EAS.AppendEventAttendance(attendance, evt)) return Ok(evt);
@@ -44,7 +50,7 @@ public class EventAttendanceControllers : Controller
     {
         //the function of this endpoint is very unclear in the description. For now I do not use any filter.
         List<EventAttendance> eventAttendances = await AccessJson.ReadJson<EventAttendance>();
-        List<EventAttendance> foundEventAttendances = eventAttendances.FindAll(x => Guid.Parse(x.EventId) == Id).ToList();
+        List<EventAttendance> foundEventAttendances = eventAttendances.FindAll(x => x.EventId == Id).ToList();
         return Ok(foundEventAttendances);
     }
 

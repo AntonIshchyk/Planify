@@ -28,7 +28,7 @@ public class AttendanceControllers : Controller
 
         bool IsAttendanceSaved = await AS.SaveAttendance(attendance);
         if (!IsAttendanceSaved) return BadRequest("You already have an attendance for this date");
-        return Created();
+        return Ok("Attendance Created");
     }
 
     [HttpGet("check-own-attendances")]
