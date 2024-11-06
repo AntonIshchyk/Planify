@@ -17,7 +17,7 @@ public class UserController : Controller
     public async Task<IActionResult> GetUserById([FromQuery] Guid Id)
     {
         User user = await US.GetUserById(Id);
-        if (user is null) return NotFound("User does not exist");
+        if (user is null) return BadRequest("User does not exist");
         return Ok(user);
     }
 
@@ -33,7 +33,7 @@ public class UserController : Controller
     public async Task<IActionResult> UpdateUser([FromBody] User user)
     {
         bool userUpdated = await US.UpdateUser(user);
-        if (!userUpdated) return NotFound("Could not find user");
+        if (!userUpdated) return BadRequest("Could not find user");
         return Ok("User is updated");
     }
 
@@ -42,7 +42,7 @@ public class UserController : Controller
     public async Task<IActionResult> DeleteUser([FromQuery] Guid Id)
     {
         bool userIsDeleted = await US.DeleteUserById(Id);
-        if (!userIsDeleted) return NotFound("User not found");
+        if (!userIsDeleted) return BadRequest("User not found");
         return Ok("User is deleted");
     }
 
@@ -51,7 +51,7 @@ public class UserController : Controller
     public async Task<IActionResult> DeleteUser(User user)
     {
         bool userIsDeleted = await US.DeleteUserWithUser(user);
-        if (!userIsDeleted) return NotFound("User not found");
+        if (!userIsDeleted) return BadRequest("User not found");
         return Ok("User is deleted");
     }
 
@@ -63,7 +63,7 @@ public class UserController : Controller
         Guid sessionId = Guid.Parse(sessionIdString);
 
         User user = await UserAccess.Get(sessionId);
-        if (user is null) return NotFound();
+        if (user is null) return BadRequest("User not found");
 
         if (!user.Friends.Contains(id)) return BadRequest("Friend not found");
         user.Friends.Remove(id);
@@ -80,7 +80,7 @@ public class UserController : Controller
         Guid sessionId = Guid.Parse(sessionIdString);
 
         User user = await UserAccess.Get(sessionId);
-        if (user is null) return NotFound();
+        if (user is null) return BadRequest("User not found");
 
         return Ok(user.Friends);
     }
@@ -93,7 +93,7 @@ public class UserController : Controller
         Guid sessionId = Guid.Parse(sessionIdString);
 
         User user = await UserAccess.Get(sessionId);
-        if (user is null) return NotFound();
+        if (user is null) return BadRequest("User not found");
 
         return Ok(user.FriendRequests);
     }
@@ -111,7 +111,7 @@ public class UserController : Controller
         Guid sessionId = Guid.Parse(sessionIdString);
 
         User user = await UserAccess.Get(sessionId);
-        if (user is null) return NotFound();
+        if (user is null) return BadRequest("User not found");
 
         if (!user.FriendRequests.Contains(id)) return BadRequest("Friend Request not found");
 
@@ -143,7 +143,7 @@ public class UserController : Controller
         Guid sessionId = Guid.Parse(sessionIdString);
 
         User user = await UserAccess.Get(sessionId);
-        if (user is null) return NotFound();
+        if (user is null) return BadRequest("User not found");
 
         // make sure user doesn`t send a friend request to himself
         if (toId == user.Id) return BadRequest("You cannot send a friend request to yourself");

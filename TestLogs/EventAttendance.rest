@@ -1,0 +1,38 @@
+
+### 5. register user
+POST http://localhost:5027/Calender-Website/register HTTP/1.1
+content-type: application/json
+
+{
+    "FirstName": "TestUsername2000",
+    "LastName": "TestUsername2000",
+    "Email": "Test2000",
+    "Password": "TestPassword2000",
+    "RecurringDays": 0
+}
+
+### 6. login user
+POST http://localhost:5027/Calender-Website/login-user HTTP/1.1
+content-type: application/json
+
+{
+    "Email": "Test2000",
+    "Password": "TestPassword2000"
+}
+
+###POST EventAttendance for Event
+POST http://localhost:5027/Calender-Website/EventAttendance HTTP/1.1
+content-type: application/json
+
+{
+    "EventId": "a8ad48c9-aee8-495b-b86a-6be42874b6fd"
+}
+
+###Get EventAttendance
+GET http://localhost:5027/Calender-Website/EventAttendanceofEvent?id=a8ad48c9-aee8-495b-b86a-6be42874b6fd
+
+###Get Attendancees
+GET http://localhost:5027/Calender-Website/list-of-attendees?EventId=a8ad48c9-aee8-495b-b86a-6be42874b6fd
+
+###DELETE EventAttendance
+DELETE http://localhost:5027/Calender-Website/delete-event-attendance?eventId=a8ad48c9-aee8-495b-b86a-6be42874b6fd
