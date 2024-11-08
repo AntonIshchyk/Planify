@@ -23,16 +23,23 @@ public class LoginControllers : Controller
         await AS.UpdateAdmin(existingAdmin);
         return Ok($"Welcome {existingAdmin.Username}!");
     }
-    
+
     [HttpPost("login-user")]
     public async Task<IActionResult> LoginUser([FromBody] User user)
     {
-        User existingUser = await US.GetUser(user);
-        if (existingUser is null) return BadRequest("User not found");
-        if (HttpContext.Session.GetString("UserId") == existingUser.Id.ToString()) return BadRequest("User is already logged in. ");
+        try
+        {
+            User existingUser = await US.GetUser(user);
+            if (existingUser is null) return BadRequest("User not found");
+            if (HttpContext.Session.GetString("UserId") == existingUser.Id.ToString()) return BadRequest("User is already logged in. ");
 
-        HttpContext.Session.SetString("UserId", existingUser.Id.ToString());
-        return Ok($"Welcome {existingUser.FirstName + " " + existingUser.LastName}!");
+            HttpContext.Session.SetString("UserId", existingUser.Id.ToString());
+            return Ok($"Welcome {existingUser.FirstName + " " + existingUser.LastName}!");
+        }
+        catch
+        {
+            return BadRequest("Error in Code.");
+        }
     }
 
     [HttpPost("register-admin")]
@@ -77,7 +84,7 @@ public class LoginControllers : Controller
             HttpContext.Session.Clear();
             return Ok($"See you later {admin.Username}!");
         }
-  
+
         User user = await UserAccess.Get(sessionId);
         if (user != null)
         {
