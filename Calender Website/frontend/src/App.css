@@ -24,6 +24,26 @@
   color: white;
 }
 
+.narrator {
+  font-size: calc(20px + 2vmin);
+  color: orange;
+  align-items: left;
+  justify-content: left;
+}
+
+.left-to-right {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+
+}
+
+.choicebutton{
+  padding: 15px 32px;
+  font-size: 20px;
+}
+
 .App-link {
   color: #61dafb;
 }
