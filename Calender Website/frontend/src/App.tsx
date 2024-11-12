@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import Login from './components/Login';
-import AdminLogin from './components/AdminLogin';
 import Startup from './components/Startup';
 function App() {
 
@@ -10,14 +9,17 @@ function App() {
   const [showUserLogin, setUserLogin] = useState(false);
   const handleAdminClick = () => setAdminLogin(true);
   const handleUserClick = () => setUserLogin(true);
+  const handleBacktoMenuClick = () => {
+    setAdminLogin(false)
+    setUserLogin(false)
+  };
   return (
     <div className="App">
       
       {}
-      {showUserLogin && <Login />}
-      {showAdminLogin && <AdminLogin />}
+      {(showUserLogin || showAdminLogin) && <Login onBacktoMenuClick={handleBacktoMenuClick} isAdmin={showAdminLogin} isUser={showUserLogin}/>}
       {!showAdminLogin && !showUserLogin && <Startup onUserClick={handleUserClick} onAdminClick={handleAdminClick}/>}
-      
+
 
     </div>
   );

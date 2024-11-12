@@ -8,11 +8,7 @@ interface StartupProps {
 }
 const Startup: React.FC<StartupProps> = ({onAdminClick, onUserClick}) => {
     const [message, setMessage] = useState('');
-    const AdminLogin = async (event : React.FormEvent) => {
-        event.preventDefault();
 
-        
-    }
 
     return (
         <div>
