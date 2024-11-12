@@ -21,7 +21,7 @@ const Login: React.FC<StartupProps> = ({onBacktoMenuClick, isAdmin, isUser}) => 
         
             if(isAdmin){
             const response = await axios.post(
-                'http://localhost:3000/Calender-Website/login-user',
+                'http://localhost:3000/Calender-Website/login-admin',
                 {"Username" : username, 
                  "Password" : password },
                  {withCredentials : true}
