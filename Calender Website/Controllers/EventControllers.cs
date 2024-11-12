@@ -70,15 +70,8 @@ public class EventController : Controller
     {
         if (e is null || e.Description == "None" || e.Title == "None" || e.Location == "None") return BadRequest("There is not enough info to make an event. ");
         e.Id = Guid.NewGuid();
-<<<<<<< HEAD
         if (DateTime.Parse(e.EndTime) < DateTime.Parse(e.StartTime)) return BadRequest("End time cannot be earlier then start time. ");
         if (await eventService.AppendEvent(e)) return Ok("Event created. ");
-=======
-
-        if (e.EndTime > e.StartTime) return BadRequest("End time cannot be earlier then start time. ");
-        
-        if (await eventService.AppendEvent(e)) return Ok("Event Created");
->>>>>>> 5366d1bf77a7a2c9f3ebab9a937aff9e09e16be6
         return BadRequest("Something went wrong");
     }
 
