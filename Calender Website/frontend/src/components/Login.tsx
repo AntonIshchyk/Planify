@@ -17,7 +17,8 @@ const Login: React.FC = () => {
             const response = await axios.post(
                 'http://localhost:3000/Calender-Website/login-user',
                 {"Email" : email, 
-                 "Password" : password }
+                 "Password" : password },
+                 {withCredentials : true}
             );
             setMessage(response.data);
         }catch(error){
