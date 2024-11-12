@@ -15,6 +15,7 @@ public class LoginControllers : Controller
     public async Task<IActionResult> LoginAdmin([FromBody] Admin admin)
     {
         Admin existingAdmin = await AS.GetAdminByLogIn(admin);
+        Console.WriteLine("Admin Id: " + admin.Id);
         if (existingAdmin is null) return BadRequest("Admin not found");
         if (HttpContext.Session.GetString("UserId") == existingAdmin.Id.ToString()) return BadRequest("Admin is already online");
         existingAdmin.LastLogIn = DateTime.Now;

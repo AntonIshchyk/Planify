@@ -3,6 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 import Login from './components/Login';
 import AdminLogin from './components/AdminLogin';
+import CreateEvent from './components/CreateEvent';
 
 function App() {
 
@@ -13,6 +14,7 @@ function App() {
       {}
       <Login />
       <AdminLogin />
+      <CreateEvent />
     </div>
   );
 }

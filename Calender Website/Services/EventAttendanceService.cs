@@ -9,7 +9,7 @@ public class EventAttendanceService
     }
     public bool ValidateDate(Event evt)
     {
-        if (DateOnly.Parse(evt.Date) < DateOnly.FromDateTime(DateTime.Now)) return false;
+        if (evt.Date < DateOnly.FromDateTime(DateTime.Now)) return false;
         return true;
     }
     public async Task<bool> DeleteEventAttendance(Guid eventId, Guid userId)
