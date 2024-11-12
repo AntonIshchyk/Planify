@@ -4,7 +4,7 @@ public class AdminFilter : Attribute, IAsyncActionFilter
 {
     public async Task OnActionExecutionAsync(ActionExecutingContext actioncontext, ActionExecutionDelegate next)
     {
-         var isAdmin = actioncontext.HttpContext.Session.GetInt32("IsAdmin");
+        var isAdmin = actioncontext.HttpContext.Session.GetInt32("IsAdmin");
         // Example: Get a specific query parameter by key (e.g., "id")
         if (!(isAdmin.HasValue && isAdmin.Value == 1))
         {

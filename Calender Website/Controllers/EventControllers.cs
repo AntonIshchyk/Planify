@@ -45,17 +45,10 @@ public class EventController : Controller
     [AdminFilter]
     public async Task<IActionResult> PostEvent([FromBody] Event e)
     {
-        if (e is null) Console.WriteLine("Event is null");
-        else
-        {
-            Console.WriteLine("Description: " + e.Description);
-            Console.WriteLine("Title: " + e.Title);
-            Console.WriteLine("Location: " + e.Location);
-        }
         if (e is null || e.Description == "None" || e.Title == "None" || e.Location == "None") return BadRequest("There is not enough info to make an event. ");
         e.Id = Guid.NewGuid();
-        if (e.EndTime > e.StartTime) return BadRequest("End time cannot be earlier then start time. ");
-        if (await eventService.AppendEvent(e)) return Created();
+        if (DateTime.Parse(e.EndTime) < DateTime.Parse(e.StartTime)) return BadRequest("End time cannot be earlier then start time. ");
+        if (await eventService.AppendEvent(e)) return Ok("Event created. ");
         return BadRequest("Something went wrong");
     }
 

@@ -8,6 +8,7 @@ const CreateEvent: React.FC = () => {
     const [StartTime, setStartTime] = useState('');
     const [EndTime, setEndTime] = useState('');
     const [Location, setLocation] = useState('');
+    const [AdminApproval, setAdminApproval] = useState(false);
     const [message, setMessage] = useState('');
 
     const handleCreateEvent = async (event : React.FormEvent) => {
@@ -22,8 +23,10 @@ const CreateEvent: React.FC = () => {
                     "Date": Date,
                     "StartTime": StartTime,
                     "EndTime": EndTime,
-                    "Location": Location
-                }
+                    "Location": Location,
+                    "AdminApproval": AdminApproval
+                },
+                { withCredentials: true }
             );
             setMessage(response.data);
         }catch(error){
@@ -38,58 +41,54 @@ const CreateEvent: React.FC = () => {
         <div>
             <h2>Create Event</h2>
             <form onSubmit={handleCreateEvent}>
-                <label>
-                    Title:
-                    <input
-                        type="title"
-                        value={Title}
-                        onChange={(e) => setTitle(e.target.value)}
-                        required />
-                </label>
+                Title:
+                <input
+                    type="text"
+                    value={Title}
+                    onChange={(e) => setTitle(e.target.value)}
+                    required />
+                <br />
+                Description:
+                <textarea
+                    placeholder="text"
+                    value={Description}
+                    onChange={(e) => setDescription(e.target.value)}
+                />
+                <br />
+                Location:
+                <input
+                    type="text"
+                    value={Location}
+                    onChange={(e) => setLocation(e.target.value)}
+                    required />
+                <br />
+                Date:
+                <input
+                    type="date"
+                    value={Date}
+                    onChange={(e) => setDate(e.target.value)}
+                    required />
+                <br />
+                Start Time:
+                <input
+                    type="time"
+                    value={StartTime}
+                    onChange={(e) => setStartTime(e.target.value)}
+                    required />
+                <br />
+                End Time:
+                <input
+                    type="time"
+                    value={EndTime}
+                    onChange={(e) => setEndTime(e.target.value)}
+                    required />
                 <br />
                 <label>
-                    Description:
+                    Admin Approval:
                     <input
-                        type="description"
-                        value={Description}
-                        onChange={(e) => setDescription(e.target.value)}
-                        required />
-                </label>
-                <br />
-                <label>
-                    Date:
-                    <input
-                        type="date"
-                        value={Date}
-                        onChange={(e) => setDate(e.target.value)}
-                        required />
-                </label>
-                <br />
-                <label>
-                    Start Time:
-                    <input
-                        type="time"
-                        value={StartTime}
-                        onChange={(e) => setStartTime(e.target.value)}
-                        required />
-                </label>
-                <br />
-                <label>
-                    End Time:
-                    <input
-                        type="time"
-                        value={EndTime}
-                        onChange={(e) => setEndTime(e.target.value)}
-                        required />
-                </label>
-                <br />
-                <label>
-                    Location:
-                    <input
-                        type="location"
-                        value={Location}
-                        onChange={(e) => setLocation(e.target.value)}
-                        required />
+                        type="checkbox"
+                        checked={AdminApproval}
+                        onChange={(e) => setAdminApproval(e.target.checked)} />
                 </label>
                 <br />
                 <button type="submit">Create Event</button>
