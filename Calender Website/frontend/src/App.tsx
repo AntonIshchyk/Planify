@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import Login from './components/Login';
+import AdminLogin from './components/AdminLogin';
 
 function App() {
 
@@ -9,8 +10,9 @@ function App() {
   return (
     <div className="App">
       
-      {/* Add the Login component here */}
+      {}
       <Login />
+      <AdminLogin />
     </div>
   );
 }

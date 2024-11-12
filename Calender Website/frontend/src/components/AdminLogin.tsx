@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
+const AdminLogin: React.FC = () => {
 
-
-const Login: React.FC = () => {
-
-    const [email, setEmail] = useState('');
+    const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [message, setMessage] = useState('');
 
@@ -15,15 +13,16 @@ const Login: React.FC = () => {
         try{
             
             const response = await axios.post(
-                'http://localhost:3000/Calender-Website/login-user',
-                {"Email" : email, 
+                'http://localhost:3000/Calender-Website/login-admin',
+                {
+                "Username": username, 
                  "Password" : password },
-                 {withCredentials : true}
+                 { withCredentials: true }
             );
             setMessage(response.data);
         }catch(error){
             if (axios.isAxiosError(error) && error.response) {
-                setMessage(error.response.data); // Displays "User not found" or "User is already logged in."
+                setMessage(error.response.data); // Displays "Admin not found" or "Admin is already logged in."
             } else {
                 setMessage('An error occurred. Please try again.');
             }
@@ -32,14 +31,14 @@ const Login: React.FC = () => {
 
     return (
         <div>
-            <h2>Login</h2>
+            <h2>Admin Login</h2>
             <form onSubmit={handleLogin}>
                 <label>
-                    Email:
+                    Username:
                     <input 
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    type="username"
+                    value={username}
+                        onChange={(e) => setUsername(e.target.value)}
                     required />
                 </label>
                 <br />
@@ -59,4 +58,4 @@ const Login: React.FC = () => {
     );
 };
 
-export default Login;   
+export default AdminLogin;
