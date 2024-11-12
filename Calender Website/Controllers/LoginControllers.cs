@@ -17,6 +17,7 @@ public class LoginControllers : Controller
         Admin existingAdmin = await AS.GetAdminByLogIn(admin);
         Console.WriteLine("Admin Id: " + admin.Id);
         if (existingAdmin is null) return BadRequest("Admin not found");
+        if (HttpContext.Session.GetString("UserId") != null) return BadRequest("You are already logged in on this session!");
         if (HttpContext.Session.GetString("UserId") == existingAdmin.Id.ToString()) return BadRequest("Admin is already online");
         existingAdmin.LastLogIn = DateTime.Now;
         HttpContext.Session.SetString("UserId", existingAdmin.Id.ToString());
@@ -32,8 +33,8 @@ public class LoginControllers : Controller
         {
             User existingUser = await US.GetUser(user);
             if (existingUser is null) return BadRequest("User not found");
+            if (HttpContext.Session.GetString("UserId") != null) return BadRequest("You are already logged in on this session!");
             if (HttpContext.Session.GetString("UserId") == existingUser.Id.ToString()) return BadRequest("User is already logged in. ");
-
             HttpContext.Session.SetString("UserId", existingUser.Id.ToString());
             return Ok($"Welcome {existingUser.FirstName + " " + existingUser.LastName}!");
         }
