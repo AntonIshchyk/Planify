@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import Login from './components/Login';
+import CreateEvent from './components/CreateEvent';
+
 import Startup from './components/Startup';
 function App() {
 
@@ -15,11 +17,10 @@ function App() {
   };
   return (
     <div className="App">
-      
+      <CreateEvent></CreateEvent>
       {}
       {(showUserLogin || showAdminLogin) && <Login onBacktoMenuClick={handleBacktoMenuClick} isAdmin={showAdminLogin} isUser={showUserLogin}/>}
       {!showAdminLogin && !showUserLogin && <Startup onUserClick={handleUserClick} onAdminClick={handleAdminClick}/>}
-
 
     </div>
   );

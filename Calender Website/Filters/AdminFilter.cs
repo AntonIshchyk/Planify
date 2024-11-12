@@ -8,7 +8,7 @@ public class AdminFilter : Attribute, IAsyncActionFilter
         // Example: Get a specific query parameter by key (e.g., "id")
         if (!(isAdmin.HasValue && isAdmin.Value == 1))
         {
-            Console.WriteLine($"{actioncontext.HttpContext.Request.Path} was requested, but no id was given");
+            Console.WriteLine($"{actioncontext.HttpContext.Request.Path} was requested, but no id of admin was given");
             actioncontext.HttpContext.Response.StatusCode = 401;
             return;
         }
