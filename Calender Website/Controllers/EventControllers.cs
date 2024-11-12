@@ -4,40 +4,63 @@ using Microsoft.AspNetCore.Mvc;
 public class EventController : Controller
 {
     EventService eventService;
-    public EventController(EventService eventservice)
+    EventAttendanceService eventAttendanceService;
+    public EventController(EventService eventservice, EventAttendanceService eAS)
     {
         eventService = eventservice;
+        eventAttendanceService = eAS;
     }
 
     [HttpGet("event")]
     public async Task<IActionResult> GetEvent([FromQuery] Guid id)
     {
         EventReview eventReview = await eventService.GetEventReviews(id);
-        if (eventReview is null) return NotFound("Review could not be found. ");
+        if (eventReview is null) return BadRequest("Review could not be found. ");
         return Ok(eventReview);
     }
 
-    // to do
-    // [HttpGet("event-friends")]
-    // public async Task<IActionResult> GetFriendsParticipatingEvent([FromQuery] Guid id)
-    // {
-    //     EventReview eventReview = await eventService.GetEventReviews(id);
-    //     if (eventReview is null) return NotFound("Review could not be found. ");
-    //     return Ok(eventReview);
-    // }
+
+    [HttpGet("event-friends")]
+    [LoggedInFilter]
+    public async Task<IActionResult> GetFriendsParticipatingEvent([FromQuery] Guid eventId)
+    {
+        string userIdString = HttpContext.Session.GetString("UserId")!;
+
+        if (string.IsNullOrEmpty(userIdString) || !Guid.TryParse(userIdString, out Guid userId))
+        {
+            return BadRequest("User ID is invalid or not available in session.");
+        }
+
+        List<object> attendees = await eventAttendanceService.GetListOfAttendees(eventId);
+        List<User> friends = new();
+        foreach (object attendee in attendees)
+        {
+            // Since friends can be users only
+            if (attendee is User user)
+            {
+                if (user.Friends.Contains(userId))
+                {
+                    friends.Add(user);
+                }
+            }
+        }
+        return Ok(friends);
+    }
 
     [HttpGet("get-all-events")]
     public async Task<IActionResult> GetAllEvents() => Ok(await eventService.GetAllEvents());
 
     [HttpPost("review")]
+    [LoggedInFilter]
     public async Task<IActionResult> AddReview([FromBody] EventAttendance review)
     {
-        if (await eventService.AddReview(review)) return Accepted("Review added. ");
+        string userIdString = HttpContext.Session.GetString("UserId")!;
+        if (await eventService.AddReview(review, Guid.Parse(userIdString))) return Ok("Review added.");
         return BadRequest("Review could not be added. ");
     }
 
     [HttpGet("review")]
-    public async Task<IActionResult> GetReview([FromQuery] Guid id) => Ok(await eventService.GetReviewsFromEventId(id));
+    public async Task<IActionResult> GetReviewsOfEvent([FromQuery] Guid id) => Ok(await eventService.GetReviewsFromEventId(id));
 
     public async Task<IActionResult> GetAllReviews() => Ok(await GetAllReviews());
 
@@ -54,24 +77,26 @@ public class EventController : Controller
         }
         if (e is null || e.Description == "None" || e.Title == "None" || e.Location == "None") return BadRequest("There is not enough info to make an event. ");
         e.Id = Guid.NewGuid();
+
         if (e.EndTime > e.StartTime) return BadRequest("End time cannot be earlier then start time. ");
-        if (await eventService.AppendEvent(e)) return Created();
+        
+        if (await eventService.AppendEvent(e)) return Ok("Event Created");
         return BadRequest("Something went wrong");
     }
 
     [HttpPut("update-event")]
     [AdminFilter]
-    public async Task<IActionResult> UpdateEvent([FromBody] Event e)
+    public async Task<IActionResult> UpdateEvent([FromBody] Event e, [FromQuery] Guid id)
     {
-        if (await eventService.UpdateEvent(e)) return Accepted("Event updated. ");
-        return NotFound("Event could not be found. ");
+        if (await eventService.UpdateEvent(e, id)) return Ok("Event updated.");
+        return BadRequest("Event could not be found.");
     }
 
     [HttpDelete("delete-event")]
     [AdminFilter]
     public async Task<IActionResult> DeleteEvent([FromQuery] Guid id)
     {
-        if (await eventService.DeleteEvent(id)) return Accepted("Event deleted. ");
+        if (await eventService.DeleteEvent(id)) return Ok("Event deleted.");
         return BadRequest("Event not found. ");
     }
 }

@@ -1,3 +1,5 @@
+using System.Reflection.Metadata.Ecma335;
+
 public class EventService
 {
     public async Task<Event> GetEvent(Guid id) => await EventAccess.Get(id);
@@ -19,10 +21,10 @@ public class EventService
         return true;
     }
 
-    public async Task<bool> UpdateEvent(Event e)
+    public async Task<bool> UpdateEvent(Event e, Guid id)
     {
         List<Event> events = await AccessJson.ReadJson<Event>();
-        int index = events.FindIndex(searchEvent => searchEvent.Id == e.Id);
+        int index = events.FindIndex(searchEvent => searchEvent.Id.ToString() == id.ToString());
         if (index < 0) return false;
         events[index] = e;
         AccessJson.WriteJsonList(events);
@@ -31,15 +33,20 @@ public class EventService
 
     public async Task<bool> DeleteEvent(Guid id) => await EventAccess.Remove(id);
 
-    public async Task<bool> AddReview(EventAttendance review)
+    public async Task<bool> AddReview(EventAttendance review, Guid userId)
     {
-        if (GetEvent(Guid.Parse(review.EventId)) is null) return false;
+        if (GetEvent(review.EventId) is null) return false;
         List<EventAttendance> reviews = await AccessJson.ReadJson<EventAttendance>();
-        if (reviews.Exists(x => x.EventId == review.EventId && x.UserId == review.UserId)) reviews.Add(review);
+        if (!reviews.Exists(x => x.EventId == review.EventId && x.UserId == userId))
+        {
+            review.Id = Guid.NewGuid();
+            review.UserId = userId;
+            reviews.Add(review);
+        }
         else
         {
-            reviews.First(x => x.EventId == review.EventId && x.UserId == review.UserId).Rating = review.Rating;
-            reviews.First(x => x.EventId == review.EventId && x.UserId == review.UserId).Feedback = review.Feedback;
+            reviews.First(x => x.EventId == review.EventId && x.UserId == userId).Rating = review.Rating;
+            reviews.First(x => x.EventId == review.EventId && x.UserId == userId).Feedback = review.Feedback;
         }
         AccessJson.WriteJsonList(reviews);
         return true;
@@ -48,13 +55,15 @@ public class EventService
     public async Task<List<EventAttendance>> GetReviewsFromEventId(Guid eventId)
     {
         List<EventAttendance> reviews = await AccessJson.ReadJson<EventAttendance>();
-        return reviews.FindAll(r => Guid.Parse(r.EventId) == eventId).ToList();
+        return reviews.FindAll(r => r.EventId == eventId).ToList();
     }
 
     public async Task<double> GetAverageRating(Guid eventId)
     {
         List<EventAttendance> reviews = await AccessJson.ReadJson<EventAttendance>();
-        return reviews.FindAll(x => Guid.Parse(x.EventId) == eventId).ToList().Average(x => x.Rating);
+        List<EventAttendance> filtered = reviews.FindAll(x => x.EventId == eventId).ToList();
+        if (filtered.Count() == 0) return 0;
+        return filtered.Average(x => x.Rating);
     }
 
     public async Task<List<Event>> GetAllEvents() => await EventAccess.LoadAll();
