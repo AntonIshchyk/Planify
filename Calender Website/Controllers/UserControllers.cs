@@ -25,7 +25,7 @@ public class UserController : Controller
     public async Task<IActionResult> GetManyUsers([FromQuery] Guid[] Ids)
     {
         User[] foundUsers = await US.GetManyUsers(Ids);
-        if (foundUsers.Length <= 0) return BadRequest("There were no users with any of these ids");
+        if (foundUsers.Length <= 0) return BadRequest("There are no users with any of these ids");
         return Ok(foundUsers);
     }
 
@@ -33,8 +33,8 @@ public class UserController : Controller
     public async Task<IActionResult> UpdateUser([FromBody] User user)
     {
         bool userUpdated = await US.UpdateUser(user);
-        if (!userUpdated) return BadRequest("Could not find user");
-        return Ok("User is updated");
+        if (!userUpdated) return BadRequest("Couldn't find user");
+        return Ok("User has been updated");
     }
 
     [HttpDelete("delete-user-by-id")]

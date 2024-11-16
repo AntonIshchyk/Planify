@@ -26,24 +26,12 @@ public class EventController : Controller
     {
         string userIdString = HttpContext.Session.GetString("UserId")!;
 
-        if (string.IsNullOrEmpty(userIdString) || !Guid.TryParse(userIdString, out Guid userId))
-        {
-            return BadRequest("User ID is invalid or not available in session.");
-        }
+        if (string.IsNullOrEmpty(userIdString) || !Guid.TryParse(userIdString, out Guid userId)) return BadRequest("User ID is invalid or not available in session.");
 
         List<object> attendees = await eventAttendanceService.GetListOfAttendees(eventId);
-        List<User> friends = new();
-        foreach (object attendee in attendees)
-        {
-            // Since friends can be users only
-            if (attendee is User user)
-            {
-                if (user.Friends.Contains(userId))
-                {
-                    friends.Add(user);
-                }
-            }
-        }
+        List<User> friends = [];
+        // Since friends can be users only
+        foreach (object attendee in attendees) if (attendee is User user) if (user.Friends.Contains(userId)) friends.Add(user);
         return Ok(friends);
     }
 
