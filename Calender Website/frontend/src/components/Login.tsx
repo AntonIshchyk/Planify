@@ -4,10 +4,10 @@ import axios from 'axios';
 
 interface StartupProps {
     onBacktoMenuClick : () => void;
-    isAdmin : boolean;
-    isUser : boolean;
+    isAdminLogin : boolean;
+    isUserLogin : boolean;
 }
-const Login: React.FC<StartupProps> = ({onBacktoMenuClick, isAdmin, isUser}) => {
+const Login: React.FC<StartupProps> = ({onBacktoMenuClick, isAdminLogin, isUserLogin}) => {
 
     const [email, setEmail] = useState('');
     const [username, setUsername] = useState('');
@@ -19,14 +19,15 @@ const Login: React.FC<StartupProps> = ({onBacktoMenuClick, isAdmin, isUser}) => 
 
         try{
         
-            if(isAdmin){
+            if(isAdminLogin){
             const response = await axios.post(
                 'http://localhost:3000/Calender-Website/login-admin',
                 {"Username" : username, 
                  "Password" : password },
-                 {withCredentials : true}
+                 {withCredentials: true}
             );
             setMessage(response.data);
+            window.location.reload();
         }
         else{
             const response = await axios.post(
@@ -36,6 +37,8 @@ const Login: React.FC<StartupProps> = ({onBacktoMenuClick, isAdmin, isUser}) => 
                  {withCredentials : true}
             );
             setMessage(response.data);
+            
+            window.location.reload();
         }
         }catch(error){
             if (axios.isAxiosError(error) && error.response) {
@@ -50,7 +53,7 @@ const Login: React.FC<StartupProps> = ({onBacktoMenuClick, isAdmin, isUser}) => 
         <div>
             <h2>Login</h2>
             <form onSubmit={handleLogin}>
-                {isUser && <label>
+                {isUserLogin && <label>
                     Email:
                     <input 
                     type="email"
@@ -60,7 +63,7 @@ const Login: React.FC<StartupProps> = ({onBacktoMenuClick, isAdmin, isUser}) => 
                 </label>
                 }
                 <br />
-                {isAdmin && <label>
+                {isAdminLogin && <label>
                     Username:
                     <input 
                     type="username"

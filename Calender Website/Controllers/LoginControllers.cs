@@ -94,4 +94,24 @@ public class LoginControllers : Controller
         }
         return BadRequest("No data found");
     }
+    [HttpGet("check-admin")]
+    public IActionResult CheckAdmin()
+    {
+        var isAdmin = HttpContext.Session.GetInt32("IsAdmin");
+        if (isAdmin == 1)
+        {
+            return Ok(true);
+        }
+        return Ok(false);
+    }
+    [HttpGet("check-logged-in")]
+    public IActionResult CheckLoggedIn()
+    {
+        var UserId = HttpContext.Session.GetString("UserId");
+        if (UserId != null)
+        {
+            return Ok(true);
+        }
+        return Ok(false);
+    }
 }
