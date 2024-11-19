@@ -72,9 +72,9 @@ public class EventController : Controller
 
     [HttpPut("update-event")]
     [AdminFilter]
-    public async Task<IActionResult> UpdateEvent([FromBody] Event e, [FromQuery] Guid id)
+    public async Task<IActionResult> UpdateEvent([FromBody] Event e)
     {
-        if (await eventService.UpdateEvent(e, id)) return Ok("Event updated.");
+        if (await eventService.UpdateEvent(e)) return Ok("Event updated.");
         return BadRequest("Event could not be found.");
     }
 

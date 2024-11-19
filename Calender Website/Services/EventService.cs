@@ -21,11 +21,11 @@ public class EventService
         return true;
     }
 
-    public async Task<bool> UpdateEvent(Event e, Guid id)
+    public async Task<bool> UpdateEvent(Event e)
     {
         List<Event> events = await AccessJson.ReadJson<Event>();
-        int index = events.FindIndex(searchEvent => searchEvent.Id.ToString() == id.ToString());
-        if (index < 0) return false;
+        int index = events.FindIndex(searchEvent => searchEvent.Id == e.Id);
+        if (index == -1) return false;
         events[index] = e;
         AccessJson.WriteJsonList(events);
         return true;

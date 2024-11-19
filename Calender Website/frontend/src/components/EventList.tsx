@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 
 interface Event {
@@ -45,12 +45,12 @@ const EventList: React.FC = () => {
             {events && events.map((event) => (
                 <div key={event.id}>
                     <h3>{event.title}</h3>
-                    <p>{event.description}</p>
-                    <p>{event.date}</p>
-                    <p>{event.startTime}</p>
-                    <p>{event.endTime}</p>
-                    <p>{event.location}</p>
-                    <p>{event.adminApproval ? 'Approved' : 'Pending'}</p>
+                    <p><strong>Description: </strong>{event.description}</p>
+                    <p><strong>Date: </strong>{event.date}</p>
+                    <p><strong>Start time: </strong>{event.startTime}</p>
+                    <p><strong>End time: </strong>{event.endTime}</p>
+                    <p><strong>Location: </strong>{event.location}</p>
+                    <p><strong>Approval: </strong>{event.adminApproval ? 'Approved' : 'Pending'}</p>
         </div>
             ))}
         </div>);}
