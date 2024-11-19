@@ -1,8 +1,6 @@
 import { useState } from 'react';
 import './App.css';
 import Login from './components/Login';
-import EventList from './components/EventList';
-import UpdateEvent from './components/UpdateEvent';
 
 import Startup from './components/Startup';
 function App() {
@@ -17,8 +15,6 @@ function App() {
   };
   return (
     <div className="App">
-      <EventList />
-      <UpdateEvent />
       {}
       {(showUserLogin || showAdminLogin) && <Login onBacktoMenuClick={handleBacktoMenuClick} isAdmin={showAdminLogin} isUser={showUserLogin}/>}
       {!showAdminLogin && !showUserLogin && <Startup onUserClick={handleUserClick} onAdminClick={handleAdminClick}/>}
