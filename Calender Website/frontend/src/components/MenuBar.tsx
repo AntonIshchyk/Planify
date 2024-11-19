@@ -20,9 +20,12 @@ const MenuBar: React.FC<StartUpProps> = ({isAdmin, isLoggedIn}) => {
     <nav className="menu-bar">
       <div className="menu-logo">MyApp</div>
       <ul className="menu-links">
+        {
+        isLoggedIn && 
         <li>
           <Link to="/">Home</Link>
         </li>
+        }
         {isAdmin &&
         <li>
           <Link to="/create-event">Create Event</Link>
