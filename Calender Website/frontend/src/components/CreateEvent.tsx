@@ -84,11 +84,11 @@ const CreateEvent: React.FC = () => {
                     required />
                 <br />
                 <label>
-                    Admin Approval:
-                    <input
-                        type="checkbox"
-                        checked={AdminApproval}
-                        onChange={(e) => setAdminApproval(e.target.checked)} />
+                Admin Approval:
+                <input
+                    type="checkbox"
+                    checked={AdminApproval}
+                    onChange={(e) => setAdminApproval(e.target.checked)} />
                 </label>
                 <br />
                 <button type="submit">Create Event</button>

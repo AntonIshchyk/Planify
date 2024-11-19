@@ -20,4 +20,6 @@ public class Event : IHasId
         EndTime = endTime.ToString();
         Location = location;
     }
+
+    public override string ToString() => $"Title: {Title}\nDescription: {Description}\nDate: {Date}\nStart time: {StartTime}\nEnd time: {EndTime}\nLocation: {Location}";
 }

@@ -1,3 +1,4 @@
+using System.Globalization;
 using Microsoft.AspNetCore.Mvc;
 
 [Route("Calender-Website")]
@@ -36,7 +37,13 @@ public class EventController : Controller
     }
 
     [HttpGet("get-all-events")]
-    public async Task<IActionResult> GetAllEvents() => Ok(await eventService.GetAllEvents());
+    [LoggedInFilter]
+    public async Task<IActionResult> GetAllEvents()
+    {
+        List<Event> events = await eventService.GetAllEvents();
+        return Ok(events);
+    }
+    
 
     [HttpPost("review")]
     [LoggedInFilter]
@@ -50,7 +57,7 @@ public class EventController : Controller
     [HttpGet("review")]
     public async Task<IActionResult> GetReviewsOfEvent([FromQuery] Guid id) => Ok(await eventService.GetReviewsFromEventId(id));
 
-    public async Task<IActionResult> GetAllReviews() => Ok(await GetAllReviews());
+    public async Task<IActionResult> GetAllReviews() => Ok(await eventService.GetAllReviews());
 
     [HttpPost("create-event")]
     [AdminFilter]
