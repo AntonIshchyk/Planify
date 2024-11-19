@@ -16,8 +16,7 @@ public class AttendanceService
     public async Task<List<Attendance>> GetAttendancesOfUser(Guid id)
     {
         List<Attendance> attendances = await AccessJson.ReadJson<Attendance>();
-        List<Attendance> attendancesOfUser = attendances.FindAll(a => a.UserId == id);
-        return attendancesOfUser;
+        return attendances.FindAll(a => a.UserId == id);
     }
 
     public async Task<bool> UpdateAttendance(Attendance attendance) => await AttendanceAccess.Update(attendance);
@@ -27,7 +26,6 @@ public class AttendanceService
     public async Task<List<Attendance>> GetAllAttendancesOfDate(DateTime date)
     {
         List<Attendance> attendances = await AccessJson.ReadJson<Attendance>();
-        List<Attendance> foundAttendances = attendances.FindAll(a => DateTime.Parse(a.Date).Year == date.Year && DateTime.Parse(a.Date).Month == date.Month && DateTime.Parse(a.Date).Day == date.Day);
-        return foundAttendances;
+        return attendances.FindAll(a => DateTime.Parse(a.Date).Year == date.Year && DateTime.Parse(a.Date).Month == date.Month && DateTime.Parse(a.Date).Day == date.Day);
     }
 }

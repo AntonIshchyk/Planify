@@ -1,17 +1,14 @@
 public class EventAttendanceService
 {
-    public async Task<bool> AppendEventAttendance(EventAttendance ea, Event evt)
+    public async Task<bool> AppendEventAttendance(EventAttendance ea)
     {
         List<EventAttendance> eventattendances = await AccessJson.ReadJson<EventAttendance>();
         if (eventattendances.Find(a => a.EventId == ea.EventId && a.UserId == ea.UserId) is not null) return false;
         await AccessJson.WriteJson(ea);
         return true;
     }
-    public bool ValidateDate(Event evt)
-    {
-        if (DateOnly.Parse(evt.Date) < DateOnly.FromDateTime(DateTime.Now)) return false;
-        return true;
-    }
+    public bool ValidateDate(Event evt) => DateOnly.Parse(evt.Date) < DateOnly.FromDateTime(DateTime.Now) ? false : true;
+
     public async Task<bool> DeleteEventAttendance(Guid eventId, Guid userId)
     {
         List<EventAttendance> eventattendances = await AccessJson.ReadJson<EventAttendance>();
@@ -32,7 +29,7 @@ public class EventAttendanceService
     {
         List<EventAttendance> eventAttendances = await AccessJson.ReadJson<EventAttendance>();
         List<Guid> userIds = eventAttendances.FindAll(ea => ea.EventId == eventId).Select(ea => ea.UserId).ToList();
-        List<object> usersAndAdmins = new();
+        List<object> usersAndAdmins = [];
         List<User> users = await AccessJson.ReadJson<User>();
         List<Admin> admins = await AccessJson.ReadJson<Admin>();
         foreach (Guid id in userIds) foreach (User user in users) if (id == user.Id) usersAndAdmins.Add(user);

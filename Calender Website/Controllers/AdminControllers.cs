@@ -39,11 +39,7 @@ public class AdminControllers : Controller
 
     [HttpGet("get-all-admins")]
     [LoggedInFilter]
-    public async Task<IActionResult> GetAllAdmins()
-    {
-        List<Admin> admins = await AS.GetAllAdmin();
-        return Ok(admins);
-    }
+    public async Task<IActionResult> GetAllAdmins() => Ok(await AS.GetAllAdmin());
 
     [HttpPut("update-admin")]
     [LoggedInFilter]
