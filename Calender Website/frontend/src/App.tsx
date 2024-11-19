@@ -3,8 +3,6 @@ import './App.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Login from './components/Login';
 import MenuBar from './components/MenuBar';
-import EventList from './components/EventList';
-import UpdateEvent from './components/UpdateEvent';
 
 import Startup from './components/Startup';
 import CreateEvent from './components/CreateEvent'; // Import the new component
