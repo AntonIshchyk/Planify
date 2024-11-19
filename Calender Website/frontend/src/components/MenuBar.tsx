@@ -31,6 +31,10 @@ const MenuBar: React.FC<StartUpProps> = ({isAdmin, isLoggedIn}) => {
           <Link to="/create-event">Create Event</Link>
         </li>
         }
+        {isLoggedIn &&
+          <li>
+            <Link to="/get-all-events">All Events</Link>
+          </li>}
         {isLoggedIn && 
         <li>
             <form onSubmit={handleLogout}><button type="submit">Logout</button></form>

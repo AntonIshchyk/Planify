@@ -38,10 +38,6 @@ const EventList: React.FC = () => {
     }
     return (
         <div>
-            <h2>Event List</h2>
-            <form onSubmit={handleEventList}>
-                <button type="submit">Get All Events</button>
-            </form>
             {events && events.map((event) => (
                 <div key={event.id}>
                     <h3>{event.title}</h3>
@@ -51,6 +47,7 @@ const EventList: React.FC = () => {
                     <p><strong>End time: </strong>{event.endTime}</p>
                     <p><strong>Location: </strong>{event.location}</p>
                     <p><strong>Approval: </strong>{event.adminApproval ? 'Approved' : 'Pending'}</p>
+                    <br />
         </div>
             ))}
         </div>);}

@@ -9,6 +9,7 @@ import CreateEvent from './components/CreateEvent'; // Import the new component
 import axios from 'axios';
 import AdminScreen from './components/AdminScreen';
 import UserScreen from './components/UserScreen';
+import EventList from './components/EventList';
 function App() {
   const [showAdminLogin, setAdminLogin] = useState(false);
   const [showUserLogin, setUserLogin] = useState(false);
@@ -84,6 +85,7 @@ function App() {
             }
           />
           <Route path="/create-event" element={<CreateEvent />} />
+          <Route path="/get-all-events" element={<EventList />} />
         </Routes>
       </div>
     </BrowserRouter>
