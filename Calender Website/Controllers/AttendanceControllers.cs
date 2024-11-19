@@ -47,10 +47,8 @@ public class AttendanceControllers : Controller
     [LoggedInFilter]
     public async Task<IActionResult> UpdateAttendance([FromBody] Attendance attendance, [FromQuery] Guid attendanceId)
     {
-        if (attendance is null) return BadRequest("Data not complete.");
-        if (attendanceId != Guid.Empty) return BadRequest("Data is not complete.");
         DateTime date;
-        if (!DateTime.TryParse(attendance.Date, out date)) return BadRequest("Data isn't complete.");
+        if (attendance is null || attendanceId != Guid.Empty || !DateTime.TryParse(attendance.Date, out date)) return BadRequest("Data not complete.");
         if (date.Day <= DateTime.Now.Day) return BadRequest("You can't adjust data in the past or on the current day.");
 
         attendance.Id = attendanceId;

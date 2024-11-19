@@ -1,3 +1,4 @@
+using System.Globalization;
 using Microsoft.AspNetCore.Mvc;
 
 [Route("Calender-Website")]
@@ -26,29 +27,23 @@ public class EventController : Controller
     {
         string userIdString = HttpContext.Session.GetString("UserId")!;
 
-        if (string.IsNullOrEmpty(userIdString) || !Guid.TryParse(userIdString, out Guid userId))
-        {
-            return BadRequest("User ID is invalid or not available in session.");
-        }
+        if (string.IsNullOrEmpty(userIdString) || !Guid.TryParse(userIdString, out Guid userId)) return BadRequest("User ID is invalid or not available in session.");
 
         List<object> attendees = await eventAttendanceService.GetListOfAttendees(eventId);
-        List<User> friends = new();
-        foreach (object attendee in attendees)
-        {
-            // Since friends can be users only
-            if (attendee is User user)
-            {
-                if (user.Friends.Contains(userId))
-                {
-                    friends.Add(user);
-                }
-            }
-        }
+        List<User> friends = [];
+        // Since friends can be users only
+        foreach (object attendee in attendees) if (attendee is User user) if (user.Friends.Contains(userId)) friends.Add(user);
         return Ok(friends);
     }
 
     [HttpGet("get-all-events")]
-    public async Task<IActionResult> GetAllEvents() => Ok(await eventService.GetAllEvents());
+    [LoggedInFilter]
+    public async Task<IActionResult> GetAllEvents()
+    {
+        List<Event> events = await eventService.GetAllEvents();
+        return Ok(events);
+    }
+    
 
     [HttpPost("review")]
     [LoggedInFilter]
@@ -62,7 +57,7 @@ public class EventController : Controller
     [HttpGet("review")]
     public async Task<IActionResult> GetReviewsOfEvent([FromQuery] Guid id) => Ok(await eventService.GetReviewsFromEventId(id));
 
-    public async Task<IActionResult> GetAllReviews() => Ok(await GetAllReviews());
+    public async Task<IActionResult> GetAllReviews() => Ok(await eventService.GetAllReviews());
 
     [HttpPost("create-event")]
     [AdminFilter]
@@ -70,15 +65,16 @@ public class EventController : Controller
     {
         if (e is null || e.Description == "None" || e.Title == "None" || e.Location == "None") return BadRequest("There is not enough info to make an event. ");
         e.Id = Guid.NewGuid();
-        if (await eventService.AppendEvent(e)) return Ok("Event Created");
+        if (DateTime.Parse(e.EndTime) < DateTime.Parse(e.StartTime)) return BadRequest("End time cannot be earlier then start time. ");
+        if (await eventService.AppendEvent(e)) return Ok("Event created. ");
         return BadRequest("Something went wrong");
     }
 
     [HttpPut("update-event")]
     [AdminFilter]
-    public async Task<IActionResult> UpdateEvent([FromBody] Event e, [FromQuery] Guid id)
+    public async Task<IActionResult> UpdateEvent([FromBody] Event e)
     {
-        if (await eventService.UpdateEvent(e, id)) return Ok("Event updated.");
+        if (await eventService.UpdateEvent(e)) return Ok("Event updated.");
         return BadRequest("Event could not be found.");
     }
 

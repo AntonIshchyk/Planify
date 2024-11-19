@@ -3,9 +3,9 @@ public class Event : IHasId
     public Guid Id { get; set; }
     public string Title { get; set; } = "None";
     public string Description { get; set; } = "None";
-    public string Date { get; set; } = "0001-01-01";
-    public string StartTime { get; set; } = "00:00";
-    public string EndTime { get; set; } = "00:00";
+    public string Date { get; set; } = DateOnly.FromDateTime(DateTime.MinValue).ToString();
+    public string StartTime { get; set; } = TimeOnly.FromDateTime(DateTime.MinValue).ToString();
+    public string EndTime { get; set; } = TimeOnly.FromDateTime(DateTime.MinValue).ToString();
     public string Location { get; set; } = "None";
     public bool AdminApproval { get; set; } = false;
 
@@ -15,9 +15,11 @@ public class Event : IHasId
     {
         Title = title;
         Description = description;
-        Date = date.ToString("yyyy-MM-dd");
-        StartTime = startTime.ToString("hh:mm");
-        EndTime = endTime.ToString("hh:mm");
+        Date = date.ToString();
+        StartTime = startTime.ToString();
+        EndTime = endTime.ToString();
         Location = location;
     }
+
+    public override string ToString() => $"Title: {Title}\nDescription: {Description}\nDate: {Date}\nStart time: {StartTime}\nEnd time: {EndTime}\nLocation: {Location}";
 }

@@ -20,29 +20,21 @@ public class EventAttendanceControllers : Controller
         else
         {
             string userIdString = HttpContext.Session.GetString("UserId")!;
-            if (string.IsNullOrEmpty(userIdString) || !Guid.TryParse(userIdString, out Guid userId))
-            {
-                return BadRequest("User ID is invalid or not available in session.");
-            }
+            if (string.IsNullOrEmpty(userIdString) || !Guid.TryParse(userIdString, out Guid userId)) return BadRequest("User ID is invalid or not available in session.");
             attendance.UserId = userId;
-
             if (await EAS.TestExistence(attendance)) return BadRequest("You already attend this Event!");
             Event evt = await ES.GetEvent(attendance.EventId);
             if (!EAS.ValidateDate(evt)) return BadRequest("Because of the date of this event, you can no longer attend these.");
             attendance.Id = Guid.NewGuid();
-            if (await EAS.AppendEventAttendance(attendance, evt)) return Ok(evt);
+            if (await EAS.AppendEventAttendance(attendance)) return Ok(evt);
         }
         return BadRequest("Something went wrong.");
     }
 
     [HttpGet("EventAttendance")]
     [LoggedInFilter]
-    public async Task<IActionResult> GetAttendance()
-    {
-        //the function of this endpoint is very unclear in the description. An endpoint with filter is given below this endpoint.
-        List<EventAttendance> eventAttendances = await AccessJson.ReadJson<EventAttendance>();
-        return Ok(eventAttendances);
-    }
+    //the function of this endpoint is very unclear in the description. An endpoint with filter is given below this endpoint.
+    public async Task<IActionResult> GetAttendance() => Ok(await AccessJson.ReadJson<EventAttendance>());
 
     [HttpGet("EventAttendanceofEvent")]
     [LoggedInFilter]
@@ -50,8 +42,7 @@ public class EventAttendanceControllers : Controller
     {
         //the function of this endpoint is very unclear in the description. For now I do not use any filter.
         List<EventAttendance> eventAttendances = await AccessJson.ReadJson<EventAttendance>();
-        List<EventAttendance> foundEventAttendances = eventAttendances.FindAll(x => x.EventId == Id).ToList();
-        return Ok(foundEventAttendances);
+        return Ok(eventAttendances.FindAll(x => x.EventId == Id).ToList());
     }
 
     [HttpDelete("delete-event-attendance")]
