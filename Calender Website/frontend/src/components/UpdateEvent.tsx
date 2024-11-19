@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-const CreateEvent: React.FC = () => {
+const UpdateEvent: React.FC = () => {
+    const [Id, setId] = useState('');
     const [Title, setTitle] = useState('');
     const [Description, setDescription] = useState('');
     const [Date, setDate] = useState('');
@@ -11,13 +12,14 @@ const CreateEvent: React.FC = () => {
     const [AdminApproval, setAdminApproval] = useState(false);
     const [message, setMessage] = useState('');
 
-    const handleCreateEvent = async (event : React.FormEvent) => {
+    const handleUpdateEvent = async (event: React.FormEvent) => {
         event.preventDefault();
 
-        try{
-            const response = await axios.post(
-                'http://localhost:3000/Calender-Website/create-event',
+        try {
+            const response = await axios.put(
+                'http://localhost:3000/Calender-Website/update-event',
                 {
+                    "Id": Id,
                     "Title": Title,
                     "Description": Description,
                     "Date": Date,
@@ -29,9 +31,9 @@ const CreateEvent: React.FC = () => {
                 { withCredentials: true }
             );
             setMessage(response.data);
-        }catch(error){
+        } catch (error) {
             if (axios.isAxiosError(error) && error.response) {
-                setMessage(error.response.data); // Displays "Event already exists."
+                setMessage(error.response.data);
             } else {
                 setMessage('An error occurred. Please try again.');
             }
@@ -39,8 +41,15 @@ const CreateEvent: React.FC = () => {
     }
     return (
         <div>
-            <h2>Create Event</h2>
-            <form onSubmit={handleCreateEvent}>
+            <h2>Update Event</h2>
+            <form onSubmit={handleUpdateEvent}>
+                Id:
+                <textarea
+                    placeholder="Id"
+                    value={Id}
+                    onChange={(e) => setId(e.target.value)}
+                    required />
+                <br />
                 Title:
                 <input
                     type="text"
@@ -50,7 +59,7 @@ const CreateEvent: React.FC = () => {
                 <br />
                 Description:
                 <textarea
-                    placeholder="text"
+                    placeholder="Description"
                     value={Description}
                     onChange={(e) => setDescription(e.target.value)}
                 />
@@ -84,18 +93,18 @@ const CreateEvent: React.FC = () => {
                     required />
                 <br />
                 <label>
-                Admin Approval:
-                <input
-                    type="checkbox"
-                    checked={AdminApproval}
-                    onChange={(e) => setAdminApproval(e.target.checked)} />
+                    Admin Approval:
+                    <input
+                        type="checkbox"
+                        checked={AdminApproval}
+                        onChange={(e) => setAdminApproval(e.target.checked)} />
                 </label>
                 <br />
-                <button type="submit">Create Event</button>
+                <button type="submit">Update Event</button>
             </form>
             {message && <p>{message}</p>}
         </div>
     );
 }
 
-export default CreateEvent;
+export default UpdateEvent;

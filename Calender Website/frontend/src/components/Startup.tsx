@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 
 interface StartupProps {
     onAdminClick: () => void;
@@ -12,7 +11,7 @@ const Startup: React.FC<StartupProps> = ({onAdminClick, onUserClick}) => {
     return (
         <div>
             <h2>Login</h2>
-            <div className="narrator">  <h3>Welcome! What are you?</h3></div>
+            <div className="narrator"><h3>Welcome! What are you?</h3></div>
             <div className='left-to-right'>
             <form onSubmit={(event) => 
                 {
