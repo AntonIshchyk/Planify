@@ -10,73 +10,86 @@ import axios from 'axios';
 import AdminScreen from './components/AdminScreen';
 import UserScreen from './components/UserScreen';
 import EventList from './components/EventList';
-function App() {
-  const [showAdminLogin, setAdminLogin] = useState(false);
-  const [showUserLogin, setUserLogin] = useState(false);
-  const [loggedIn, setLoggedIn] = useState(false);
-  const [isAdmin, setIsAdmin] = useState(false);
-  const handleAdminClick = () => setAdminLogin(true);
-  const handleUserClick = () => setUserLogin(true);
-  const handleLoginClick = () => setLoggedIn(true);
-  const handleBacktoMenuClick = () => {
-    setAdminLogin(false);
-    setUserLogin(false);
+import { AppState, initAppState } from './App.state';
+export class App extends React.Component<{}, AppState> {
+
+  constructor(props : {}){
+    super(props );
+    this.state = initAppState;
+  }
+   handleBacktoMenuClick = () => {
+    this.setState(this.state.updateShowAdminLogin(false));
+    this.setState(this.state.updateShowUserLogin(false));
+  };
+   handleUserClick = () => {
+    this.setState(this.state.updateShowAdminLogin(false));
+    this.setState(this.state.updateShowUserLogin(true));
+  };
+   handleAdminClick = () => {
+    this.setState(this.state.updateShowAdminLogin(true));
+    this.setState(this.state.updateShowUserLogin(false));
   };
 
-  useEffect(() => {
+  async componentDidMount() {
     const checkAdminStatus = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/Calender-Website/check-admin', {withCredentials : true});
-        setIsAdmin(response.data); // true or false
+        const response = await axios.get('http://localhost:3000/Calender-Website/check-admin', {
+          withCredentials: true,
+        });
+        this.setState({ isAdmin: response.data }); // true or false
       } catch (error) {
         console.error('Error checking admin status:', error);
-        setIsAdmin(false);  // Default to false if there's an error
-      }
-    }
-    const checkLoginStatus = async () => {
-      try{
-        const response = await axios.get('http://localhost:3000/Calender-Website/check-logged-in', {withCredentials : true});
-        setLoggedIn(response.data);
-        setAdminLogin(false);
-        setUserLogin(false);
-      }
-      catch(error) {
-        console.error('Error checking login status: ', error);
-        setLoggedIn(false);
+        this.setState({ isAdmin: false }); // Default to false if there's an error
       }
     };
 
-    checkAdminStatus();
-    checkLoginStatus();
-  }, []);
+    const checkLoginStatus = async () => {
+      try {
+        const response = await axios.get('http://localhost:3000/Calender-Website/check-logged-in', {
+          withCredentials: true,
+        });
+        this.setState({
+          loggedIn: response.data,
+          showAdminLogin: false,
+          showUserLogin: false,
+        });
+      } catch (error) {
+        console.error('Error checking login status:', error);
+        this.setState({ loggedIn: false });
+      }
+    };
+    await checkAdminStatus();
+    await checkLoginStatus();
+  }
+render(){
   return (
     <BrowserRouter>
       <div className="App">
-        <MenuBar isAdmin={isAdmin} 
-        isLoggedIn={loggedIn}
+        <MenuBar isAdmin={this.state.isAdmin} 
+        isLoggedIn={this.state.loggedIn}
         /> 
         <Routes>
           <Route
             path="/"
             element={
               <>
-                {!loggedIn && (showUserLogin || showAdminLogin) && (
+                {!this.state.loggedIn && (this.state.showUserLogin || this.state.showAdminLogin) && (
                   <Login
-                    onBacktoMenuClick={handleBacktoMenuClick}
-                    isAdminLogin={showAdminLogin}
-                    isUserLogin={showUserLogin}
+                    onBacktoMenuClick={this.handleBacktoMenuClick}
+                    isAdminLogin={this.state.showAdminLogin}
+                    isUserLogin={this.state.showUserLogin}
                   />
                 )}
-                {!loggedIn && !showAdminLogin && !showUserLogin && (
+                {!this.state.loggedIn && !this.state.showAdminLogin && !this.state.showUserLogin && (
                   <Startup
-                    onUserClick={handleUserClick}
-                    onAdminClick={handleAdminClick}
+                    onUserClick={this.handleUserClick}
+                    onAdminClick={this.handleAdminClick}
                   />
                 )}
-                {isAdmin && (
+                {this.state.isAdmin && (
                   <AdminScreen/>
                 )}
-                {!isAdmin && loggedIn && (
+                {!this.state.isAdmin && this.state.loggedIn && (
                   <UserScreen/>
                 )
 
@@ -89,7 +102,8 @@ function App() {
         </Routes>
       </div>
     </BrowserRouter>
-  );
+  )
+}
 }
 
 export default App;

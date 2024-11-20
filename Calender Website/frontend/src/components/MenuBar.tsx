@@ -1,12 +1,16 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom'; 
 import axios from 'axios';
-interface StartUpProps {
+import Login from './Login';
+interface MenuBarProps {
     isAdmin : boolean;
     isLoggedIn : boolean;
 }
-const MenuBar: React.FC<StartUpProps> = ({isAdmin, isLoggedIn}) => {
-    const handleLogout = async (event : React.FormEvent) => {
+export class MenuBar extends React.Component<MenuBarProps, {}>{
+    constructor(props : MenuBarProps){
+        super(props);
+    }
+    handleLogout = async (event : React.FormEvent) => {
         event.preventDefault();
         await axios.post(
             'http://localhost:3000/Calender-Website/logout',
@@ -16,32 +20,34 @@ const MenuBar: React.FC<StartUpProps> = ({isAdmin, isLoggedIn}) => {
         window.location.reload();
 
     }
+    render(){
   return (
     <nav className="menu-bar">
       <div className="menu-logo">MyApp</div>
       <ul className="menu-links">
         {
-        isLoggedIn && 
+        this.props.isLoggedIn && 
         <li>
           <Link to="/">Home</Link>
         </li>
         }
-        {isAdmin &&
+        {this.props.isAdmin &&
         <li>
           <Link to="/create-event">Create Event</Link>
         </li>
         }
-        {isLoggedIn &&
+        {this.props.isLoggedIn &&
           <li>
             <Link to="/get-all-events">All Events</Link>
           </li>}
-        {isLoggedIn && 
+        {this.props.isLoggedIn && 
         <li>
-            <form onSubmit={handleLogout}><button type="submit">Logout</button></form>
+            <form onSubmit={this.handleLogout}><button type="submit">Logout</button></form>
         </li>}
       </ul>
     </nav>  
   );
+}
 };
 
 export default MenuBar;

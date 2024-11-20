@@ -1,74 +1,74 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { initLoginState, LoginState } from './Login.state';
 
-
-interface StartupProps {
+interface LoginProps {
     onBacktoMenuClick : () => void;
     isAdminLogin : boolean;
     isUserLogin : boolean;
 }
-const Login: React.FC<StartupProps> = ({onBacktoMenuClick, isAdminLogin, isUserLogin}) => {
+export class Login extends React.Component<LoginProps, LoginState> {
+    constructor(props : LoginProps){
+        super(props);
+        this.state = initLoginState;
+    }
 
-    const [email, setEmail] = useState('');
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
-    const [message, setMessage] = useState('');
-
-    const handleLogin = async (event : React.FormEvent) => {
+    handleLogin = async (event : React.FormEvent) => {
         event.preventDefault();
 
         try{
         
-            if(isAdminLogin){
+            if(this.props.isAdminLogin){
             const response = await axios.post(
                 'http://localhost:3000/Calender-Website/login-admin',
-                {"Username" : username, 
-                 "Password" : password },
+                {"Username" : this.state.username, 
+                 "Password" : this.state.password },
                  {withCredentials: true}
             );
-            setMessage(response.data);
+            this.setState(this.state.updateMessage(response.data));
             window.location.reload();
         }
         else{
             const response = await axios.post(
                 'http://localhost:3000/Calender-Website/login-user',
-                {"Email" : email, 
-                 "Password" : password },
+                {"Email" : this.state.email, 
+                 "Password" : this.state.password },
                  {withCredentials : true}
             );
-            setMessage(response.data);
+            this.setState(this.state.updateMessage(response.data));
             
             window.location.reload();
         }
         }catch(error){
             if (axios.isAxiosError(error) && error.response) {
-                setMessage(error.response.data); // Displays "User not found" or "User is already logged in."
+                this.setState(this.state.updateMessage(error.response.data)); // Displays "User not found" or "User is already logged in."
             } else {
-                setMessage('An error occurred. Please try again.');
+                this.setState(this.state.updateMessage("There is an error"));
             }
         }
-    }
+    };
 
-    return (
+    render() {
+        return(
         <div>
             <h2>Login</h2>
-            <form onSubmit={handleLogin}>
-                {isUserLogin && <label>
+            <form onSubmit={this.handleLogin}>
+                {this.props.isUserLogin && <label>
                     Email:
                     <input 
                     type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    value={this.state.email}
+                    onChange={(e) => this.setState(this.state.updateEmail(e.currentTarget.value))}
                     required />
                 </label>
                 }
                 <br />
-                {isAdminLogin && <label>
+                {this.props.isAdminLogin && <label>
                     Username:
                     <input 
                     type="username"
-                    value={username}
-                        onChange={(e) => setUsername(e.target.value)}
+                    value={this.state.username}
+                        onChange={(e) => this.setState(this.state.updateUsername(e.currentTarget.value))}
                     required />
                 </label>
                 }
@@ -77,8 +77,8 @@ const Login: React.FC<StartupProps> = ({onBacktoMenuClick, isAdminLogin, isUserL
                     Password:
                     <input 
                     type="password" 
-                    value={password} 
-                    onChange = {(e) => setPassword(e.target.value)}
+                    value={this.state.password} 
+                    onChange = {(e) => this.setState(this.state.updatePassword(e.currentTarget.value))}
                     required/>
                 </label>
                 <br />
@@ -87,13 +87,13 @@ const Login: React.FC<StartupProps> = ({onBacktoMenuClick, isAdminLogin, isUserL
 
             <form onSubmit={(event) => {
                 event.preventDefault();
-                onBacktoMenuClick();
+                this.props.onBacktoMenuClick();
             }}>
             <button type="submit">Back to Menu</button>
             </form>
-            {message && <p>{message}</p>}
+            {this.state.message && <p>{this.state.message}</p>}
         </div>
-    );
+)};
 };
 
 export default Login;   
