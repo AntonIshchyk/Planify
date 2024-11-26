@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { initLoginState, LoginState } from './Login.state';
+import { AppState } from '../App.state';
+import { toast } from 'react-toastify';
 
 interface LoginProps {
     onBacktoMenuClick : () => void;
@@ -11,21 +13,20 @@ export class Login extends React.Component<LoginProps, LoginState> {
     constructor(props : LoginProps){
         super(props);
         this.state = initLoginState;
+        
     }
-
     handleLogin = async (event : React.FormEvent) => {
         event.preventDefault();
-
         try{
         
             if(this.props.isAdminLogin){
-            const response = await axios.post(
+                const response = await axios.post(
                 'http://localhost:3000/Calender-Website/login-admin',
                 {"Username" : this.state.username, 
                  "Password" : this.state.password },
                  {withCredentials: true}
             );
-            this.setState(this.state.updateMessage(response.data));
+            localStorage.setItem("message", response.data)
             window.location.reload();
         }
         else{
@@ -35,15 +36,15 @@ export class Login extends React.Component<LoginProps, LoginState> {
                  "Password" : this.state.password },
                  {withCredentials : true}
             );
-            this.setState(this.state.updateMessage(response.data));
+            toast.info(response.data);
             
             window.location.reload();
         }
         }catch(error){
             if (axios.isAxiosError(error) && error.response) {
-                this.setState(this.state.updateMessage(error.response.data)); // Displays "User not found" or "User is already logged in."
+                toast.error(error.response.data); // Displays "User not found" or "User is already logged in."
             } else {
-                this.setState(this.state.updateMessage("There is an error"));
+                toast.error("There is an error");
             }
         }
     };
@@ -91,7 +92,6 @@ export class Login extends React.Component<LoginProps, LoginState> {
             }}>
             <button type="submit">Back to Menu</button>
             </form>
-            {this.state.message && <p>{this.state.message}</p>}
         </div>
 )};
 };

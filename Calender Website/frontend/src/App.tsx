@@ -3,7 +3,8 @@ import './App.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Login from './components/Login';
 import MenuBar from './components/MenuBar';
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import Startup from './components/Startup';
 import CreateEvent from './components/CreateEvent'; // Import the new component
 import axios from 'axios';
@@ -11,6 +12,7 @@ import AdminScreen from './components/AdminScreen';
 import UserScreen from './components/UserScreen';
 import EventList from './components/EventList';
 import { AppState, initAppState } from './App.state';
+
 export class App extends React.Component<{}, AppState> {
 
   constructor(props : {}){
@@ -26,45 +28,66 @@ export class App extends React.Component<{}, AppState> {
     this.setState(this.state.updateShowUserLogin(true));
   };
    handleAdminClick = () => {
-    this.setState(this.state.updateShowAdminLogin(true));
+    this.setState(this.state.updateShowAdminLogin(true)); 
     this.setState(this.state.updateShowUserLogin(false));
   };
-
   async componentDidMount() {
-    const checkAdminStatus = async () => {
-      try {
+    // Check and show toast message first
+    const message = localStorage.getItem('message');
+    if (message) {
+        toast.info(message); // Display the message
+        localStorage.removeItem('message'); // Clear it
+    }
+
+    // Run async checks without delaying the toast rendering
+    this.checkAdminStatus();
+    this.checkLoginStatus();
+}
+
+checkAdminStatus = async () => {
+    try {
         const response = await axios.get('http://localhost:3000/Calender-Website/check-admin', {
-          withCredentials: true,
+            withCredentials: true,
         });
         this.setState({ isAdmin: response.data }); // true or false
-      } catch (error) {
+    } catch (error) {
         console.error('Error checking admin status:', error);
         this.setState({ isAdmin: false }); // Default to false if there's an error
-      }
-    };
+    }
+};
 
-    const checkLoginStatus = async () => {
-      try {
+checkLoginStatus = async () => {
+    try {
         const response = await axios.get('http://localhost:3000/Calender-Website/check-logged-in', {
-          withCredentials: true,
+            withCredentials: true,
         });
         this.setState({
-          loggedIn: response.data,
-          showAdminLogin: false,
-          showUserLogin: false,
+            loggedIn: response.data,
+            showAdminLogin: false,
+            showUserLogin: false,
         });
-      } catch (error) {
+    } catch (error) {
         console.error('Error checking login status:', error);
         this.setState({ loggedIn: false });
-      }
-    };
-    await checkAdminStatus();
-    await checkLoginStatus();
-  }
+    }
+};
 render(){
   return (
     <BrowserRouter>
       <div className="App">
+      <ToastContainer 
+          position="top-right" 
+          autoClose={5000} 
+          hideProgressBar={false} 
+          newestOnTop 
+          closeOnClick 
+          rtl={false} 
+          pauseOnFocusLoss 
+          draggable 
+          pauseOnHover 
+          theme="light"
+        />  
+
         <MenuBar isAdmin={this.state.isAdmin} 
         isLoggedIn={this.state.loggedIn}
         /> 
@@ -97,8 +120,8 @@ render(){
               </>
             }
           />
-          <Route path="/create-event" element={<CreateEvent />} />
-          <Route path="/get-all-events" element={<EventList />} />
+          <Route path="/create-event" element={<CreateEvent/>}/>
+          <Route path="/get-all-events" element={<> <EventList/> </>} />
         </Routes>
       </div>
     </BrowserRouter>

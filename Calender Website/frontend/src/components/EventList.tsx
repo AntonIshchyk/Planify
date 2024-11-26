@@ -1,22 +1,17 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { EventListState, initEventListState } from './EventList.state';
+import { AppState } from '../App.state';
+import { toast } from 'react-toastify';
 
-interface Event {
-    id: string;
-    title: string;
-    description: string;
-    date: string;
-    startTime: string;
-    endTime: string;
-    location: string;
-    adminApproval: boolean;
+interface EventListProps{
 }
-
-const EventList: React.FC = () => {
-    const [events, setEvents] = useState<Event[]>([]);
-    const [message, setMessage] = useState('');
-
-    const handleEventList = async (event: React.FormEvent) => {
+export class EventList extends React.Component<EventListProps, EventListState> {
+    constructor(props: EventListProps){
+        super(props);
+        this.state = initEventListState
+    }
+    handleEventList = async (event: React.FormEvent) => {
         event.preventDefault();
 
         try {
@@ -24,21 +19,22 @@ const EventList: React.FC = () => {
                 'http://localhost:3000/Calender-Website/get-all-events',
                 { withCredentials: true }
             );
-            setEvents(response.data);
+            this.setState(this.state.updateEvents(response.data));
         } catch (error) {
             if (axios.isAxiosError(error) && error.response) {
-                setMessage(error.response.data); // Displays "Event already exists."
+                toast.error(error.response.data); // Displays "Event already exists."
             } else {
-                setMessage('An error occurred. Please try again.');
+                toast.error('An error occurred. Please try again.');
             }
         }
-        if (events.length === 0) {
-            setMessage('No events found.');
+        if (this.state.events.length === 0) {
+            toast.error('No events found.');
         }
     }
+    render(){
     return (
         <div>
-            {events && events.map((event) => (
+            {this.state.events && this.state.events.map((event) => (
                 <div key={event.id}>
                     <h3>{event.title}</h3>
                     <p><strong>Description: </strong>{event.description}</p>
@@ -51,4 +47,5 @@ const EventList: React.FC = () => {
         </div>
             ))}
         </div>);}
+}
 export default EventList;

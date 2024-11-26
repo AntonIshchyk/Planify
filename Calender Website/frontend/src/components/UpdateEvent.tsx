@@ -1,110 +1,110 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-
-const UpdateEvent: React.FC = () => {
-    const [Id, setId] = useState('');
-    const [Title, setTitle] = useState('');
-    const [Description, setDescription] = useState('');
-    const [Date, setDate] = useState('');
-    const [StartTime, setStartTime] = useState('');
-    const [EndTime, setEndTime] = useState('');
-    const [Location, setLocation] = useState('');
-    const [AdminApproval, setAdminApproval] = useState(false);
-    const [message, setMessage] = useState('');
-
-    const handleUpdateEvent = async (event: React.FormEvent) => {
+import { initUpdateEventState, UpdateEventState } from './UpdateEvent.state';
+import { AppState } from '../App.state';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+interface UpdateEventProps {
+}
+export class UpdateEvent extends React.Component<UpdateEventProps, UpdateEventState>{
+    constructor(props: UpdateEventProps){
+        super(props);
+        this.state = initUpdateEventState;
+    }
+    handleUpdateEvent = async (event: React.FormEvent) => {
         event.preventDefault();
 
         try {
             const response = await axios.put(
                 'http://localhost:3000/Calender-Website/update-event',
                 {
-                    "Id": Id,
-                    "Title": Title,
-                    "Description": Description,
-                    "Date": Date,
-                    "StartTime": StartTime,
-                    "EndTime": EndTime,
-                    "Location": Location,
-                    "AdminApproval": AdminApproval
+                    "Id": this.state.id,
+                    "Title": this.state.title,
+                    "Description": this.state.description,
+                    "Date": this.state.date,
+                    "StartTime": this.state.startTime,
+                    "EndTime": this.state.endTime,
+                    "Location": this.state.adminApproval,
+                    "AdminApproval": this.state.adminApproval
                 },
                 { withCredentials: true }
             );
-            setMessage(response.data);
+            toast.info(response.data);
         } catch (error) {
             if (axios.isAxiosError(error) && error.response) {
-                setMessage(error.response.data);
+                toast.error(error.response.data);
             } else {
-                setMessage('An error occurred. Please try again.');
+                toast.error('An error occurred. Please try again.');
             }
         }
     }
+    render(){
     return (
         <div>
             <h2>Update Event</h2>
-            <form onSubmit={handleUpdateEvent}>
+            <form onSubmit={this.handleUpdateEvent}>
                 Id:
                 <textarea
                     placeholder="Id"
-                    value={Id}
-                    onChange={(e) => setId(e.target.value)}
+                    value={this.state.id}
+                    onChange={(e) => this.setState(this.state.updateId(e.target.value))}
                     required />
                 <br />
                 Title:
                 <input
                     type="text"
-                    value={Title}
-                    onChange={(e) => setTitle(e.target.value)}
+                    value={this.state.title}
+                    onChange={(e) => this.setState(this.state.updateTitle(e.target.value))}
                     required />
                 <br />
                 Description:
                 <textarea
                     placeholder="Description"
-                    value={Description}
-                    onChange={(e) => setDescription(e.target.value)}
+                    value={this.state.description}
+                    onChange={(e) => this.setState(this.state.updateDescription(e.target.value))}
                 />
                 <br />
                 Location:
                 <input
                     type="text"
-                    value={Location}
-                    onChange={(e) => setLocation(e.target.value)}
+                    value={this.state.location}
+                    onChange={(e) => this.setState(this.state.updateLocation(e.target.value))}
                     required />
                 <br />
                 Date:
                 <input
                     type="date"
-                    value={Date}
-                    onChange={(e) => setDate(e.target.value)}
+                    value={this.state.date}
+                    onChange={(e) => this.setState(this.state.updateDate(e.target.value))}
                     required />
                 <br />
                 Start Time:
                 <input
                     type="time"
-                    value={StartTime}
-                    onChange={(e) => setStartTime(e.target.value)}
+                    value={this.state.startTime}
+                    onChange={(e) => this.setState(this.state.updateStartTime(e.target.value))}
                     required />
                 <br />
                 End Time:
                 <input
                     type="time"
-                    value={EndTime}
-                    onChange={(e) => setEndTime(e.target.value)}
+                    value={this.state.endTime}
+                    onChange={(e) => this.setState(this.state.updateEndTime(e.target.value))}
                     required />
                 <br />
                 <label>
                     Admin Approval:
                     <input
                         type="checkbox"
-                        checked={AdminApproval}
-                        onChange={(e) => setAdminApproval(e.target.checked)} />
+                        checked={this.state.adminApproval}
+                        onChange={(e) => this.setState(this.state.updateAdminApproval(e.target.checked))} />
                 </label>
                 <br />
                 <button type="submit">Update Event</button>
             </form>
-            {message && <p>{message}</p>}
         </div>
     );
+}
 }
 
 export default UpdateEvent;
