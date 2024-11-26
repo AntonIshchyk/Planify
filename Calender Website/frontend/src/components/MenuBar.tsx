@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom'; 
 import axios from 'axios';
 import Login from './Login';
@@ -37,9 +37,13 @@ export class MenuBar extends React.Component<MenuBarProps, {}>{
         </li>
         }
         {this.props.isLoggedIn &&
-          <li>
-            <Link to="/get-all-events">All Events</Link>
-          </li>}
+        <li>
+          <Link to="/get-all-events">All Events</Link>
+        </li>}
+        {this.props.isAdmin &&
+        <li>
+          <Link to="/delete-event">Delete Event</Link>
+        </li>}
         {this.props.isLoggedIn && 
         <li>
             <form onSubmit={this.handleLogout}><button type="submit">Logout</button></form>

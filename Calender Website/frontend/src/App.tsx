@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import './App.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Login from './components/Login';
@@ -10,6 +10,7 @@ import axios from 'axios';
 import AdminScreen from './components/AdminScreen';
 import UserScreen from './components/UserScreen';
 import EventList from './components/EventList';
+import DeleteEvent from './components/DeleteEvent';
 import { AppState, initAppState } from './App.state';
 export class App extends React.Component<{}, AppState> {
 
@@ -99,6 +100,7 @@ render(){
           />
           <Route path="/create-event" element={<CreateEvent />} />
           <Route path="/get-all-events" element={<EventList />} />
+          <Route path="/delete-event" element={<DeleteEvent />} />
         </Routes>
       </div>
     </BrowserRouter>
