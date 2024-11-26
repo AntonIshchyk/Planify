@@ -1,4 +1,5 @@
 import { DebugLogger } from "util";
+import App from "./App";
 
 export type AppState = {
     showAdminLogin: boolean;
@@ -9,7 +10,7 @@ export type AppState = {
     updateShowUserLogin : (showUserLogin : boolean) => (state : AppState) => AppState;
     updateLoggedIn : (loggedIn : boolean) => (state : AppState) => AppState;
     updateIsAdmin : (isAdmin : boolean) => (state : AppState) => AppState;
-}
+}   
 
 export const initAppState = {
     showAdminLogin : false,
