@@ -1,4 +1,3 @@
-"use client";
 import React from 'react';
 import axios from 'axios';
 import { initLoginState, LoginState } from './Login.state';
