@@ -20,4 +20,4 @@ export const initLoginState = {
     updatePassword : (password: string) => (state: LoginState) : LoginState => ({...state,
         password : password
     })
-}
+} 

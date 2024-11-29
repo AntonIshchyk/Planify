@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { EventListState, initEventListState } from './EventList.state';
+import { toast } from 'react-toastify';
 
 interface Event {
     id: string;
@@ -12,37 +14,38 @@ interface Event {
     adminApproval: boolean;
 }
 
-const EventList: React.FC = () => {
-    const [events, setEvents] = useState<Event[]>([]);
-    const [message, setMessage] = useState('');
-
-    useEffect(() => {
+export class EventList extends React.Component<{}, EventListState>{
+    constructor(props : {}){
+        super(props);
+        this.state = initEventListState;
+        
+    }
+    componentDidMount() {
         // Fetch data when the component mounts
-        const fetchEvents = async () => {
-            try {
-                const response = await axios.get(
-                    'http://localhost:3000/Calender-Website/get-all-events',
-                    { withCredentials: true }
-                );
-                setEvents(response.data);
-            } catch (error) {
-                if (axios.isAxiosError(error) && error.response) {
-                    setMessage(error.response.data);
-                } else {
-                    setMessage('An error occurred. Please try again.');
-                }
+        this.fetchEvents();
+    }
+    fetchEvents = async () => {
+        try {
+            const response = await axios.get(
+                'http://localhost:3000/Calender-Website/get-all-events',
+                { withCredentials: true }
+            );
+            this.setState(this.state.updateEvents(response.data));
+        } catch (error) {
+            if (axios.isAxiosError(error) && error.response) {
+                toast.error(error.response.data);
+            } else {
+                toast.error('An error occurred. Please try again.');
             }
-        };
-
-        fetchEvents();
-    }, []); // Empty dependency array to run once when the component mounts
-
+        }
+    };
+ // Empty dependency array to run once when the component mounts
+    render(){
     return (
         <div>
-            {message && <p>{message}</p>}
-            {events.length <= 0 ? (
+            {this.state.events.length <= 0 ? (
                 <p>No events found.</p>) : 
-                (events.map((event) => (
+                (this.state.events.map((event) => (
                     <div key={event.id}>
                         <h3>{event.title}</h3>
                         <p><strong>Description: </strong>{event.description}</p>
@@ -57,6 +60,6 @@ const EventList: React.FC = () => {
             )}
         </div>
     );
-};
-
+}
+}
 export default EventList;
