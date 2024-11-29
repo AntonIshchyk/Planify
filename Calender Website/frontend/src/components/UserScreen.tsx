@@ -1,11 +1,10 @@
+"use client";
 import React from 'react';
+
 interface UserScreenProps{
     
 }
 export class UserScreen extends React.Component<UserScreenProps,{}>{
-    constructor(props : UserScreenProps){
-        super(props);
-    }
     render(){
     return (
         <div>

@@ -1,6 +1,3 @@
-import { DebugLogger } from "util";
-import App from "./App";
-
 export type AppState = {
     showAdminLogin: boolean;
     showUserLogin: boolean;

@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
+"use client";
+import React from 'react';
 import axios from 'axios';
 import { initLoginState, LoginState } from './Login.state';
-import { AppState } from '../App.state';
 import { toast } from 'react-toastify';
-import { Toast } from 'react-toastify/dist/components';
 
 interface LoginProps {
     onBacktoMenuClick : () => void;

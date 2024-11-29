@@ -1,16 +1,13 @@
+"use client";
 import React from 'react';
 import { Link } from 'react-router-dom'; 
 import axios from 'axios';
-import Login from './Login';
-import { AppState } from '../App.state';
+
 interface MenuBarProps {
     isAdmin : boolean;
     isLoggedIn : boolean;
 }
 export class MenuBar extends React.Component<MenuBarProps, {}>{
-    constructor(props : MenuBarProps){
-        super(props);
-    }
     handleLogout = async (event : React.FormEvent) => {
         event.preventDefault();
         await axios.post(

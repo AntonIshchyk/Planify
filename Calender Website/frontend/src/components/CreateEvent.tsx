@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+"use client";
+import React from 'react';
 import axios from 'axios';
 import { CreateEventState, initCreateEventState } from './CreateEvent.state';
-import { AppState, initAppState } from '../App.state';
 import { toast } from 'react-toastify';
+
 interface CreateEventProps{
 }
 export class CreateEvent extends React.Component<CreateEventProps, CreateEventState> {

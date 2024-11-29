@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+"use client";
+import React from 'react';
 import axios from 'axios';
 import { initUpdateEventState, UpdateEventState } from './UpdateEvent.state';
-import { AppState } from '../App.state';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 interface UpdateEventProps {
 }

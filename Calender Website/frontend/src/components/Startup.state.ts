@@ -1,5 +1,3 @@
-import Login from "./Login";
-
 export type StartupState = {
     message : string;
     updateMessage : (message : string) => (state : StartupState) => StartupState

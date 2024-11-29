@@ -1,14 +1,11 @@
-import React, { useState } from 'react';
-import { AppState } from '../App.state';
+"use client";
+import React from 'react';
 
 interface StartupProps {
     onAdminClick: () => void;
     onUserClick: () => void;
 }
 export class Startup extends React.Component<StartupProps>{
-    constructor(props : StartupProps){
-        super(props);
-    }
     render(){
     return (
         <div>

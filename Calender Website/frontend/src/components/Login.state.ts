@@ -1,5 +1,3 @@
-import Login from "./Login";
-
 export type LoginState = {
     email : string;
     username: string;
@@ -10,9 +8,9 @@ export type LoginState = {
 }
 
 export const initLoginState = {
-    email: "",
-    username : "",
-    password : "",
+    email: '',
+    username : '',
+    password : '',
     updateUsername : (username: string) => (state: LoginState) : LoginState => ({...state,
         username : username
     }),

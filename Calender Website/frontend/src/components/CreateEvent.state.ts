@@ -1,5 +1,3 @@
-import { endianness } from "os";
-
 export type CreateEventState = {
     title : string;
     description: string;
