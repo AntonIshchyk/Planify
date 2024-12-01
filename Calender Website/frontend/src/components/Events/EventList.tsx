@@ -1,4 +1,4 @@
-/*import React from 'react';
+import React from 'react';
 import axios from 'axios';
 import { EventListState, initEventListState } from './EventList.state';
 import { toast } from 'react-toastify';
@@ -51,5 +51,5 @@ export class EventList extends React.Component<{}, EventListState>{
     );
 }
 }
-export default EventList;*/
+export default EventList;
 export {};
