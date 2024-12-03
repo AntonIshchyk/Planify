@@ -13,6 +13,27 @@ export class EventList extends React.Component<{}, EventListState>{
         // Fetch data when the component mounts
         this.fetchEvents();
     }
+    async handleDelete(id: string) {
+        try {
+            const response = await axios.delete(
+                `http://localhost:3000/Calender-Website/delete-event?id=${id}`,
+                {
+                    withCredentials: true
+                }
+            )
+            localStorage.setItem('message', id);
+            window.location.reload();
+            window.dispatchEvent(new Event('storageUpdated'));
+        }
+        catch (error) {
+            if (axios.isAxiosError(error) && error.response) {
+                toast.error(error.response.data)
+            }
+            else {
+                toast.error('An error occurred. Please try again.');
+            }
+        }
+    }
     fetchEvents = async () => {
         try {
             const response = await axios.get(
@@ -43,6 +64,7 @@ export class EventList extends React.Component<{}, EventListState>{
                         <p><strong>End time: </strong>{event.endTime}</p>
                         <p><strong>Location: </strong>{event.location}</p>
                         <p><strong>Approval: </strong>{event.adminApproval ? 'Approved' : 'Pending'}</p>
+                        <button onClick={() => this.handleDelete(event.id)}>Delete</button>
                         <br />
                     </div>
                 ))
