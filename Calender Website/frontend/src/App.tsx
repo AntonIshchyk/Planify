@@ -1,16 +1,16 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import './App.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Login from './components/Login';
 import MenuBar from './components/MenuBar';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Startup from './components/Startup';
 import CreateEvent from './components/CreateEvent';
 import axios from 'axios';
 import AdminScreen from './components/AdminScreen';
 import UserScreen from './components/UserScreen';
-//import EventList from './components/EventList';
+import EventList from './components/EventList';
 import DeleteEvent from './components/DeleteEvent';
 import { AppState, initAppState } from './App.state';
 
@@ -96,18 +96,6 @@ export class App extends Component<{}, AppState> {
     return (
       <BrowserRouter>
         <div className="App">
-          <ToastContainer
-            position="top-right"
-            autoClose={5000}
-            hideProgressBar={false}
-            newestOnTop
-            closeOnClick
-            rtl={false}
-            pauseOnFocusLoss
-            draggable
-            pauseOnHover
-            theme="light"
-          />
 
           <MenuBar
             isAdmin={this.state.isAdmin}
@@ -135,7 +123,7 @@ export class App extends Component<{}, AppState> {
               }
             />
             <Route path="/create-event" element={<CreateEvent />} />
-            
+            <Route path="/get-all-events" element={<EventList />} />
             <Route path="/delete-event" element={<DeleteEvent />} />
           </Routes>
         </div>
@@ -145,4 +133,3 @@ export class App extends Component<{}, AppState> {
 }
 
 export default App;
-//<Route path="/get-all-events" element={<EventList />} />
