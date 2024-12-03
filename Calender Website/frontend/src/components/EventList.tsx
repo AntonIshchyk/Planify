@@ -3,8 +3,14 @@ import axios from 'axios';
 import { EventListState, initEventListState } from './EventList.state';
 import { toast } from 'react-toastify';
 
-export class EventList extends React.Component<{}, EventListState>{
-    constructor(props : {}){
+interface EventListProps {
+    onBacktoMenuClick: () => void;
+    isAdminLogin: boolean;
+    isUserLogin: boolean;
+}
+
+export class EventList extends React.Component<EventListProps, EventListState>{
+    constructor(props: EventListProps){
         super(props);
         this.state = initEventListState;
         
@@ -64,7 +70,7 @@ export class EventList extends React.Component<{}, EventListState>{
                         <p><strong>End time: </strong>{event.endTime}</p>
                         <p><strong>Location: </strong>{event.location}</p>
                         <p><strong>Approval: </strong>{event.adminApproval ? 'Approved' : 'Pending'}</p>
-                        <button onClick={() => this.handleDelete(event.id)}>Delete</button>
+                        {this.props.isAdminLogin && <label><button onClick={() => this.handleDelete(event.id)}>Delete</button></label>}
                         <br />
                     </div>
                 ))

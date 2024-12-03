@@ -123,7 +123,10 @@ export class App extends Component<{}, AppState> {
               }
             />
             <Route path="/create-event" element={<CreateEvent />} />
-            <Route path="/get-all-events" element={<EventList />} />
+            <Route path="/get-all-events" element={<EventList
+              onBacktoMenuClick={this.handleBacktoMenuClick}
+              isAdminLogin={this.state.showAdminLogin}
+              isUserLogin={this.state.showUserLogin} />} />
             <Route path="/delete-event" element={<DeleteEvent />} />
           </Routes>
         </div>
