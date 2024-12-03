@@ -13,6 +13,7 @@ import UserScreen from './components/Home/UserScreen';
 import EventList from './components/Events/EventList';
 import DeleteEvent from './components/Events/DeleteEvent';
 import { AppState, initAppState } from './App.state';
+import { Friends } from './components/Friends/Friends';
 
 export class App extends Component<{}, AppState> {
   constructor(props: {}) {
@@ -137,6 +138,7 @@ export class App extends Component<{}, AppState> {
             <Route path="/create-event" element={<CreateEvent />} />
             <Route path="/get-all-events" element={<EventList />} />
             <Route path="/delete-event" element={<DeleteEvent />} />
+            <Route path="/friends" element={<Friends />} />
           </Routes>
         </div>
       </BrowserRouter>
