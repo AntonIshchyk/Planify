@@ -90,6 +90,30 @@ export class Friends extends React.Component<{}, FriendsState>
         }
     };
 
+
+    deleteFriend = async (friendId: string) => {
+        try {
+            // Send DELETE request to remove the friend
+            await axios.delete(
+                `http://localhost:3000/Calender-Website/delete-friend?id=${friendId}`,
+                { withCredentials: true }
+            );
+
+            // After deletion, remove the friend from the state
+            this.setState({
+                friends: this.state.friends.filter(friend => friend.id !== friendId),
+            });
+
+            toast.success('Friend deleted successfully!');
+        } catch (error) {
+            if (axios.isAxiosError(error) && error.response) {
+                toast.error(error.response.data);
+            } else {
+                toast.error('An error occurred. Please try again.');
+            }
+        }
+    };
+
     render()
     {
         return (
@@ -104,6 +128,7 @@ export class Friends extends React.Component<{}, FriendsState>
                         <h3>{friend.email}</h3>
                         <h3>Recurring Days {friend.recurringDays}</h3>
                         <h3>We could also show friends of our friend</h3>
+                        <button onClick={() => this.deleteFriend(friend.id)}>Delete friend</button>
                         <br />
                     </div>
                 ))
