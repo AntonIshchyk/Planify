@@ -113,7 +113,7 @@ export class Friends extends React.Component<{}, FriendsState>
                 <h1>Your Friend Requests</h1>
                     {this.state.requests.length <= 0 ? (
                     <p>No Requests found.</p>) : 
-                    (this.state.friends.map(friend => (
+                    (this.state.requests.map(friend => (
                         <div key={friend.id}>
                             <h3>{friend.firstName}</h3>
                             <h3>{friend.lastName}</h3>
