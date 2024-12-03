@@ -42,6 +42,11 @@ export class MenuBar extends React.Component<MenuBarProps, {}>{
         <li>
           <Link to="/delete-event">Delete Event</Link>
         </li>}
+        {this.props.isLoggedIn &&
+        <li>
+          <Link to="/attend">Attend Office</Link>
+        </li>
+        }
         {this.props.isLoggedIn && 
         <li>
             <form onSubmit={this.handleLogout}><button type="submit">Logout</button></form>
