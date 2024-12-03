@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { EventListState, initEventListState } from './EventList.state';
 import { toast } from 'react-toastify';
+import { Link } from 'react-router-dom';
 
 interface Event {
     id: string;
@@ -54,6 +55,10 @@ export class EventList extends React.Component<{}, EventListState>{
                         <p><strong>End time: </strong>{event.endTime}</p>
                         <p><strong>Location: </strong>{event.location}</p>
                         <p><strong>Approval: </strong>{event.adminApproval ? 'Approved' : 'Pending'}</p>
+                        {(<li>
+                            <Link to="/attend-event">See Attendancees</Link>
+                            </li>
+                        )}
                         <br />
                     </div>
                 ))

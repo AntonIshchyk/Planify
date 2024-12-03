@@ -23,12 +23,9 @@ export class EventAttendanceesList extends React.Component<{}, EventAttendancees
     async handleDelete(id: string){
         try{
             const response = await axios.delete(
-                'http://localhost:3000/Calender-Website/delete-event-attendance',
+                `http://localhost:3000/Calender-Website/delete-event-attendance?eventId=${id}`,
                 {
-                    withCredentials: true,
-                    data: {
-                        eventId: id
-                    }
+                    withCredentials: true
                 }
             )
             localStorage.setItem('message', id);
