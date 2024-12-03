@@ -15,6 +15,8 @@ import EventList from './components/EventList';
 import DeleteEvent from './components/DeleteEvent';
 import { AppState, initAppState } from './App.state';
 import CreateAttendance from './components/CreateAttendance';
+import AttendEvent from './components/AttendEvent';
+import EventAttendanceesList from './components/EventAttendanceesList';
 
 export class App extends Component<{}, AppState> {
   constructor(props: {}) {
@@ -105,7 +107,7 @@ export class App extends Component<{}, AppState> {
             newestOnTop
             closeOnClick
             rtl={false}
-            pauseOnFocusLoss
+            pauseOnFocusLoss  
             draggable
             pauseOnHover
             theme="light"
@@ -140,6 +142,8 @@ export class App extends Component<{}, AppState> {
             <Route path="/get-all-events" element={<EventList />} />
             <Route path="/delete-event" element={<DeleteEvent />} />
             <Route path="/attend" element={<CreateAttendance/>}/>
+            <Route path="/attending-events" element={<EventAttendanceesList />} />
+            <Route path="/attend-event" element={<AttendEvent />} />
           </Routes>
         </div>
       </BrowserRouter>
