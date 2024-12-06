@@ -43,6 +43,10 @@ public class AttendanceControllers : Controller
         return Ok(attendancesOfUser);
     }
 
+    [HttpGet("get-attendances-of-event")]
+    [AdminFilter]
+    public async Task<IActionResult> GetAttendancesofEvent([FromQuery] Guid eventId) => Ok(AS.GetAttendanceesofEvent(eventId));
+
     [HttpPut("update-attendance")]
     [LoggedInFilter]
     public async Task<IActionResult> UpdateAttendance([FromBody] Attendance attendance, [FromQuery] Guid attendanceId)

@@ -56,10 +56,10 @@ export class EventList extends React.Component<{}, EventListState>{
                         <p><strong>Location: </strong>{event.location}</p>
                         <p><strong>Approval: </strong>{event.adminApproval ? 'Approved' : 'Pending'}</p>
                         {(<li>
-                            <Link to="/attend-event">See Attendancees</Link>
+                            <Link to="/show-attendances">See Attendancees</Link>
                             </li>
                         )}
-                        <br />
+                        <br />  
                     </div>
                 ))
             )}
