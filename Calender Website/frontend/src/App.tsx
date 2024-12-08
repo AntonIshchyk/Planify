@@ -19,6 +19,7 @@ import AttendEvent from './components/AttendEvent';
 import EventAttendanceesList from './components/EventAttendanceesList';
 import ViewAttendancees from './components/ViewAttendancees';
 import Register from './components/Register';
+import AddAdminAccount from './components/AddAdminAccount';
 
 export class App extends Component<{}, AppState> {
   constructor(props: {}) {
@@ -157,6 +158,7 @@ export class App extends Component<{}, AppState> {
             <Route path="/attending-events" element={<EventAttendanceesList />} />
             <Route path="/attend-event" element={<AttendEvent />} />
             <Route path="/show-attendances/:eventId/:title" element={<ViewAttendancees/>} />
+            <Route path="/add-admin" element={<AddAdminAccount/>} />
           </Routes>
         </div>
       </BrowserRouter>
