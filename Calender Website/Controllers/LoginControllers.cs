@@ -66,6 +66,7 @@ public class LoginControllers : Controller
         user.Id = Guid.NewGuid();
         bool IsUserWritenToJson = await US.SaveUser(user);
         if (!IsUserWritenToJson) return BadRequest("Invalid Data");
+        HttpContext.Session.SetString("UserId", user.Id.ToString());
         return Ok("User registered");
     }
 

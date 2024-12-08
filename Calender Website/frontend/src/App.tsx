@@ -18,6 +18,7 @@ import CreateAttendance from './components/CreateAttendance';
 import AttendEvent from './components/AttendEvent';
 import EventAttendanceesList from './components/EventAttendanceesList';
 import ViewAttendancees from './components/ViewAttendancees';
+import Register from './components/Register';
 
 export class App extends Component<{}, AppState> {
   constructor(props: {}) {
@@ -28,16 +29,24 @@ export class App extends Component<{}, AppState> {
   handleBacktoMenuClick = () => {
     this.setState(this.state.updateShowAdminLogin(false));
     this.setState(this.state.updateShowUserLogin(false));
+    this.setState(this.state.updateShowRegister(false));
   };
 
   handleUserClick = () => {
     this.setState(this.state.updateShowAdminLogin(false));
     this.setState(this.state.updateShowUserLogin(true));
+    this.setState(this.state.updateShowRegister(false));
   };
 
   handleAdminClick = () => {
     this.setState(this.state.updateShowAdminLogin(true));
     this.setState(this.state.updateShowUserLogin(false));
+    this.setState(this.state.updateShowRegister(false));
+  };
+  handleRegisterClick = () => {
+    this.setState(this.state.updateShowAdminLogin(false));
+    this.setState(this.state.updateShowUserLogin(false));
+    this.setState(this.state.updateShowRegister(true));
   };
 
   componentDidMount() {
@@ -124,18 +133,20 @@ export class App extends Component<{}, AppState> {
               path="/"
               element={
                 <>
-                  {!this.state.loggedIn && (this.state.showUserLogin || this.state.showAdminLogin) && (
+                  {!this.state.loggedIn && !this.state.showRegister && (this.state.showUserLogin || this.state.showAdminLogin) && (
                     <Login
                       onBacktoMenuClick={this.handleBacktoMenuClick}
                       isAdminLogin={this.state.showAdminLogin}
                       isUserLogin={this.state.showUserLogin}
+                      onRegisterClick={this.handleRegisterClick}
                     />
                   )}
-                  {!this.state.loggedIn && !this.state.showAdminLogin && !this.state.showUserLogin && (
+                  {!this.state.loggedIn && !this.state.showAdminLogin && !this.state.showUserLogin && !this.state.showRegister &&(
                     <Startup onUserClick={this.handleUserClick} onAdminClick={this.handleAdminClick} />
                   )}
                   {this.state.isAdmin && <AdminScreen />}
-                  {!this.state.isAdmin && this.state.loggedIn && <UserScreen />}
+                  {!this.state.isAdmin && this.state.loggedIn && <UserScreen />} 
+                  {!this.state.showUserLogin && !this.state.showAdminLogin && this.state.showRegister && <Register onBacktoMenuClick={this.handleBacktoMenuClick}/>} 
                 </>
               }
             />
@@ -145,7 +156,7 @@ export class App extends Component<{}, AppState> {
             <Route path="/attend" element={<CreateAttendance/>}/>
             <Route path="/attending-events" element={<EventAttendanceesList />} />
             <Route path="/attend-event" element={<AttendEvent />} />
-            <Route path="/show-attendances" element={<ViewAttendancees eventId={''} title={''} />} />
+            <Route path="/show-attendances/:eventId/:title" element={<ViewAttendancees/>} />
           </Routes>
         </div>
       </BrowserRouter>

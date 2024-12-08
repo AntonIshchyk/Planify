@@ -14,11 +14,12 @@ public class AttendanceService
     }
     public async Task<List<string>> GetAttendanceesofEvent(Guid EventId)
     {
-        List<EventAttendance> attendancees = await AccessJson.ReadJson<EventAttendance>();
-        List<Admin> admins = await AccessJson.ReadJson<Admin>();
-        List<User> users = await AccessJson.ReadJson<User>();
-        List<Guid> attendingPeople = attendancees.FindAll(x => x.EventId.ToString() == EventId.ToString()).Select(x => x.UserId).ToList();
-        return admins.FindAll(x => attendingPeople.Contains(x.Id)).Select(x => x.Username).Union(users.FindAll(x => attendingPeople.Contains(x.Id)).Select(x => x.FirstName + " " + x.LastName)).ToList();
+        //List<EventAttendance> attendancees = await AccessJson.ReadJson<EventAttendance>();
+        //List<Admin> admins = await AccessJson.ReadJson<Admin>();
+        //List<User> users = await AccessJson.ReadJson<User>();
+        //List<Guid> attendingPeople = attendancees.FindAll(x => x.EventId.ToString() == EventId.ToString()).Select(x => x.UserId).ToList();
+        //return admins.FindAll(x => attendingPeople.Contains(x.Id)).Select(x => x.Username).Union(users.FindAll(x => attendingPeople.Contains(x.Id)).Select(x => x.FirstName + " " + x.LastName)).ToList();
+       return new(){"hi", "hello"};
     }
 
     public async Task<List<Attendance>> GetAttendancesOfUser(Guid id)

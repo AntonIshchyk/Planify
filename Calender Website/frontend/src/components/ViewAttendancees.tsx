@@ -1,28 +1,45 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { Link } from 'react-router-dom';
 import { initViewAttendanceesState, ViewAttendanceesState } from './ViewAttendancees.state';
-interface ViewAttendanceesProps {
-    eventId : string;
-    title : string;
+import { useParams } from 'react-router-dom';
+import { EventListState, initEventListState } from './EventList.state';
+export function withRouter(Component: any) {
+    return function WrappedComponent(props: any) {
+        const params = useParams();
+        return <Component {...props} params={params} />;
+    };
 }
-export class ViewAttendancees extends React.Component<ViewAttendanceesProps, ViewAttendanceesState>{
-    constructor(props : ViewAttendanceesProps){
+
+interface ViewAttendanceesProps {
+    params: {
+        eventId: string;
+        title?: string;
+    };
+}
+
+export class ViewAttendancees extends React.Component<ViewAttendanceesProps, ViewAttendanceesState> {
+    constructor(props: ViewAttendanceesProps) {
         super(props);
         this.state = initViewAttendanceesState;
     }
+    
     componentDidMount() {
         // Fetch data when the component mounts
         this.fetchEvents();
     }
+
     fetchEvents = async () => {
+        const  eventId  = this.props.params.eventId; // Access eventId from params
         try {
             const response = await axios.get(
-                'http://localhost:3000/Calender-Website/get-attendances-of-event',
+                `http://localhost:3000/Calender-Website/get-attendances-of-event?eventId=${eventId}`,
                 { withCredentials: true }
             );
             this.setState(this.state.updateAttendancees(response.data));
+            toast.info(this.state.attendancees[1])
+
         } catch (error) {
             if (axios.isAxiosError(error) && error.response) {
                 toast.error(error.response.data);
@@ -31,23 +48,29 @@ export class ViewAttendancees extends React.Component<ViewAttendanceesProps, Vie
             }
         }
     };
- // Em
- // Empty dependency array to run once when the component mounts
-    render(){
-    return (
-        <div>
-             {this.state.attendancees.length <= 0 ? (
-                <p>No attendances found.</p>) : 
-                (this.state.attendancees.map((attendance) => (
-                    <div key={attendance}>
-                        <h3>{}</h3>
-                        <p><strong></strong>{attendance}</p>
-                        <br />  
-                    </div>
-                ))
-            )}
-        </div>
-    );
+
+    render() {
+        if (!Array.isArray(this.state.attendancees)) {
+            return <p>Invalid data type for attendance list.</p>;
+        }
+    
+        return (
+            <div>
+                {this.state.attendancees.length > 0 ? (
+                    this.state.attendancees.map((attendance, index) => (
+                        <div key={index}>
+                            <h3>Attendance Details</h3>
+                            <p><strong>Attendee:</strong> {attendance}</p>
+                            <br />
+                        </div>
+                    ))
+                ) : (
+                    <p>No attendances found.</p>
+                )}
+            </div>
+        );
+    }
+    
 }
-}
-export default ViewAttendancees;
+
+export default withRouter(ViewAttendancees);

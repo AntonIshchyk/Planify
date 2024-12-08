@@ -5,5 +5,12 @@
     "EventId": "6cae6a27-0716-4633-a34a-2bb277b0e234",
     "Rating": 0.0,
     "Feedback": "None"
+  },
+  {
+    "Id": "007bdb5e-b66a-46ce-acc5-3d37cabb5ee2",
+    "UserId": "3062f683-a110-4813-8f2e-67116bc87448",
+    "EventId": "6cae6a27-0716-4633-a34a-2bb277b0e234",
+    "Rating": 0.0,
+    "Feedback": "None"
   }
 ]
