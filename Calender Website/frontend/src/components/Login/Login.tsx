@@ -58,7 +58,7 @@ export class Login extends React.Component<LoginProps, LoginState> {
                     <input 
                     type="email"
                     value={this.state.email}
-                    onChange={(e) => this.setState(this.state.updateEmail(e.currentTarget.value))}
+                    onChange={(e) => this.setState(this.state.updateField("email", e.currentTarget.value))}
                     required />
                 </label>
                 }
@@ -68,7 +68,7 @@ export class Login extends React.Component<LoginProps, LoginState> {
                     <input 
                     type="username"
                     value={this.state.username}
-                        onChange={(e) => this.setState(this.state.updateUsername(e.currentTarget.value))}
+                        onChange={(e) => this.setState(this.state.updateField("username", e.currentTarget.value))}
                     required />
                 </label>
                 }
@@ -78,7 +78,7 @@ export class Login extends React.Component<LoginProps, LoginState> {
                     <input 
                     type="password" 
                     value={this.state.password} 
-                    onChange = {(e) => this.setState(this.state.updatePassword(e.currentTarget.value))}
+                    onChange = {(e) => this.setState(this.state.updateField("password", e.currentTarget.value))}
                     required/>
                 </label>
                 <br />

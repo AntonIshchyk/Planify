@@ -1,12 +1,11 @@
+import {StateUpdater, createStateUpdater} from '../Updater/Updater';
+
 export type StartupState = {
     message : string;
-    updateMessage : (message : string) => (state : StartupState) => StartupState
-
+    updateField: StateUpdater<StartupState>
 }
 
 export const initStartupState = {
     message : '',
-    updateMessage : (message: string) => (state: StartupState) : StartupState => ({...state,
-        message : message
-    })
+    updateField: createStateUpdater<StartupState>()
 }
