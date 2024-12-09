@@ -1,3 +1,16 @@
+type StateUpdater<Entity> = <Field extends keyof Entity>(
+    field: Field,
+    value: Entity[Field]
+) => (state: Entity) => Entity;
+
+const createStateUpdater = <Entity>(): StateUpdater<Entity> => {
+    return <Field extends keyof Entity>(key: Field, value: Entity[Field]) => (state: Entity): Entity => ({
+        ...state,
+        [key]: value,
+    });
+};
+
+
 export type CreateEventState = {
     title : string;
     description: string;
@@ -6,13 +19,7 @@ export type CreateEventState = {
     endTime : string;
     location : string;
     adminApproval : boolean;
-    updateTitle : (title : string) => (state: CreateEventState) => CreateEventState
-    updateDescription : (description : string) => (state: CreateEventState) => CreateEventState
-    updateDate : (date : string) => (state: CreateEventState) => CreateEventState
-    updateStartTime : (startTime : string) => (state: CreateEventState) => CreateEventState
-    updateEndTime : (endTime : string) => (state: CreateEventState) => CreateEventState
-    updateLocation : (location : string) => (state: CreateEventState) => CreateEventState
-    updateAdminApproval : (adminApproval : boolean) => (state: CreateEventState) => CreateEventState
+    updateField: StateUpdater<CreateEventState>;
 }
 export const initCreateEventState = {
     title : '',
@@ -22,25 +29,5 @@ export const initCreateEventState = {
     endTime : '',
     location : '',
     adminApproval : false,
-    updateTitle : (title: string) => (state: CreateEventState) : CreateEventState => ({...state,
-        title : title
-    }),
-    updateDescription : (description: string) => (state: CreateEventState) : CreateEventState => ({...state,
-        description : description
-    }),
-    updateDate : (date: string) => (state: CreateEventState) : CreateEventState => ({...state,
-        date : date
-    }),
-    updateStartTime : (startTime: string) => (state: CreateEventState) : CreateEventState => ({...state,
-        startTime : startTime
-    }),
-    updateEndTime : (endTime: string) => (state: CreateEventState) : CreateEventState => ({...state,
-        endTime : endTime
-    }),
-    updateLocation : (location: string) => (state: CreateEventState) : CreateEventState => ({...state,
-        location : location
-    }),
-    updateAdminApproval : (adminApproval: boolean) => (state: CreateEventState) : CreateEventState => ({...state,
-        adminApproval : adminApproval
-    })
+    updateField: createStateUpdater<CreateEventState>(),
 }
