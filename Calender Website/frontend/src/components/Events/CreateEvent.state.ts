@@ -1,15 +1,4 @@
-type StateUpdater<Entity> = <Field extends keyof Entity>(
-    field: Field,
-    value: Entity[Field]
-) => (state: Entity) => Entity;
-
-const createStateUpdater = <Entity>(): StateUpdater<Entity> => {
-    return <Field extends keyof Entity>(key: Field, value: Entity[Field]) => (state: Entity): Entity => ({
-        ...state,
-        [key]: value,
-    });
-};
-
+import {StateUpdater, createStateUpdater} from '../Updater/Updater';
 
 export type CreateEventState = {
     title : string;

@@ -1,8 +1,10 @@
+import {StateUpdater, createStateUpdater} from '../Updater/Updater';
+
 export type DeleteEventState = {
     id: string
-    updateId : (id : string) => (state: DeleteEventState) => DeleteEventState
+    updateField: StateUpdater<DeleteEventState>;
 }
-export const initDeleteEventState = {
+export const initDeleteEventState : DeleteEventState  = {
     id: '',
-    updateId: (id: string) => (state: DeleteEventState) : DeleteEventState => ({...state, id : id})
+    updateField: createStateUpdater<DeleteEventState>()
 }

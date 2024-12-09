@@ -15,13 +15,8 @@ export class DeleteEvent extends React.Component<DeleteEventProps, DeleteEventSt
 
         try{
             const response = await axios.delete(
-                `http://localhost:3000/Calender-Website/delete-event`,
-                {
-                    withCredentials: true,
-                    data: {
-                        id: this.state.id
-                    }
-                }
+                `http://localhost:3000/Calender-Website/delete-event?id=${this.state.id}`,
+                { withCredentials: true}
             );
             toast.info(response.data);
         }catch(error){
@@ -42,7 +37,7 @@ export class DeleteEvent extends React.Component<DeleteEventProps, DeleteEventSt
                     <textarea
                         placeholder="text"
                         value={this.state.id}
-                        onChange={(e) => this.setState(this.state.updateId(e.target.value))}
+                        onChange={(e) => this.setState(this.state.updateField("id", e.target.value))}
                     />
                 </label>
                 <br />
