@@ -14,7 +14,8 @@ export class MenuBar extends React.Component<MenuBarProps, {}>{
             {},
              {withCredentials : true}
         );
-        window.location.reload();
+        // redirect me to the / page
+        window.location.href = '/';
 
     }
     render(){
