@@ -4,7 +4,15 @@
     "Username": "TestUsername",
     "Password": "TestPassword",
     "Email": "TestEmail",
-    "LastLogIn": "2024-12-06T11:04:41.8452425+01:00",
+    "LastLogIn": "2024-12-09T11:37:44.4615238+01:00",
     "LastLogOut": "2024-12-03T10:42:43.5200882+01:00"
+  },
+  {
+    "Id": "163347b3-5ef7-4f33-832b-f1843d5ba19d",
+    "Username": "Matts",
+    "Password": "Matsoeeee",
+    "Email": "Matts@gmail.com",
+    "LastLogIn": "0001-01-01T00:00:00",
+    "LastLogOut": "0001-01-01T00:00:00"
   }
 ]

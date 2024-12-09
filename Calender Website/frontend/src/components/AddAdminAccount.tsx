@@ -20,7 +20,7 @@ export class Login extends React.Component<{}, LoginState> {
                 "Email" : this.state.email},
                 {withCredentials: true}
             );
-            localStorage.setItem('message', response.data);
+            toast.info(response.data);
         
         }catch(error){
             if (axios.isAxiosError(error) && error.response) {
@@ -63,7 +63,7 @@ export class Login extends React.Component<{}, LoginState> {
                     required/>
                 </label>
                 <br />
-                <button type="submit">Login</button>
+                <button type="submit">Add Account</button>
             </form>
         </div>
 )};
