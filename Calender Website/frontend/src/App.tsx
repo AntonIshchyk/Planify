@@ -22,18 +22,18 @@ export class App extends Component<{}, AppState> {
   }
 
   handleBacktoMenuClick = () => {
-    this.setState(this.state.updateShowAdminLogin(false));
-    this.setState(this.state.updateShowUserLogin(false));
+    this.setState(this.state.updateField("showAdminLogin", false));
+    this.setState(this.state.updateField("showUserLogin", false));
   };
 
   handleUserClick = () => {
-    this.setState(this.state.updateShowAdminLogin(false));
-    this.setState(this.state.updateShowUserLogin(true));
+    this.setState(this.state.updateField("showAdminLogin", false));
+    this.setState(this.state.updateField("showUserLogin", true));
   };
 
   handleAdminClick = () => {
-    this.setState(this.state.updateShowAdminLogin(true));
-    this.setState(this.state.updateShowUserLogin(false));
+    this.setState(this.state.updateField("showAdminLogin", true));
+    this.setState(this.state.updateField("showUserLogin", false));
   };
 
   componentDidMount() {

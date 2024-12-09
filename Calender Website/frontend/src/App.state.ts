@@ -1,12 +1,11 @@
+import {StateUpdater, createStateUpdater} from './components/Updater/Updater';
+
 export type AppState = {
     showAdminLogin: boolean;
     showUserLogin: boolean;
     loggedIn : boolean;
     isAdmin : boolean;
-    updateShowAdminLogin : (showAdminLogin : boolean) => (state : AppState) => AppState;
-    updateShowUserLogin : (showUserLogin : boolean) => (state : AppState) => AppState;
-    updateLoggedIn : (loggedIn : boolean) => (state : AppState) => AppState;
-    updateIsAdmin : (isAdmin : boolean) => (state : AppState) => AppState;
+    updateField: StateUpdater<AppState>
 }   
 
 export const initAppState = {
@@ -14,16 +13,5 @@ export const initAppState = {
     showUserLogin : false,
     loggedIn : false,
     isAdmin : false,
-    updateShowAdminLogin : (showAdminLogin: boolean) => (state: AppState) : AppState => ({...state,
-        showAdminLogin : showAdminLogin
-    }),
-    updateShowUserLogin : (showUserLogin: boolean) => (state: AppState) : AppState => ({...state,
-        showUserLogin : showUserLogin
-    }),
-    updateLoggedIn : (loggedIn: boolean) => (state: AppState) : AppState => ({...state,
-        loggedIn : loggedIn
-    }),
-    updateIsAdmin : (isAdmin: boolean) => (state: AppState) : AppState => ({...state,
-        isAdmin : isAdmin
-    })
+    updateField: createStateUpdater<AppState>()
 }
