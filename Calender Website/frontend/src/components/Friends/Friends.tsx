@@ -29,7 +29,7 @@ export class Friends extends React.Component<{}, FriendsState>
             const friendIds: string[] = response.data;
 
             if (friendIds.length === 0) {
-                this.setState(this.state.updateFriends([]));
+                this.setState(this.state.updateField("friends", []));
                 return;
             }
             
@@ -39,7 +39,7 @@ export class Friends extends React.Component<{}, FriendsState>
                 { withCredentials: true }
             );
 
-            this.setState(this.state.updateFriends(friendsResponse.data));
+            this.setState(this.state.updateField("friends", friendsResponse.data));
         } 
         catch (error) 
         {
@@ -65,7 +65,7 @@ export class Friends extends React.Component<{}, FriendsState>
             const RequestSourceIds: string[] = response.data;
 
             if (RequestSourceIds.length === 0) {
-                this.setState(this.state.updateFriends([]));
+                this.setState(this.state.updateField("requests", []));
                 return;
             }
 
@@ -75,7 +75,7 @@ export class Friends extends React.Component<{}, FriendsState>
                 { withCredentials: true }
             );
 
-            this.setState(this.state.updateFriendRequests(RequestsResponse.data));
+            this.setState(this.state.updateField("requests", RequestsResponse.data));
         } 
         catch (error) 
         {

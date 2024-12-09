@@ -1,3 +1,5 @@
+import {StateUpdater, createStateUpdater} from '../Updater/Updater';
+
 interface User {
     id: string;
     firstName: string;
@@ -13,14 +15,11 @@ interface User {
 export type FriendsState = {
     friends : User[],
     requests: User[],
-    updateFriends : (friends : User[]) => (state : FriendsState) => FriendsState
-    updateFriendRequests : (requests : User[]) => (state : FriendsState) => FriendsState
+    updateField: StateUpdater<FriendsState>
 }
 
 export const initFriendsState = {
     friends : [],
     requests: [],
-    updateFriends : (friends: User[]) => (state: FriendsState) => ({...state, friends : friends}),
-    updateFriendRequests: (friendRequests: User[]) => (state: FriendsState) => ({ ...state, requests: friendRequests })
-
+    updateField: createStateUpdater<FriendsState>()
 }
