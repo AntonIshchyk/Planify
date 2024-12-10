@@ -3,7 +3,7 @@ import './App.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Login from './components/Login/Login';
 import MenuBar from './components/Home/MenuBar';
-import { toast } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Startup from './components/Home/Startup';
 import CreateEvent from './components/Events/CreateEvent';
