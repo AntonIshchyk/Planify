@@ -2,7 +2,7 @@ import React from "react";
 import { FriendsState, initFriendsState } from "./Friends.state";
 import { toast } from 'react-toastify';
 import axios from 'axios';
-
+import './Friends.css';
 
 export class Friends extends React.Component<{}, FriendsState>
 {
@@ -117,7 +117,7 @@ export class Friends extends React.Component<{}, FriendsState>
     render()
     {
         return (
-            <div>
+            <div className="friends">
                 <h1>Your Friends</h1>
                 {this.state.friends.length <= 0 ? (
                 <p>No Friends found.</p>) : 
@@ -134,7 +134,7 @@ export class Friends extends React.Component<{}, FriendsState>
                 ))
             )}
 
-                <div>
+                <div className="friend-requests">
                 <h1>Your Friend Requests</h1>
                     {this.state.requests.length <= 0 ? (
                     <p>No Requests found.</p>) : 
