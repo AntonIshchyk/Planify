@@ -37,4 +37,16 @@ public class EventAttendanceService
         foreach (Guid id in userIds) foreach (Admin admin in admins) if (id == admin.Id) usersAndAdmins.Add(admin);
         return usersAndAdmins;
     }
+
+    public async Task<List<string>> AttendanceStrings(Guid eventId)
+    {
+        List<object> attendances = await GetListOfAttendees(eventId);
+        List<string> names = new();
+        foreach (object attendance in attendances)
+        {
+            if (attendance is Admin admin) names.Add(admin.Username);
+            if (attendance is User user) names.Add(user.FirstName + " " + user.LastName);
+        }
+        return names;
+    }
 }

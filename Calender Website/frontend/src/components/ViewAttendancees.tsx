@@ -32,11 +32,10 @@ export class ViewAttendancees extends React.Component<ViewAttendanceesProps, Vie
         const  eventId  = this.props.params.eventId; // Access eventId from params
         try {
             const response = await axios.get(
-                `http://localhost:3000/Calender-Website/EventAttendanceofEvent?Id=${eventId}`,
+                `http://localhost:3000/Calender-Website/get-user-names?eventId=${eventId}`,
                 { withCredentials: true }
             );
             this.setState(this.state.updateAttendances(response.data));
-            toast.info(this.state.attendances[1])
 
         } catch (error) {
             if (axios.isAxiosError(error) && error.response) {
