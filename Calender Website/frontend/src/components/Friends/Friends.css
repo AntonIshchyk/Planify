@@ -1,8 +1,14 @@
+.container {
+    display: flex;
+}
+
 .friend-requests{
     background-color: grey;
+    flex: 1;
 }
 
 .friends
 {
     background-color: bisque;
+    flex: 1;
 }

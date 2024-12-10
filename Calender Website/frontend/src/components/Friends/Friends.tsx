@@ -117,7 +117,7 @@ export class Friends extends React.Component<{}, FriendsState>
     render() 
     {
         return (
-            <div>
+            <div className="container">
                 <div className="friends">
                     <h1>Your Friends</h1>
                     {this.state.friends.length <= 0 ? (
@@ -125,11 +125,11 @@ export class Friends extends React.Component<{}, FriendsState>
                     ) : (
                         this.state.friends.map(friend => (
                             <div key={friend.id}>
-                                <h3>{friend.firstName}</h3>
-                                <h3>{friend.lastName}</h3>
-                                <h3>{friend.email}</h3>
-                                <h3>Recurring Days {friend.recurringDays}</h3>
-                                <h3>We could also show friends of our friend</h3>
+                                <p>{friend.firstName}</p>
+                                <p>{friend.lastName}</p>
+                                <p>{friend.email}</p>
+                                <p>Recurring Days {friend.recurringDays}</p>
+                                <p>We could also show friends of our friend</p>
                                 <button onClick={() => this.deleteFriend(friend.id)}>
                                     Delete friend
                                 </button>
@@ -146,15 +146,20 @@ export class Friends extends React.Component<{}, FriendsState>
                     ) : (
                         this.state.requests.map(friend => (
                             <div key={friend.id}>
-                                <h3>{friend.firstName}</h3>
-                                <h3>{friend.lastName}</h3>
-                                <h3>{friend.email}</h3>
-                                <h3>Recurring Days {friend.recurringDays}</h3>
-                                <h3>We could also show friends of our potential friend</h3>
+                                <p>{friend.firstName}</p>
+                                <p>{friend.lastName}</p>
+                                <p>{friend.email}</p>
+                                <p>Recurring Days {friend.recurringDays}</p>
+                                <p>We could also show friends of our potential friend</p>
                                 <br />
                             </div>
                         ))
                     )}
+                </div>
+
+                <div className="friends">
+                    <h1>Find People</h1>
+                    <input type="text" />
                 </div>
             </div>
         );
