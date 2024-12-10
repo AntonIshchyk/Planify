@@ -163,7 +163,9 @@ export class App extends Component<{}, AppState> {
                 </>
               }/>
             <Route path="/create-event" element={<CreateEvent />} />
-            <Route path="/get-all-events" element={<EventList />} />
+            <Route path="/get-all-events" element={<EventList onBacktoMenuClick={function (): void {
+              throw new Error('Function not implemented.');
+            } } isAdminLogin={this.state.isAdmin} isUserLogin={this.state.loggedIn} />} />
             <Route path="/delete-event" element={<DeleteEvent />} />
             <Route path="/attend" element={<CreateAttendance/>}/>
             <Route path="/attending-events" element={<EventAttendanceesList />} />

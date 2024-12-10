@@ -4,8 +4,14 @@ import { EventListState, initEventListState } from './EventList.state';
 import { toast } from 'react-toastify';
 import { Link } from 'react-router-dom';
 
-export class EventList extends React.Component<{}, EventListState>{
-    constructor(props : {}){
+interface EventListProps {
+    onBacktoMenuClick: () => void;
+    isAdminLogin: boolean;
+    isUserLogin: boolean;
+}
+
+export class EventList extends React.Component<EventListProps, EventListState>{
+    constructor(props: EventListProps){
         super(props);
         this.state = initEventListState;
         
@@ -44,7 +50,7 @@ export class EventList extends React.Component<{}, EventListState>{
                         <p><strong>End time: </strong>{event.endTime}</p>
                         <p><strong>Location: </strong>{event.location}</p>
                         <p><strong>Approval: </strong>{event.adminApproval ? 'Approved' : 'Pending'}</p>
-                        {(<li>
+                        {this.props.isAdminLogin && (<li>
                             <Link to={`/show-attendances/${event.id}/${event.title}`}>See Attendancees</Link>
                             </li>
                         )}
