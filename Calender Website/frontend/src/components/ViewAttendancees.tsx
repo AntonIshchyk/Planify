@@ -53,12 +53,11 @@ export class ViewAttendancees extends React.Component<ViewAttendanceesProps, Vie
     
         return (
             <div>
+                <h3>Event attendances for {this.props.params.title}</h3>
                 {this.state.attendances.length > 0 ? (
-                    this.state.attendances.map((attendance) => (
-                        <div key={attendance.Id}>
-                            <h3>Attendance Details</h3>
-                            <p><strong>Attendee:</strong> {attendance.User}</p>
-                            <br />
+                    this.state.attendances.map((attendance, index) => (
+                        <div key={index}>
+                            <p><strong>Attendee:</strong> {attendance}</p>
                         </div>
                     ))
                 ) : (

@@ -41,6 +41,7 @@ public class EventAttendanceService
     public async Task<List<string>> AttendanceStrings(Guid eventId)
     {
         List<object> attendances = await GetListOfAttendees(eventId);
+        Console.WriteLine(attendances.Count());
         List<string> names = new();
         foreach (object attendance in attendances)
         {
