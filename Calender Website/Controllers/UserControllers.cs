@@ -174,7 +174,7 @@ public class UserController : Controller
 
     [HttpGet("find-events")]
     [LoggedInFilter]
-    public async Task<IActionResult> FindEvents(string str)
+    public async Task<IActionResult> FindEvents([FromQuery] string str)
     {
         List<Event> allEvents = await EventAccess.LoadAll();
 
@@ -188,7 +188,7 @@ public class UserController : Controller
 
     [HttpGet("find-people")]
     [LoggedInFilter]
-    public async Task<IActionResult> FindPeople(string str)
+    public async Task<IActionResult> FindPeople([FromQuery] string str)
     {
         List<User> allUsers = await UserAccess.LoadAll();
 

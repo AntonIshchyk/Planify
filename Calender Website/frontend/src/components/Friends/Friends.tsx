@@ -114,6 +114,28 @@ export class Friends extends React.Component<{}, FriendsState>
         }
     };
 
+    fetchFindPeople = async (str:string) => {
+        try 
+        {
+            const response = await axios.get(
+                `http://localhost:3000/Calender-Website/find-people?str=${str}`,
+                { withCredentials: true }
+            );
+            this.setState(this.state.updateField("foundPeople", response.data));
+        } 
+        catch (error) 
+        {
+            if (axios.isAxiosError(error) && error.response) 
+            {
+                toast.error(error.response.data);
+            } 
+            else 
+            {
+                toast.error('An error occurred. Please try again.');
+            }
+        }
+    };
+
     render() 
     {
         return (

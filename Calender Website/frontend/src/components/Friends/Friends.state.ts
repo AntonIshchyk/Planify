@@ -15,11 +15,13 @@ interface User {
 export type FriendsState = {
     friends : User[],
     requests: User[],
+    foundPeople: User[],
     updateField: StateUpdater<FriendsState>
 }
 
 export const initFriendsState = {
     friends : [],
     requests: [],
+    foundPeople: [],
     updateField: createStateUpdater<FriendsState>()
 }
