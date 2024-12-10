@@ -43,7 +43,7 @@ public class EventController : Controller
         List<Event> events = await eventService.GetAllEvents();
         return Ok(events);
     }
-    
+
 
     [HttpPost("review")]
     [LoggedInFilter]
@@ -84,5 +84,19 @@ public class EventController : Controller
     {
         if (await eventService.DeleteEvent(id)) return Ok("Event deleted.");
         return BadRequest("Event not found. ");
+    }
+
+    [HttpGet("find-events")]
+    [LoggedInFilter]
+    public async Task<IActionResult> FindEvents([FromQuery] string str)
+    {
+        List<Event> allEvents = await EventAccess.LoadAll();
+
+        str = str.ToLower();
+        List<Event> foundEvents = allEvents
+        .Where(e => e.Title.ToLower().Contains(str))
+        .ToList();
+
+        return Ok(foundEvents);
     }
 }

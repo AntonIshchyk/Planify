@@ -171,21 +171,6 @@ public class UserController : Controller
         return Ok("Friend request was sent");
     }
 
-
-    [HttpGet("find-events")]
-    [LoggedInFilter]
-    public async Task<IActionResult> FindEvents([FromQuery] string str)
-    {
-        List<Event> allEvents = await EventAccess.LoadAll();
-
-        str = str.ToLower();
-        List<Event> foundEvents = allEvents
-        .Where(e => e.Title.ToLower().Contains(str))
-        .ToList();
-
-        return Ok(foundEvents);
-    }
-
     [HttpGet("find-people")]
     [LoggedInFilter]
     public async Task<IActionResult> FindPeople([FromQuery] string str)
