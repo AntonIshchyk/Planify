@@ -50,29 +50,7 @@ export class App extends Component<{}, AppState> {
     this.setState(this.state.updateField("showUserLogin", false));
     this.setState(this.state.updateField("showRegister", false));
   };
-  /*handleBacktoMenuClick = () => {
-    this.setState(this.state.updateShowAdminLogin(false));
-    this.setState(this.state.updateShowUserLogin(false));
-    this.setState(this.state.updateShowRegister(false));
-  };
-
-  handleUserClick = () => {
-    this.setState(this.state.updateShowAdminLogin(false));
-    this.setState(this.state.updateShowUserLogin(true));
-    this.setState(this.state.updateShowRegister(false));
-  };
-
-  handleAdminClick = () => {
-    this.setState(this.state.updateShowAdminLogin(true));
-    this.setState(this.state.updateShowUserLogin(false));
-    this.setState(this.state.updateShowRegister(false));
-  };
-  handleRegisterClick = () => {
-    this.setState(this.state.updateShowAdminLogin(false));
-    this.setState(this.state.updateShowUserLogin(false));
-    this.setState(this.state.updateShowRegister(true));
-  };*/
-
+  
   componentDidMount() {
     // Check and show toast message first
     this.checkLocalStorageMessage(); // Check message from localStorage
@@ -134,7 +112,18 @@ export class App extends Component<{}, AppState> {
     return (
       <BrowserRouter>
         <div className="App">
-          
+          <ToastContainer
+            position="top-right"
+            autoClose={5000}
+            hideProgressBar={false}
+            newestOnTop
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="light"
+          />
 
           <MenuBar
             isAdmin={this.state.isAdmin}
@@ -181,15 +170,3 @@ export class App extends Component<{}, AppState> {
 }
 
 export default App;
-/*<ToastContainer
-            position="top-right"
-            autoClose={5000}
-            hideProgressBar={false}
-            newestOnTop
-            closeOnClick
-            rtl={false}
-            pauseOnFocusLoss  
-            draggable
-            pauseOnHover
-            theme="light"
-          />*/
