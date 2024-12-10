@@ -3,7 +3,7 @@ import axios from 'axios';
 import { EventListState, initEventListState } from './EventList.state';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
-//import { UpdateEvent } from './UpdateEvent';
+import { UpdateEvent } from './UpdateEvent';
 //import { Link } from 'react-router-dom';
 
 interface EventListProps {
@@ -13,11 +13,11 @@ interface EventListProps {
     navigate: (path: string) => void;
 }
 
-export class EventList extends React.Component<EventListProps, EventListState>{
-    constructor(props: EventListProps){
+export class EventList extends React.Component<EventListProps, EventListState> {
+    constructor(props: EventListProps) {
         super(props);
         this.state = initEventListState;
-        
+
     }
     componentDidMount() {
         // Fetch data when the component mounts
@@ -47,9 +47,9 @@ export class EventList extends React.Component<EventListProps, EventListState>{
             }
         }
     }
-    
-    handleUpdateEvent = async ( id: string, event: React.FormEvent) => {
-        
+
+    handleUpdateEvent = async (id: string, event: React.FormEvent) => {
+
         event.preventDefault()
         try {
             const response = await axios.put(
@@ -94,85 +94,30 @@ export class EventList extends React.Component<EventListProps, EventListState>{
             }
         }
     };
- // Empty dependency array to run once when the component mounts
-    render(){
-    return (
-        <div>
-            {this.state.events.length <= 0 ? (
-                <p>No events found.</p>) : 
-                (this.state.events.map((event) => (
-                    <div key={event.id}>
-                        <h3>{event.title}</h3>
-                        <p><strong>Description: </strong>{event.description}</p>
-                        <p><strong>Date: </strong>{event.date}</p>
-                        <p><strong>Start time: </strong>{event.startTime}</p>
-                        <p><strong>End time: </strong>{event.endTime}</p>
-                        <p><strong>Location: </strong>{event.location}</p>
-                        <p><strong>Approval: </strong>{event.adminApproval ? 'Approved' : 'Pending'}</p>
-                        {this.props.isAdminLogin && <label><button type= "submit" onClick={() => this.handleDelete(event.id)}>Delete</button></label>}
-                        {this.props.isAdminLogin && <label><button onClick={(e) => this.handleUpdateEvent(event.id, e)}>
-                            <form>
-                                Title:
-                                <input
-                                    type="text"
-                                    value={this.state.title}
-                                    onChange={(e) => this.setState(this.state.updateField("title", e.target.value))}
-                                    required />
-                                <br />
-                                Description:
-                                <textarea
-                                    placeholder="Description"
-                                    value={this.state.description}
-                                    onChange={(e) => this.setState(this.state.updateField("description", e.target.value))}
-                                />
-                                <br />
-                                Location:
-                                <input
-                                    type="text"
-                                    value={this.state.location}
-                                    onChange={(e) => this.setState(this.state.updateField("location", e.target.value))}
-                                    required />
-                                <br />
-                                Date:
-                                <input
-                                    type="date"
-                                    value={this.state.date}
-                                    onChange={(e) => this.setState(this.state.updateField("date", e.target.value))}
-                                    required />
-                                <br />
-                                Start Time:
-                                <input
-                                    type="time"
-                                    value={this.state.startTime}
-                                    onChange={(e) => this.setState(this.state.updateField("startTime", e.target.value))}
-                                    required />
-                                <br />
-                                End Time:
-                                <input
-                                    type="time"
-                                    value={this.state.endTime}
-                                    onChange={(e) => this.setState(this.state.updateField("endTime", e.target.value))}
-                                    required />
-                                <br />
-                                <label>
-                                    Admin Approval:
-                                    <input
-                                        type="checkbox"
-                                        checked={this.state.adminApproval}
-                                        onChange={(e) => this.setState(this.state.updateField("adminApproval", e.target.checked))} />
-                                </label>
-                                <br />
-                                <button type="submit">Update Event</button>
-                            </form>
-                            
-                            Update</button></label>}
-                        <br />
-                    </div>
-                ))
-            )}
-        </div>
-    );
-}
+    // Empty dependency array to run once when the component mounts
+    render() {
+        return (
+            <div>
+                {this.state.events.length <= 0 ? (
+                    <p>No events found.</p>) :
+                    (this.state.events.map((event) => (
+                        <div key={event.id}>
+                            <h3>{event.title}</h3>
+                            <p><strong>Description: </strong>{event.description}</p>
+                            <p><strong>Date: </strong>{event.date}</p>
+                            <p><strong>Start time: </strong>{event.startTime}</p>
+                            <p><strong>End time: </strong>{event.endTime}</p>
+                            <p><strong>Location: </strong>{event.location}</p>
+                            <p><strong>Approval: </strong>{event.adminApproval ? 'Approved' : 'Pending'}</p>
+                            {this.props.isAdminLogin && <label><button type="submit" onClick={() => this.handleDelete(event.id)}>Delete</button></label>}
+                            {this.props.isAdminLogin && <label><button onClick={() => <UpdateEvent />}>Update</button></label>}
+                            <br />
+                        </div>
+                    ))
+                    )}
+            </div>
+        );
+    }
 }
 function withNavigation(Component: typeof EventList) {
     return function Wrapper(props: Omit<EventListProps, 'navigate'>) {
