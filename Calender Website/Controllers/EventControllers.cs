@@ -19,7 +19,9 @@ public class EventController : Controller
         if (eventReview is null) return BadRequest("Review could not be found. ");
         return Ok(eventReview);
     }
-
+    [HttpPut("approve-event")]
+    [AdminFilter]
+    public async Task<IActionResult> ApproveEvent([FromQuery] Guid eventId) => Ok(await eventService.ApproveEvent(eventId));
 
     [HttpGet("event-friends")]
     [LoggedInFilter]
@@ -43,7 +45,7 @@ public class EventController : Controller
         List<Event> events = await eventService.GetAllEvents();
         return Ok(events);
     }
-    
+
 
     [HttpPost("review")]
     [LoggedInFilter]

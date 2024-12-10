@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 interface EventListProps {
     onBacktoMenuClick: () => void;
     isAdminLogin: boolean;
-    isUserLogin: boolean;
+    isLoggedIn: boolean;
 }
 
 export class EventList extends React.Component<EventListProps, EventListState>{
@@ -15,6 +15,44 @@ export class EventList extends React.Component<EventListProps, EventListState>{
         super(props);
         this.state = initEventListState;
         
+    }
+    handleEventAttend = async (eventId : string) => {
+        try{
+            const response = await axios.post(
+                'http://localhost:3000/Calender-Website/EventAttendance',
+                {
+                    "EventId" : eventId
+                },
+                { withCredentials: true }
+            );
+            localStorage.setItem('message', response.data);
+            window.location.reload();
+            window.dispatchEvent(new Event('storageUpdated'));
+        }catch(error){
+            if (axios.isAxiosError(error) && error.response) {
+                toast.error(error.response.data); // Displays "Event already exists."
+            } else {
+                toast.error('An error occurred. Please try again.');
+            }
+        }
+    }
+    approve = async (id : string) => {
+        try{
+        const response = await axios.put(
+            `http://localhost:3000/Calender-Website/approve-event?eventId=${id}`,
+            {},
+            { withCredentials: true }
+        );
+            localStorage.setItem('message', "Event Approved");
+            window.location.reload();
+            window.dispatchEvent(new Event('storageUpdated'));
+    }catch (error) {
+        if (axios.isAxiosError(error) && error.response) {
+            toast.error(error.response.data);
+        } else {
+            toast.error('An error occurred. Please try again.');
+        }
+    }
     }
     componentDidMount() {
         // Fetch data when the component mounts
@@ -26,6 +64,11 @@ export class EventList extends React.Component<EventListProps, EventListState>{
                 'http://localhost:3000/Calender-Website/get-all-events',
                 { withCredentials: true }
             );
+            const attending = await axios.get(
+                'http://localhost:3000/Calender-Website/IsAttending',
+                { withCredentials: true }
+            );
+            this.setState(this.state.updateAttending(attending.data));
             this.setState(this.state.updateEvents(response.data));
         } catch (error) {
             if (axios.isAxiosError(error) && error.response) {
@@ -50,6 +93,20 @@ export class EventList extends React.Component<EventListProps, EventListState>{
                         <p><strong>End time: </strong>{event.endTime}</p>
                         <p><strong>Location: </strong>{event.location}</p>
                         <p><strong>Approval: </strong>{event.adminApproval ? 'Approved' : 'Pending'}</p>
+                        {this.props.isAdminLogin && !event.adminApproval && (<form onSubmit={(e) => {
+                            e.preventDefault();
+                            this.approve(event.id)
+                        }}>
+                        <button type="submit">Approve</button>
+                        </form>
+                        )}
+                        {this.props.isLoggedIn && event.adminApproval && !this.state.attending.includes(event.id)  && (<form onSubmit={(e) => {
+                            e.preventDefault();
+                            this.handleEventAttend(event.id)
+                        }}>
+                        <button type="submit">Attend</button>
+                        </form>
+                        )}
                         {this.props.isAdminLogin && (<li>
                             <Link to={`/show-attendances/${event.id}/${event.title}`}>See Attendancees</Link>
                             </li>

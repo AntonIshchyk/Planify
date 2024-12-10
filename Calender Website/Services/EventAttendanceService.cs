@@ -9,6 +9,12 @@ public class EventAttendanceService
     }
     public bool ValidateDate(Event evt) => DateOnly.Parse(evt.Date) < DateOnly.FromDateTime(DateTime.Now) ? false : true;
 
+    public async Task<List<Guid>> GetAttending(string userId)
+    {
+        List<EventAttendance> eventAttendances = await EventAttendanceAccess.LoadAll();
+        return eventAttendances.Where(attendance => attendance.UserId.ToString() == userId).Select(attendance => attendance.EventId).ToList();
+    }
+
     public async Task<bool> DeleteEventAttendance(Guid eventId, Guid userId)
     {
         List<EventAttendance> eventattendances = await AccessJson.ReadJson<EventAttendance>();

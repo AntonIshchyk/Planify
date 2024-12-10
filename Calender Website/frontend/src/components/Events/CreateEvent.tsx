@@ -12,7 +12,6 @@ export class CreateEvent extends React.Component<CreateEventProps, CreateEventSt
     }
     handleCreateEvent = async (event : React.FormEvent) => {
         event.preventDefault();
-
         try{
             const response = await axios.post(
                 'http://localhost:3000/Calender-Website/create-event',
