@@ -13,12 +13,12 @@ import UserScreen from './components/Home/UserScreen';
 import EventList from './components/Events/EventList';
 import DeleteEvent from './components/Events/DeleteEvent';
 import { AppState, initAppState } from './App.state';
-import CreateAttendance from './components/CreateAttendance';
-import AttendEvent from './components/AttendEvent';
-import EventAttendanceesList from './components/EventAttendanceesList';
-import ViewAttendancees from './components/ViewAttendancees';
-import Register from './components/Register';
-import AddAdminAccount from './components/AddAdminAccount';
+import CreateAttendance from './components/EventAttendance/CreateAttendance';
+import AttendEvent from './components/EventAttendance/AttendEvent';
+import EventAttendanceesList from './components/EventAttendance/EventAttendanceesList';
+import ViewAttendancees from './components/EventAttendance/ViewAttendancees';
+import Register from './components/Register/Register';
+import AddAdminAccount from './components/Register/AddAdminAccount';
 import { Friends } from './components/Friends/Friends';
 
 export class App extends Component<{}, AppState> {
