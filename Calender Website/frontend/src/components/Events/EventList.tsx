@@ -16,6 +16,37 @@ export class EventList extends React.Component<EventListProps, EventListState>{
         this.state = initEventListState;
         
     }
+
+    handleChangeFeedback = async (eventId : string, feedback : string) => {
+        this.setState(this.state.updateFeedback(eventId, feedback));
+    }
+    handleChangeRating = async (eventId : string, rating : number) => {
+        this.setState(this.state.updateRating(eventId, rating));
+    }
+    handleFeedbackSent = async (eventId : string) => {
+        try{
+            const response = await axios.post(
+                'http://localhost:3000/Calender-Website/review',
+                {
+                    "EventId" : eventId,
+                    "Rating" : this.state.rating.get(eventId),
+                    "Feedback" : this.state.feedback.get(eventId) || "None"
+                },
+                { withCredentials: true
+                }
+            );
+            localStorage.setItem('message', response.data);
+            window.location.reload();
+            window.dispatchEvent(new Event('storageUpdated'));
+        }catch(error){
+            if (axios.isAxiosError(error) && error.response) {
+                toast.error(error.response.data); // Displays "Event already exists."
+            } else {
+                toast.error('An error occurred. Please try again.');
+            }
+        }
+    }
+
     handleEventAttend = async (eventId : string) => {
         try{
             const response = await axios.post(
@@ -111,6 +142,32 @@ export class EventList extends React.Component<EventListProps, EventListState>{
                             <Link to={`/show-attendances/${event.id}/${event.title}`}>See Attendancees</Link>
                             </li>
                         )}
+                {this.state.attending.includes(event.id) &&
+                <form onSubmit={(e) => {
+                    e.preventDefault();
+                    this.handleFeedbackSent(event.id)
+                }}>
+                Rating: 
+                <input
+                    type="number"
+                    step="0.1"
+                    value={this.state.rating.get(event.id) || ''}
+                    onChange={(e) => 
+                        this.handleChangeRating(event.id, Number(e.target.value))
+                    }
+                    required />
+                <br />
+                Feedback:
+                <textarea
+                    placeholder="feedback"
+                    value={this.state.feedback.get(event.id)}
+                    onChange={(e) => 
+                        this.handleChangeFeedback(event.id, e.target.value)}
+                />
+                <br />
+                <button type="submit">Send Feedback</button>
+            </form>
+    }
                         <br />  
                     </div>
                 ))

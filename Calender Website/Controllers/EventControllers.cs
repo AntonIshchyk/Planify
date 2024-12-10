@@ -51,6 +51,7 @@ public class EventController : Controller
     [LoggedInFilter]
     public async Task<IActionResult> AddReview([FromBody] EventAttendance review)
     {
+        if (review is null) return BadRequest("No Review given!");
         string userIdString = HttpContext.Session.GetString("UserId")!;
         if (await eventService.AddReview(review, Guid.Parse(userIdString))) return Ok("Review added.");
         return BadRequest("Review could not be added. ");
