@@ -27,18 +27,18 @@ export class ViewAttendancees extends React.Component<ViewAttendanceesProps, Vie
     
     componentDidMount() {
         // Fetch data when the component mounts
-        this.fetchEvents();
+        this.fetchAttendances();
     }
 
-    fetchEvents = async () => {
+    fetchAttendances = async () => {
         const  eventId  = this.props.params.eventId; // Access eventId from params
         try {
             const response = await axios.get(
-                `http://localhost:3000/Calender-Website/get-attendances-of-event?eventId=${eventId}`,
+                `http://localhost:3000/Calender-Website/EventAttendanceofEvent?Id=${eventId}`,
                 { withCredentials: true }
             );
-            this.setState(this.state.updateAttendancees(response.data));
-            toast.info(this.state.attendancees[1])
+            this.setState(this.state.updateAttendances(response.data));
+            toast.info(this.state.attendances[1])
 
         } catch (error) {
             if (axios.isAxiosError(error) && error.response) {
@@ -50,14 +50,14 @@ export class ViewAttendancees extends React.Component<ViewAttendanceesProps, Vie
     };
 
     render() {
-        if (!Array.isArray(this.state.attendancees)) {
+        if (!Array.isArray(this.state.attendances)) {
             return <p>Invalid data type for attendance list.</p>;
         }
     
         return (
             <div>
-                {this.state.attendancees.length > 0 ? (
-                    this.state.attendancees.map((attendance, index) => (
+                {this.state.attendances.length > 0 ? (
+                    this.state.attendances.map((attendance, index) => (
                         <div key={index}>
                             <h3>Attendance Details</h3>
                             <p><strong>Attendee:</strong> {attendance}</p>

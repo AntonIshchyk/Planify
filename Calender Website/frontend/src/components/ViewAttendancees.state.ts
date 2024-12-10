@@ -1,10 +1,10 @@
 export type ViewAttendanceesState = {
-    attendancees : string[],
-    updateAttendancees : (attendancees : string[]) => (state : ViewAttendanceesState) => ViewAttendanceesState
+    attendances : string[],
+    updateAttendances : (attendances : string[]) => (state : ViewAttendanceesState) => ViewAttendanceesState
 }
 
 export const initViewAttendanceesState = {
-    attendancees : [],
-    updateAttendancees : (attendancees : string[]) => (state:ViewAttendanceesState) => ({...state, attendancees : attendancees})
+    attendances : [],
+    updateAttendances : (attendances : string[]) => (state:ViewAttendanceesState) => ({...state, attendances : attendances})
 
 }

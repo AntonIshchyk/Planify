@@ -18,6 +18,7 @@ public class EventAttendanceService
         AccessJson.WriteJsonList(eventattendances);
         return true;
     }
+
     public async Task<bool> TestExistence(EventAttendance ea)
     {
         List<EventAttendance> eventattendances = await AccessJson.ReadJson<EventAttendance>();
