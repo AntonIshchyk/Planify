@@ -144,6 +144,29 @@ export class Friends extends React.Component<{}, FriendsState>
         }
     };
 
+    sendFriendRequest = async (personId:string) => {
+        try 
+        {
+            const response = await axios.post(
+                `http://localhost:3000/Calender-Website/send-friend-request?toId=${personId}`,
+                {},
+                { withCredentials: true }
+            );
+            toast.success("Friend request sent successfully!");
+        } 
+        catch (error) 
+        {
+            if (axios.isAxiosError(error) && error.response) 
+            {
+                toast.error(error.response.data);
+            } 
+            else 
+            {
+                toast.error('An error occurred. Please try again.');
+            }
+        }
+    };
+
     render() 
     {
         return (
@@ -196,19 +219,28 @@ export class Friends extends React.Component<{}, FriendsState>
                         onChange={this.handleSearchChange}
                     />
 
-                    <div className="search-results">
-                        {this.state.foundPeople.length > 0 ? (
-                            this.state.foundPeople.map(person => (
+                    {this.state.foundPeople.length === 0 ? (
+                        <p>No results found.</p>
+                    ) : (
+                        this.state.foundPeople.map(person => {
+                            const isFriend = this.state.friends.some(friend => friend.id === person.id);
+
+                            return (
                                 <div key={person.id}>
                                     <p>Name: {person.firstName} {person.lastName}</p>
                                     <p>Email: {person.email}</p>
                                     <p>Recurring Days: {person.recurringDays}</p>
+                                    {isFriend ? (
+                                        <p>Status: Already Friends</p>
+                                    ) : (
+                                        <button onClick={() => this.sendFriendRequest(person.id)}>
+                                            Send Friend Request
+                                        </button>
+                                    )}
                                 </div>
-                            ))
-                        ) : (
-                            this.state.searchStr.length > 0 && <p>No results found.</p>
-                        )}
-                    </div>
+                            );
+                        })
+                    )}
                 </div>
             </div>
         );
