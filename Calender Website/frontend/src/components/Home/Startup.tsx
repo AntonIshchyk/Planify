@@ -1,13 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 interface StartupProps {
     onAdminClick: () => void;
     onUserClick: () => void;
 }
-const Startup: React.FC<StartupProps> = ({onAdminClick, onUserClick}) => {
-    const [message, setMessage] = useState('');
-
-
+export class Startup extends React.Component<StartupProps>{
+    render(){
     return (
         <div>
             <h1>Login</h1>
@@ -16,21 +14,22 @@ const Startup: React.FC<StartupProps> = ({onAdminClick, onUserClick}) => {
             <form onSubmit={(event) => 
                 {
                     event.preventDefault();
-                    onUserClick()
+                    this.props.onUserClick()
                 }
             }>
             <button type="submit" className='choicebutton'>User</button>
             </form>
             <form onSubmit={(event) => {
                 event.preventDefault();
-                onAdminClick();
+                this.props.onAdminClick();
             }}>
             <button type="submit" className='choicebutton'>Admin</button>
             </form>
             </div>
-            {message && <p>{message}</p>}
+            
         </div>
     );
 };
+}
 
 export default Startup;   
