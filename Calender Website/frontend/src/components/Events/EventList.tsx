@@ -68,8 +68,8 @@ export class EventList extends React.Component<EventListProps, EventListState>{
                 'http://localhost:3000/Calender-Website/IsAttending',
                 { withCredentials: true }
             );
-            this.setState(this.state.updateAttending(attending.data));
-            this.setState(this.state.updateEvents(response.data));
+            this.setState(this.state.updateField("attending",attending.data));
+            this.setState(this.state.updateField("events", response.data));
         } catch (error) {
             if (axios.isAxiosError(error) && error.response) {
                 toast.error(error.response.data);
