@@ -114,39 +114,45 @@ export class Friends extends React.Component<{}, FriendsState>
         }
     };
 
-    render()
+    render() 
     {
         return (
-            <div className="friends">
-                <h1>Your Friends</h1>
-                {this.state.friends.length <= 0 ? (
-                <p>No Friends found.</p>) : 
-                (this.state.friends.map(friend => (
-                    <div key={friend.id}>
-                        <h3>{friend.firstName}</h3>
-                        <h3>{friend.lastName}</h3>
-                        <h3>{friend.email}</h3>
-                        <h3>Recurring Days {friend.recurringDays}</h3>
-                        <h3>We could also show friends of our friend</h3>
-                        <button onClick={() => this.deleteFriend(friend.id)}>Delete friend</button>
-                        <br />
-                    </div>
-                ))
-            )}
-
+            <div>
+                <div className="friends">
+                    <h1>Your Friends</h1>
+                    {this.state.friends.length <= 0 ? (
+                        <p>No Friends found.</p>
+                    ) : (
+                        this.state.friends.map(friend => (
+                            <div key={friend.id}>
+                                <h3>{friend.firstName}</h3>
+                                <h3>{friend.lastName}</h3>
+                                <h3>{friend.email}</h3>
+                                <h3>Recurring Days {friend.recurringDays}</h3>
+                                <h3>We could also show friends of our friend</h3>
+                                <button onClick={() => this.deleteFriend(friend.id)}>
+                                    Delete friend
+                                </button>
+                                <br />
+                            </div>
+                        ))
+                    )}
+                </div>
+    
                 <div className="friend-requests">
-                <h1>Your Friend Requests</h1>
+                    <h1>Your Friend Requests</h1>
                     {this.state.requests.length <= 0 ? (
-                    <p>No Requests found.</p>) : 
-                    (this.state.requests.map(friend => (
-                        <div key={friend.id}>
-                            <h3>{friend.firstName}</h3>
-                            <h3>{friend.lastName}</h3>
-                            <h3>{friend.email}</h3>
-                            <h3>Recurring Days {friend.recurringDays}</h3>
-                            <h3>We could also show friends of our potential friend</h3>
-                            <br />
-                        </div>
+                        <p>No Requests found.</p>
+                    ) : (
+                        this.state.requests.map(friend => (
+                            <div key={friend.id}>
+                                <h3>{friend.firstName}</h3>
+                                <h3>{friend.lastName}</h3>
+                                <h3>{friend.email}</h3>
+                                <h3>Recurring Days {friend.recurringDays}</h3>
+                                <h3>We could also show friends of our potential friend</h3>
+                                <br />
+                            </div>
                         ))
                     )}
                 </div>
