@@ -4,11 +4,16 @@ using Microsoft.AspNetCore.Mvc;
 public class UserController : Controller
 {
     readonly UserService US;
+    EventAttendanceService EAS;
 
-    public UserController(UserService us)
+    public UserController(UserService us, EventAttendanceService eas)
     {
         US = us;
+        EAS = eas;
     }
+
+    [HttpGet("get-user-names")]
+    public async Task<IActionResult> GetUserNames([FromQuery] Guid eventId) => Ok(await EAS.AttendanceStrings(eventId));
 
     [HttpGet("get-all-users")]
     public async Task<IActionResult> GetAllUsers() => Ok(await US.GetAllUsers());

@@ -1,20 +1,34 @@
 import React from 'react';
 import axios from 'axios';
-import { EventListState, initEventListState } from './EventList.state';
 import { toast } from 'react-toastify';
-import { Link } from 'react-router-dom';
+import { EventAttendanceesListState, initEventAttendanceesListState } from './EventAttendanceesList.state';
 
-interface EventListProps {
-    onBacktoMenuClick: () => void;
-    isAdminLogin: boolean;
-    isUserLogin: boolean;
-}
-
-export class EventList extends React.Component<EventListProps, EventListState>{
-    constructor(props: EventListProps){
+export class EventAttendanceesList extends React.Component<{}, EventAttendanceesListState>{
+    constructor(props : {}){
         super(props);
-        this.state = initEventListState;
+        this.state = initEventAttendanceesListState;
         
+    }
+    async handleDelete(id: string){
+        try{
+            const response = await axios.delete(
+                `http://localhost:3000/Calender-Website/delete-event-attendance?eventId=${id}`,
+                {
+                    withCredentials: true
+                }
+            )
+            localStorage.setItem('message', id);
+            window.location.reload();
+            window.dispatchEvent(new Event('storageUpdated'));
+        }
+        catch(error){
+            if(axios.isAxiosError(error) && error.response){
+                toast.error(error.response.data)
+            }
+            else {
+                toast.error('An error occurred. Please try again.');
+            }
+        }
     }
     componentDidMount() {
         // Fetch data when the component mounts
@@ -23,7 +37,7 @@ export class EventList extends React.Component<EventListProps, EventListState>{
     fetchEvents = async () => {
         try {
             const response = await axios.get(
-                'http://localhost:3000/Calender-Website/get-all-events',
+                'http://localhost:3000/Calender-Website/get-attending-events',
                 { withCredentials: true }
             );
             this.setState(this.state.updateEvents(response.data));
@@ -50,11 +64,10 @@ export class EventList extends React.Component<EventListProps, EventListState>{
                         <p><strong>End time: </strong>{event.endTime}</p>
                         <p><strong>Location: </strong>{event.location}</p>
                         <p><strong>Approval: </strong>{event.adminApproval ? 'Approved' : 'Pending'}</p>
-                        {this.props.isAdminLogin && (<li>
-                            <Link to={`/show-attendances/${event.id}/${event.title}`}>See Attendancees</Link>
-                            </li>
-                        )}
-                        <br />  
+                        <button type="button" onClick={() => this.handleDelete(event.id)}>
+                            Remove Attendancee
+                            </button>
+                        <br />
                     </div>
                 ))
             )}
@@ -62,5 +75,4 @@ export class EventList extends React.Component<EventListProps, EventListState>{
     );
 }
 }
-export default EventList;
-export {};
+export default EventAttendanceesList;

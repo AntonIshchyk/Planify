@@ -31,7 +31,9 @@
     "Friends": [
       "078049bb-4d88-4972-9642-9c7af0402360"
     ],
-    "FriendRequests": []
+    "FriendRequests": [
+      "078049bb-4d88-4972-9642-9c7af0402360"
+    ]
   },
   {
     "Id": "1418bc94-b715-4ae3-a4d6-a111e3653c24",
@@ -41,6 +43,26 @@
     "Password": "TestPassword2000",
     "RecurringDays": 0,
     "Friends": [],
-    "FriendRequests": ["078049bb-4d88-4972-9642-9c7af0402360"]
+    "FriendRequests": []
+  },
+  {
+    "Id": "98c52815-1b03-47c1-a5e9-b7056fdb7a26",
+    "FirstName": "Matts",
+    "LastName": "de Vries",
+    "Email": "matts@gmail.com",
+    "Password": "Omaaaaa",
+    "RecurringDays": 0,
+    "Friends": [],
+    "FriendRequests": []
+  },
+  {
+    "Id": "4d1d4aaf-79de-452d-8a60-2c1d3d5966ab",
+    "FirstName": "Oma",
+    "LastName": "Ducik",
+    "Email": "oma@gmail.com",
+    "Password": "omaaaaaaa",
+    "RecurringDays": 0,
+    "Friends": [],
+    "FriendRequests": []
   }
 ]

@@ -7,6 +7,7 @@ interface LoginProps {
     onBacktoMenuClick : () => void;
     isAdminLogin : boolean;
     isUserLogin : boolean;
+    onRegisterClick : () => void;
 }
 export class Login extends React.Component<LoginProps, LoginState> {
     constructor(props : LoginProps){
@@ -83,8 +84,14 @@ export class Login extends React.Component<LoginProps, LoginState> {
                 </label>
                 <br />
                 <button type="submit">Login</button>
+            </form> 
+            { this.props.isUserLogin && <form onSubmit={(event) => {
+                event.preventDefault();
+                this.props.onRegisterClick();
+            }}>
+            <button type="submit">Register as User</button>
             </form>
-
+            }
             <form onSubmit={(event) => {
                 event.preventDefault();
                 this.props.onBacktoMenuClick();

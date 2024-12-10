@@ -13,6 +13,12 @@ import UserScreen from './components/Home/UserScreen';
 import EventList from './components/Events/EventList';
 import DeleteEvent from './components/Events/DeleteEvent';
 import { AppState, initAppState } from './App.state';
+import CreateAttendance from './components/EventAttendance/CreateAttendance';
+import AttendEvent from './components/EventAttendance/AttendEvent';
+import EventAttendanceesList from './components/EventAttendance/EventAttendanceesList';
+import ViewAttendancees from './components/EventAttendance/ViewAttendancees';
+import Register from './components/Register/Register';
+import AddAdminAccount from './components/Register/AddAdminAccount';
 import { Friends } from './components/Friends/Friends';
 
 export class App extends Component<{}, AppState> {
@@ -24,17 +30,48 @@ export class App extends Component<{}, AppState> {
   handleBacktoMenuClick = () => {
     this.setState(this.state.updateField("showAdminLogin", false));
     this.setState(this.state.updateField("showUserLogin", false));
+    this.setState(this.state.updateField("showRegister", false));
+  };
+
+  handleRegisterClick = () => {
+    this.setState(this.state.updateField("showAdminLogin", false));
+    this.setState(this.state.updateField("showUserLogin", false));
+    this.setState(this.state.updateField("showRegister", true));
   };
 
   handleUserClick = () => {
     this.setState(this.state.updateField("showAdminLogin", false));
     this.setState(this.state.updateField("showUserLogin", true));
+    this.setState(this.state.updateField("showRegister", false));
   };
 
   handleAdminClick = () => {
     this.setState(this.state.updateField("showAdminLogin", true));
     this.setState(this.state.updateField("showUserLogin", false));
+    this.setState(this.state.updateField("showRegister", false));
   };
+  /*handleBacktoMenuClick = () => {
+    this.setState(this.state.updateShowAdminLogin(false));
+    this.setState(this.state.updateShowUserLogin(false));
+    this.setState(this.state.updateShowRegister(false));
+  };
+
+  handleUserClick = () => {
+    this.setState(this.state.updateShowAdminLogin(false));
+    this.setState(this.state.updateShowUserLogin(true));
+    this.setState(this.state.updateShowRegister(false));
+  };
+
+  handleAdminClick = () => {
+    this.setState(this.state.updateShowAdminLogin(true));
+    this.setState(this.state.updateShowUserLogin(false));
+    this.setState(this.state.updateShowRegister(false));
+  };
+  handleRegisterClick = () => {
+    this.setState(this.state.updateShowAdminLogin(false));
+    this.setState(this.state.updateShowUserLogin(false));
+    this.setState(this.state.updateShowRegister(true));
+  };*/
 
   componentDidMount() {
     // Check and show toast message first
@@ -97,18 +134,7 @@ export class App extends Component<{}, AppState> {
     return (
       <BrowserRouter>
         <div className="App">
-          <ToastContainer
-            position="top-right"
-            autoClose={5000}
-            hideProgressBar={false}
-            newestOnTop
-            closeOnClick
-            rtl={false}
-            pauseOnFocusLoss
-            draggable
-            pauseOnHover
-            theme="light"
-          />
+          
 
           <MenuBar
             isAdmin={this.state.isAdmin}
@@ -120,24 +146,32 @@ export class App extends Component<{}, AppState> {
               path="/"
               element={
                 <>
-                  {!this.state.loggedIn && (this.state.showUserLogin || this.state.showAdminLogin) && (
+                  {!this.state.loggedIn && !this.state.showRegister && (this.state.showUserLogin || this.state.showAdminLogin) && (
                     <Login
                       onBacktoMenuClick={this.handleBacktoMenuClick}
                       isAdminLogin={this.state.showAdminLogin}
                       isUserLogin={this.state.showUserLogin}
+                      onRegisterClick={this.handleRegisterClick}
                     />
                   )}
-                  {!this.state.loggedIn && !this.state.showAdminLogin && !this.state.showUserLogin && (
+                  {!this.state.loggedIn && !this.state.showAdminLogin && !this.state.showUserLogin && !this.state.showRegister && (
                     <Startup onUserClick={this.handleUserClick} onAdminClick={this.handleAdminClick} />
                   )}
                   {this.state.isAdmin && <AdminScreen />}
                   {!this.state.isAdmin && this.state.loggedIn && <UserScreen />}
+                  {!this.state.showUserLogin && !this.state.showAdminLogin && this.state.showRegister && <Register onBacktoMenuClick={this.handleBacktoMenuClick} />}
                 </>
-              }
-            />
+              }/>
             <Route path="/create-event" element={<CreateEvent />} />
-            <Route path="/get-all-events" element={<EventList />} />
+            <Route path="/get-all-events" element={<EventList onBacktoMenuClick={function (): void {
+              throw new Error('Function not implemented.');
+            } } isAdminLogin={this.state.isAdmin} isUserLogin={this.state.loggedIn} />} />
             <Route path="/delete-event" element={<DeleteEvent />} />
+            <Route path="/attend" element={<CreateAttendance/>}/>
+            <Route path="/attending-events" element={<EventAttendanceesList />} />
+            <Route path="/attend-event" element={<AttendEvent />} />
+            <Route path="/show-attendances/:eventId/:title" element={<ViewAttendancees/>} />
+            <Route path="/add-admin" element={<AddAdminAccount/>} />
             <Route path="/friends" element={<Friends />} />
           </Routes>
         </div>
@@ -147,4 +181,15 @@ export class App extends Component<{}, AppState> {
 }
 
 export default App;
-
+/*<ToastContainer
+            position="top-right"
+            autoClose={5000}
+            hideProgressBar={false}
+            newestOnTop
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss  
+            draggable
+            pauseOnHover
+            theme="light"
+          />*/
