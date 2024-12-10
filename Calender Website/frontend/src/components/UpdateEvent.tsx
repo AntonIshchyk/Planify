@@ -6,9 +6,11 @@ import 'react-toastify/dist/ReactToastify.css';
 interface UpdateEventProps {
 }
 export class UpdateEvent extends React.Component<UpdateEventProps, UpdateEventState>{
-    constructor(props: UpdateEventProps){
+    constructor(props: UpdateEventProps, id: string){
+    
         super(props);
         this.state = initUpdateEventState;
+        this.setState(this.state.updateId(id));
     }
     handleUpdateEvent = async (event: React.FormEvent) => {
         event.preventDefault();
@@ -17,7 +19,6 @@ export class UpdateEvent extends React.Component<UpdateEventProps, UpdateEventSt
             const response = await axios.put(
                 'http://localhost:3000/Calender-Website/update-event',
                 {
-                    "Id": this.state.id,
                     "Title": this.state.title,
                     "Description": this.state.description,
                     "Date": this.state.date,
@@ -42,13 +43,6 @@ export class UpdateEvent extends React.Component<UpdateEventProps, UpdateEventSt
         <div>
             <h2>Update Event</h2>
             <form onSubmit={this.handleUpdateEvent}>
-                Id:
-                <textarea
-                    placeholder="Id"
-                    value={this.state.id}
-                    onChange={(e) => this.setState(this.state.updateId(e.target.value))}
-                    required />
-                <br />
                 Title:
                 <input
                     type="text"

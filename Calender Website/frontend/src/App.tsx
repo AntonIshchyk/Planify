@@ -13,6 +13,7 @@ import UserScreen from './components/UserScreen';
 import EventList from './components/EventList';
 import DeleteEvent from './components/DeleteEvent';
 import { AppState, initAppState } from './App.state';
+import UpdateEvent from './components/UpdateEvent';
 
 export class App extends Component<{}, AppState> {
   constructor(props: {}) {
@@ -125,9 +126,10 @@ export class App extends Component<{}, AppState> {
             <Route path="/create-event" element={<CreateEvent />} />
             <Route path="/get-all-events" element={<EventList
               onBacktoMenuClick={this.handleBacktoMenuClick}
-              isAdminLogin={this.state.showAdminLogin}
-              isUserLogin={this.state.showUserLogin} />} />
+              isAdminLogin={this.state.isAdmin}
+              isUserLogin={this.state.loggedIn} />} />
             <Route path="/delete-event" element={<DeleteEvent />} />
+            <Route path="/update-event" element={<UpdateEvent />} />
           </Routes>
         </div>
       </BrowserRouter>
