@@ -39,7 +39,7 @@ export class AttendEvent extends React.Component<AttendEventProps, AttendEventSt
                 <input
                     type="text"
                     value={this.state.EventId}
-                    onChange={(e) => this.setState(this.state.updateEventId(e.target.value))}
+                    onChange={(e) => this.setState(this.state.updateField("EventId", e.target.value))}
                     required />
                 <br />
                 <button type="submit">Attend</button>

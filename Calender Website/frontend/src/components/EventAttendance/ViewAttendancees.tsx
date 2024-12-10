@@ -35,7 +35,7 @@ export class ViewAttendancees extends React.Component<ViewAttendanceesProps, Vie
                 `http://localhost:3000/Calender-Website/get-user-names?eventId=${eventId}`,
                 { withCredentials: true }
             );
-            this.setState(this.state.updateAttendances(response.data));
+            this.setState(this.state.updateField("attendances", response.data));
 
         } catch (error) {
             if (axios.isAxiosError(error) && error.response) {

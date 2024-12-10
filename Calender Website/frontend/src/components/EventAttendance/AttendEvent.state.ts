@@ -1,10 +1,10 @@
+import {StateUpdater, createStateUpdater} from '../Updater/Updater';
+
 export type AttendEventState = {
     EventId : string;
-    updateEventId : (EventId : string) => (state: AttendEventState) => AttendEventState
+    updateField: StateUpdater<AttendEventState>;
 }
 export const initAttendEventState = {
     EventId : '',
-    updateEventId : (EventId: string) => (state: AttendEventState) : AttendEventState => ({...state,
-        EventId : EventId
-    }),
+    updateField : createStateUpdater<AttendEventState>()
 }

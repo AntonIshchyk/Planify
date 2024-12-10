@@ -1,3 +1,5 @@
+import {StateUpdater, createStateUpdater} from '../Updater/Updater';
+
 interface Event {
     id: string;
     title: string;
@@ -11,11 +13,10 @@ interface Event {
 
 export type EventAttendanceesListState = {
     events : Event[],
-    updateEvents : (events : Event[]) => (state : EventAttendanceesListState) => EventAttendanceesListState
+    updateField: StateUpdater<EventAttendanceesListState>;
 }
 
 export const initEventAttendanceesListState = {
     events : [],
-    updateEvents : (events : Event[]) => (state:EventAttendanceesListState) => ({...state, events : events})
-
+    updateField : createStateUpdater<EventAttendanceesListState>()
 }
