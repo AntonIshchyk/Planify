@@ -1,7 +1,7 @@
 "use client";
 import React from 'react';
 import axios from 'axios';
-import { initLoginState, LoginState } from './Login/Login.state';
+import { initLoginState, LoginState } from '../Login/Login.state';
 import { toast } from 'react-toastify';
 
 export class Login extends React.Component<{}, LoginState> {

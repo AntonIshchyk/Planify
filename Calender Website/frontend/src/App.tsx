@@ -17,8 +17,8 @@ import CreateAttendance from './components/CreateAttendance';
 import AttendEvent from './components/AttendEvent';
 import EventAttendanceesList from './components/EventAttendanceesList';
 import ViewAttendancees from './components/ViewAttendancees';
-import Register from './components/Register';
-import AddAdminAccount from './components/AddAdminAccount';
+import Register from './components/Register/Register';
+import AddAdminAccount from './components/Register/AddAdminAccount';
 import { Friends } from './components/Friends/Friends';
 
 export class App extends Component<{}, AppState> {

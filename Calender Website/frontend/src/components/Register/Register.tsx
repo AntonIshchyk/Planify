@@ -2,7 +2,7 @@
 import React from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-import { initRegisterState, RegisterState } from './Register.state';
+import { initRegisterState, RegisterState } from '../Register/Register.state';
 
 interface RegisterProps {
     onBacktoMenuClick : () => void;
