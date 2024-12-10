@@ -109,8 +109,63 @@ export class EventList extends React.Component<EventListProps, EventListState>{
                         <p><strong>End time: </strong>{event.endTime}</p>
                         <p><strong>Location: </strong>{event.location}</p>
                         <p><strong>Approval: </strong>{event.adminApproval ? 'Approved' : 'Pending'}</p>
-                        {this.props.isAdminLogin && <label><button onClick={() => this.handleDelete(event.id)}>Delete</button></label>}
-                        {this.props.isAdminLogin && <label><button type= "button" onClick={(e) => this.handleUpdateEvent(event.id, e)}>Update</button></label>}
+                        {this.props.isAdminLogin && <label><button type= "submit" onClick={() => this.handleDelete(event.id)}>Delete</button></label>}
+                        {this.props.isAdminLogin && <label><button onClick={(e) => this.handleUpdateEvent(event.id, e)}>
+                            <form>
+                                Title:
+                                <input
+                                    type="text"
+                                    value={this.state.title}
+                                    onChange={(e) => this.setState(this.state.updateField("title", e.target.value))}
+                                    required />
+                                <br />
+                                Description:
+                                <textarea
+                                    placeholder="Description"
+                                    value={this.state.description}
+                                    onChange={(e) => this.setState(this.state.updateField("description", e.target.value))}
+                                />
+                                <br />
+                                Location:
+                                <input
+                                    type="text"
+                                    value={this.state.location}
+                                    onChange={(e) => this.setState(this.state.updateField("location", e.target.value))}
+                                    required />
+                                <br />
+                                Date:
+                                <input
+                                    type="date"
+                                    value={this.state.date}
+                                    onChange={(e) => this.setState(this.state.updateField("date", e.target.value))}
+                                    required />
+                                <br />
+                                Start Time:
+                                <input
+                                    type="time"
+                                    value={this.state.startTime}
+                                    onChange={(e) => this.setState(this.state.updateField("startTime", e.target.value))}
+                                    required />
+                                <br />
+                                End Time:
+                                <input
+                                    type="time"
+                                    value={this.state.endTime}
+                                    onChange={(e) => this.setState(this.state.updateField("endTime", e.target.value))}
+                                    required />
+                                <br />
+                                <label>
+                                    Admin Approval:
+                                    <input
+                                        type="checkbox"
+                                        checked={this.state.adminApproval}
+                                        onChange={(e) => this.setState(this.state.updateField("adminApproval", e.target.checked))} />
+                                </label>
+                                <br />
+                                <button type="submit">Update Event</button>
+                            </form>
+                            
+                            Update</button></label>}
                         <br />
                     </div>
                 ))
