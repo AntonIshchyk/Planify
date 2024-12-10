@@ -136,6 +136,14 @@ export class Friends extends React.Component<{}, FriendsState>
         }
     };
 
+    handleSearchChange = (e:React.ChangeEvent<HTMLInputElement>) => {
+        const searchStr = e.target.value;
+        this.setState(this.state.updateField("searchStr", searchStr));
+        if (searchStr.length > 0) {
+            this.fetchFindPeople(searchStr);
+        }
+    };
+
     render() 
     {
         return (
@@ -181,7 +189,26 @@ export class Friends extends React.Component<{}, FriendsState>
 
                 <div className="friends">
                     <h1>Find People</h1>
-                    <input type="text" />
+                    <input
+                        type="text"
+                        placeholder="Search for people..."
+                        value={this.state.searchStr}
+                        onChange={this.handleSearchChange}
+                    />
+
+                    <div className="search-results">
+                        {this.state.foundPeople.length > 0 ? (
+                            this.state.foundPeople.map(person => (
+                                <div key={person.id}>
+                                    <p>Name: {person.firstName} {person.lastName}</p>
+                                    <p>Email: {person.email}</p>
+                                    <p>Recurring Days: {person.recurringDays}</p>
+                                </div>
+                            ))
+                        ) : (
+                            this.state.searchStr.length > 0 && <p>No results found.</p>
+                        )}
+                    </div>
                 </div>
             </div>
         );

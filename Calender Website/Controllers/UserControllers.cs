@@ -180,7 +180,7 @@ public class UserController : Controller
         str = str.ToLower();
         List<User> foundUsers = allUsers
         .Where(u => u.FirstName.ToLower().Contains(str) ||
-                     u.LastName.ToLower().Contains(str))
+                    u.LastName.ToLower().Contains(str))
         .ToList();
 
         return Ok(foundUsers);
