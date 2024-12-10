@@ -19,7 +19,7 @@
     "Friends": [
       "333bb2e8-2b02-4ada-9686-8627c5fabd5a"
     ],
-    "FriendRequests": []
+    "FriendRequests": ["1418bc94-b715-4ae3-a4d6-a111e3653c24"]
   },
   {
     "Id": "333bb2e8-2b02-4ada-9686-8627c5fabd5a",
@@ -31,7 +31,9 @@
     "Friends": [
       "078049bb-4d88-4972-9642-9c7af0402360"
     ],
-    "FriendRequests": []
+    "FriendRequests": [
+      "078049bb-4d88-4972-9642-9c7af0402360"
+    ]
   },
   {
     "Id": "1418bc94-b715-4ae3-a4d6-a111e3653c24",

@@ -57,3 +57,4 @@ export class EventList extends React.Component<{}, EventListState>{
 }
 }
 export default EventList;
+export {};

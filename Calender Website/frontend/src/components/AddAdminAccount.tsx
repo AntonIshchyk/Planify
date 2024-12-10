@@ -1,7 +1,7 @@
 "use client";
 import React from 'react';
 import axios from 'axios';
-import { initLoginState, LoginState } from './Login.state';
+import { initLoginState, LoginState } from './Login/Login.state';
 import { toast } from 'react-toastify';
 
 export class Login extends React.Component<{}, LoginState> {
@@ -41,7 +41,7 @@ export class Login extends React.Component<{}, LoginState> {
                     <input 
                     type="email"
                     value={this.state.email}
-                    onChange={(e) => this.setState(this.state.updateEmail(e.currentTarget.value))}
+                            onChange={(e) => this.setState(this.state.updateField("email", e.currentTarget.value))}
                     required />
                 </label>
                 <br />
@@ -50,7 +50,7 @@ export class Login extends React.Component<{}, LoginState> {
                     <input 
                     type="username"
                     value={this.state.username}
-                        onChange={(e) => this.setState(this.state.updateUsername(e.currentTarget.value))}
+                            onChange={(e) => this.setState(this.state.updateField("username", e.currentTarget.value))}
                     required />
                 </label>
                 <br />
@@ -59,7 +59,7 @@ export class Login extends React.Component<{}, LoginState> {
                     <input 
                     type="password" 
                     value={this.state.password} 
-                    onChange = {(e) => this.setState(this.state.updatePassword(e.currentTarget.value))}
+                            onChange={(e) => this.setState(this.state.updateField("password", e.currentTarget.value))}
                     required/>
                 </label>
                 <br />

@@ -17,5 +17,4 @@ export type EventListState = {
 export const initEventListState = {
     events : [],
     updateEvents : (events : Event[]) => (state:EventListState) => ({...state, events : events})
-
 }

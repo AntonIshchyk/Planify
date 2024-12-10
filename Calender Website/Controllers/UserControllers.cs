@@ -71,8 +71,13 @@ public class UserController : Controller
         if (user is null) return BadRequest("User not found");
 
         if (!user.Friends.Contains(id)) return BadRequest("Friend not found");
+
+        User friend = await UserAccess.Get(id);
+
+        friend.Friends.Remove(sessionId);
         user.Friends.Remove(id);
         await US.UpdateUser(user);
+        await US.UpdateUser(friend);
         return Ok("Friend deleted");
     }
 

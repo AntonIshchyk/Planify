@@ -78,7 +78,7 @@ export class Login extends React.Component<RegisterProps, RegisterState> {
                     required/>
                 </label>
                 <br />
-                <button type="submit">Login</button>
+                <button type="submit">Register</button>
             </form>
 
             <form onSubmit={(event) => {
