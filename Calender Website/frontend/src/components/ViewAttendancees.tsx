@@ -1,10 +1,8 @@
 import React from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-import { Link } from 'react-router-dom';
 import { initViewAttendanceesState, ViewAttendanceesState } from './ViewAttendancees.state';
 import { useParams } from 'react-router-dom';
-import { EventListState, initEventListState } from './EventList.state';
 export function withRouter(Component: any) {
     return function WrappedComponent(props: any) {
         const params = useParams();
@@ -57,10 +55,10 @@ export class ViewAttendancees extends React.Component<ViewAttendanceesProps, Vie
         return (
             <div>
                 {this.state.attendances.length > 0 ? (
-                    this.state.attendances.map((attendance, index) => (
-                        <div key={index}>
+                    this.state.attendances.map((attendance) => (
+                        <div key={attendance.Id}>
                             <h3>Attendance Details</h3>
-                            <p><strong>Attendee:</strong> {attendance}</p>
+                            <p><strong>Attendee:</strong> {attendance.User}</p>
                             <br />
                         </div>
                     ))

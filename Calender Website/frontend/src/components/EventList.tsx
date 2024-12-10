@@ -1,19 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import axios from 'axios';
 import { EventListState, initEventListState } from './EventList.state';
 import { toast } from 'react-toastify';
 import { Link } from 'react-router-dom';
-
-interface Event {
-    id: string;
-    title: string;
-    description: string;
-    date: string;
-    startTime: string;
-    endTime: string;
-    location: string;
-    adminApproval: boolean;
-}
 
 export class EventList extends React.Component<{}, EventListState>{
     constructor(props : {}){

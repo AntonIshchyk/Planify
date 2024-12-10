@@ -4,7 +4,23 @@
     "Username": "TestUsername",
     "Password": "TestPassword",
     "Email": "TestEmail",
-    "LastLogIn": "2024-12-10T09:59:15.5111243+01:00",
-    "LastLogOut": "2024-12-10T09:18:57.4282567+01:00"
+    "LastLogIn": "2024-12-10T09:47:27.3836796+01:00",
+    "LastLogOut": "2024-12-10T09:45:42.8748695+01:00"
+  },
+  {
+    "Id": "163347b3-5ef7-4f33-832b-f1843d5ba19d",
+    "Username": "Matts",
+    "Password": "Matsoeeee",
+    "Email": "Matts@gmail.com",
+    "LastLogIn": "0001-01-01T00:00:00",
+    "LastLogOut": "0001-01-01T00:00:00"
+  },
+  {
+    "Id": "ddd4ea4c-20ea-4ad7-bca5-581527c84d8c",
+    "Username": "tobyyyyyyyyyyyyyyyyy",
+    "Password": "toby",
+    "Email": "toby@toby.gmail.com",
+    "LastLogIn": "2024-12-10T09:55:58.739408+01:00",
+    "LastLogOut": "0001-01-01T00:00:00"
   }
 ]

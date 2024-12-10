@@ -1,7 +1,6 @@
 "use client";
 import React from 'react';
 import axios from 'axios';
-import { CreateEventState, initCreateEventState } from './CreateEvent.state';
 import { toast } from 'react-toastify';
 import { CreateAttendanceState, initCreateAttendanceState } from './CreateAttendance.state';
 
