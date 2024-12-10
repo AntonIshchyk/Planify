@@ -47,7 +47,7 @@ export class Login extends React.Component<RegisterProps, RegisterState> {
                     <input 
                     type="email"
                     value={this.state.email}
-                    onChange={(e) => this.setState(this.state.updateEmail(e.currentTarget.value))}
+                    onChange={(e) => this.setState(this.state.updateField("email", e.currentTarget.value))}
                     required />
                 </label>
                 <br />
@@ -56,7 +56,7 @@ export class Login extends React.Component<RegisterProps, RegisterState> {
                     <input 
                     type="username"
                     value={this.state.firstName}
-                        onChange={(e) => this.setState(this.state.updateFirstName(e.currentTarget.value))}
+                        onChange={(e) => this.setState(this.state.updateField("firstName", e.currentTarget.value))}
                     required />
                 </label>
                 <br />
@@ -65,7 +65,7 @@ export class Login extends React.Component<RegisterProps, RegisterState> {
                     <input 
                     type="username"
                     value={this.state.lastName}
-                        onChange={(e) => this.setState(this.state.updateLastName(e.currentTarget.value))}
+                        onChange={(e) => this.setState(this.state.updateField("lastName", e.currentTarget.value))}
                     required />
                 </label>
                 <br />
@@ -74,7 +74,7 @@ export class Login extends React.Component<RegisterProps, RegisterState> {
                     <input 
                     type="password" 
                     value={this.state.password} 
-                    onChange = {(e) => this.setState(this.state.updatePassword(e.currentTarget.value))}
+                    onChange = {(e) => this.setState(this.state.updateField("password", e.currentTarget.value))}
                     required/>
                 </label>
                 <br />
