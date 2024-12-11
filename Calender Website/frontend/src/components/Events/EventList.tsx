@@ -23,6 +23,9 @@ export class EventList extends React.Component<EventListProps, EventListState>{
     handleChangeRating = async (eventId : string, rating : number) => {
         this.setState(this.state.updateRating(eventId, rating));
     }
+    handleChangeAverageRating = async (eventId : string, averageRating : number) => {
+        this.setState(this.state.updateAverageRatings(eventId, averageRating))
+    }
     handleFeedbackSent = async (eventId : string) => {
         try{
             const response = await axios.post(
@@ -101,10 +104,26 @@ export class EventList extends React.Component<EventListProps, EventListState>{
             );
             this.setState(this.state.updateAttending(attending.data));
             this.setState(this.state.updateEvents(response.data));
-        } catch (error) {
+            this.state.events.forEach(async (value) => {
+                try {
+                    const rating = await axios.get(
+                        `http://localhost:3000/Calender-Website/average-rating?eventId=${value.id}`,
+                        { withCredentials: true }
+                    );
+                    this.handleChangeAverageRating(value.id, rating.data);
+                } catch (error) {
+                    if (axios.isAxiosError(error) && error.response) {
+                        toast.error(error.response.data);
+                    } else {
+                        toast.error('An error occurred while fetching average ratings.');
+                    }
+                }
+            });
+        } catch (error ) {
             if (axios.isAxiosError(error) && error.response) {
                 toast.error(error.response.data);
-            } else {
+            } 
+            else {
                 toast.error('An error occurred. Please try again.');
             }
         }
@@ -123,6 +142,7 @@ export class EventList extends React.Component<EventListProps, EventListState>{
                         <p><strong>Start time: </strong>{event.startTime}</p>
                         <p><strong>End time: </strong>{event.endTime}</p>
                         <p><strong>Location: </strong>{event.location}</p>
+                        {this.state.averageRatings.get(event.id)}
                         <p><strong>Approval: </strong>{event.adminApproval ? 'Approved' : 'Pending'}</p>
                         {this.props.isAdminLogin && !event.adminApproval && (<form onSubmit={(e) => {
                             e.preventDefault();
