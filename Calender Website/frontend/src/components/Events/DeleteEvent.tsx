@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import { DeleteEventState, initDeleteEventState } from './DeleteEvent.state';
 import { toast } from 'react-toastify';
+import apiClient from '../../ApiClient';
 
 interface DeleteEventProps {
 }
@@ -14,7 +15,7 @@ export class DeleteEvent extends React.Component<DeleteEventProps, DeleteEventSt
         event.preventDefault();
 
         try{
-            const response = await axios.delete(
+            const response = await apiClient.delete(
                 `http://localhost:3000/Calender-Website/delete-event?id=${this.state.id}`,
                 { withCredentials: true}
             );

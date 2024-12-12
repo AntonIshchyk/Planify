@@ -20,6 +20,7 @@ import Register from './components/Register/Register';
 import AddAdminAccount from './components/Register/AddAdminAccount';
 import { Friends } from './components/Friends/Friends';
 import EventDetails from './components/Events/EventDetails';
+import apiClient from './ApiClient';
 
 export class App extends Component<{}, AppState> {
   constructor(props: {}) {
@@ -104,7 +105,7 @@ export class App extends Component<{}, AppState> {
 
   checkAdminStatus = async () => {
     try {
-      const response = await axios.get('http://localhost:3000/Calender-Website/check-admin', {
+      const response = await apiClient.get('http://localhost:3000/Calender-Website/check-admin', {
         withCredentials: true,
       });
       this.setState({ isAdmin: response.data }); // true or false
@@ -116,7 +117,7 @@ export class App extends Component<{}, AppState> {
 
   checkLoginStatus = async () => {
     try {
-      const response = await axios.get('http://localhost:3000/Calender-Website/check-logged-in', {
+      const response = await apiClient.get('http://localhost:3000/Calender-Website/check-logged-in', {
         withCredentials: true,
       });
       this.setState({

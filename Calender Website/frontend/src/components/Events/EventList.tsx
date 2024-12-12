@@ -3,6 +3,7 @@ import axios from 'axios';
 import { EventListState, initEventListState } from './EventList.state';
 import { toast } from 'react-toastify';
 import { Link } from 'react-router-dom';
+import apiClient from '../../ApiClient';
 
 interface EventListProps {
     onBacktoMenuClick: () => void;
@@ -26,14 +27,14 @@ export class EventList extends React.Component<EventListProps, EventListState>{
     }
     fetchEvents = async () => {
         try {
-            const response = await axios.get(
+            const response = await apiClient.get(
                 'http://localhost:3000/Calender-Website/get-all-events',
                 { withCredentials: true }
             );
             this.setState(this.state.updateEvents(response.data));
             const ratings = await Promise.all(
                 response.data.map(async (event: { id: string }) => {
-                    const ratingResponse = await axios.get(
+                    const ratingResponse = await apiClient.get(
                         `http://localhost:3000/Calender-Website/average-rating?eventId=${event.id}`,
                         { withCredentials: true }
                     );

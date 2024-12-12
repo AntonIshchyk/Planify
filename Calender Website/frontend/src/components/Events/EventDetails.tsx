@@ -5,6 +5,7 @@ import { toast } from 'react-toastify';
 import { Link } from 'react-router-dom';
 import { EventDetailsState, initEventDetailsState } from './EventDetails.state';
 import { useParams } from 'react-router-dom';
+import apiClient from '../../ApiClient';
 interface EventDetailsProps {
     onBacktoMenuClick: () => void;
     isAdminLogin: boolean;
@@ -26,9 +27,29 @@ export class EventDetails extends React.Component<EventDetailsProps, EventDetail
         this.state = initEventDetailsState;
         
     }
+    handleDeleteEvent = async () => {
+
+        try{
+            const response = await apiClient.delete(
+                `http://localhost:3000/Calender-Website/delete-event?id=${this.state.event.id}`,
+                { withCredentials: true}
+            );
+            
+            localStorage.setItem('message', response.data);
+            window.location.reload();
+            window.dispatchEvent(new Event('storageUpdated'));
+            window.location.href = '/get-all-events'
+        }catch(error){
+            if (axios.isAxiosError(error) && error.response) {
+                toast.error(error.response.data);
+            } else {
+                toast.error('An error occurred. Please try again.');
+            }
+        }
+    }
     handleFeedbackSent = async () => {
         try{
-            const response = await axios.post(
+            const response = await apiClient.post(
                 'http://localhost:3000/Calender-Website/review',
                 {
                     "EventId" : this.state.event.id,
@@ -52,7 +73,7 @@ export class EventDetails extends React.Component<EventDetailsProps, EventDetail
 
     handleEventAttend = async () => {
         try{
-            const response = await axios.post(
+            const response = await apiClient.post(
                 'http://localhost:3000/Calender-Website/EventAttendance',
                 {
                     "EventId" : this.state.event.id
@@ -72,7 +93,7 @@ export class EventDetails extends React.Component<EventDetailsProps, EventDetail
     }
     approve = async () => {
         try{
-        const response = await axios.put(
+        const response = await apiClient.put(
             `http://localhost:3000/Calender-Website/approve-event?eventId=${this.state.event.id}`,
             {},
             { withCredentials: true }
@@ -94,21 +115,21 @@ export class EventDetails extends React.Component<EventDetailsProps, EventDetail
     }
     fetchEvents = async () => {
         try {
-            const responseevent = await axios.get(
+            const responseevent = await apiClient.get(
                 `http://localhost:3000/Calender-Website/get-event?id=${this.props.params.eventId}`,
                 {withCredentials:true}
             )
             this.setState(this.state.updateEvent(responseevent.data))
-            const response = await axios.get(
+            const response = await apiClient.get(
                 'http://localhost:3000/Calender-Website/get-all-events',
                 { withCredentials: true }
             );
-            const attending = await axios.get(
+            const attending = await apiClient.get(
                 'http://localhost:3000/Calender-Website/IsAttending',
                 { withCredentials: true }
             );
             this.setState(this.state.updateAttending(attending.data));
-                    const rating = await axios.get(
+                    const rating = await apiClient.get(
                         `http://localhost:3000/Calender-Website/average-rating?eventId=${this.props.params.eventId}`,
                         { withCredentials: true }
                     );
@@ -140,6 +161,13 @@ export class EventDetails extends React.Component<EventDetailsProps, EventDetail
                             this.approve()
                         }}>
                         <button type="submit">Approve</button>
+                        </form>
+                        )}
+                        {this.props.isAdminLogin && (<form onSubmit={(e) => {
+                            e.preventDefault();
+                            this.handleDeleteEvent()
+                        }}>
+                        <button type="submit">Delete</button>
                         </form>
                         )}
                         {this.props.isLoggedIn && this.state.event.adminApproval && !this.state.attending.includes(this.state.event.id)  && (<form onSubmit={(e) => {

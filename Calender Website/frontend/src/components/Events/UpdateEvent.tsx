@@ -3,6 +3,7 @@ import axios from 'axios';
 import { initUpdateEventState, UpdateEventState } from './UpdateEvent.state';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import apiClient from '../../ApiClient';
 interface UpdateEventProps {
 }
 export class UpdateEvent extends React.Component<UpdateEventProps, UpdateEventState>{
@@ -14,7 +15,7 @@ export class UpdateEvent extends React.Component<UpdateEventProps, UpdateEventSt
         event.preventDefault();
 
         try {
-            const response = await axios.put(
+            const response = await apiClient.put(
                 'http://localhost:3000/Calender-Website/update-event',
                 {
                     "Id": this.state.id,
