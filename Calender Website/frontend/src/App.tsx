@@ -11,7 +11,6 @@ import axios from 'axios';
 import AdminScreen from './components/Home/AdminScreen';
 import UserScreen from './components/Home/UserScreen';
 import EventList from './components/Events/EventList';
-import DeleteEvent from './components/Events/DeleteEvent';
 import { AppState, initAppState } from './App.state';
 import CreateAttendance from './components/EventAttendance/CreateAttendance';
 import EventAttendanceesList from './components/EventAttendance/EventAttendanceesList';
@@ -178,7 +177,6 @@ export class App extends Component<{}, AppState> {
             <Route path="/get-all-events" element={<EventList onBacktoMenuClick={function (): void {
               throw new Error('Function not implemented.');
             } } isAdminLogin={this.state.isAdmin} isLoggedIn={this.state.loggedIn} />} />
-            <Route path="/delete-event" element={<DeleteEvent />} />
             <Route path="/attend" element={<CreateAttendance/>}/>
             <Route path="/attending-events" element={<EventAttendanceesList />} />
             <Route path="/show-attendances/:eventId/:title" element={<ViewAttendancees/>} />
