@@ -14,13 +14,25 @@ public class EventController : Controller
     }
     [HttpGet("average-rating")]
     [LoggedInFilter]
-    public async Task<IActionResult> GetAverageRating([FromQuery] Guid eventId) => Ok(eventService.GetAverageRating(eventId));
+    public async Task<IActionResult> GetAverageRating([FromQuery] Guid eventId)
+    {
+        double average = await eventService.GetAverageRating(eventId);
+        return Ok(average);
+    }
     [HttpGet("event")]
     public async Task<IActionResult> GetEvent([FromQuery] Guid id)
     {
+        Console.WriteLine(id);
         EventReview eventReview = await eventService.GetEventReviews(id);
         if (eventReview is null) return BadRequest("Review could not be found. ");
         return Ok(eventReview);
+    }
+
+    [HttpGet("get-event")]
+    public async Task<IActionResult> GetEventOnly([FromQuery] Guid id)
+    {
+        Event e = await eventService.GetEvent(id);
+        return Ok(e);
     }
     [HttpPut("approve-event")]
     [AdminFilter]

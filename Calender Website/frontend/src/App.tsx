@@ -19,6 +19,7 @@ import ViewAttendancees from './components/EventAttendance/ViewAttendancees';
 import Register from './components/Register/Register';
 import AddAdminAccount from './components/Register/AddAdminAccount';
 import { Friends } from './components/Friends/Friends';
+import EventDetails from './components/Events/EventDetails';
 
 export class App extends Component<{}, AppState> {
   constructor(props: {}) {
@@ -182,6 +183,7 @@ export class App extends Component<{}, AppState> {
             <Route path="/show-attendances/:eventId/:title" element={<ViewAttendancees/>} />
             <Route path="/add-admin" element={<AddAdminAccount/>} />
             <Route path="/friends" element={<Friends />} />
+            <Route path="/show-event/:eventId" element={<EventDetails onBacktoMenuClick={this.handleBacktoMenuClick} isAdminLogin={this.state.isAdmin} isLoggedIn={this.state.loggedIn}/>} />
           </Routes>
         </div>
       </BrowserRouter>
