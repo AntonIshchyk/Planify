@@ -16,7 +16,26 @@ export class Friends extends React.Component<{}, FriendsState>
     componentDidMount() {
         this.fetchFriends();
         this.fetchFriendsRequests();
+        this.fetchSessionId();
     }
+
+    fetchSessionId = async () => {
+        try {
+            const response = await axios.get(
+                'http://localhost:3000/Calender-Website/get-session-id',
+                { withCredentials: true }
+            );
+            const sessionId = response.data;
+            this.setState(this.state.updateField("sessionId", sessionId));
+        } catch (error) {
+            if (axios.isAxiosError(error) && error.response) {
+                toast.error(error.response.data);
+            } else {
+                toast.error('Failed to retrieve session ID. Please try again.');
+            }
+        }
+    };
+    
 
     fetchFriends = async () => {
         try 
@@ -268,7 +287,7 @@ export class Friends extends React.Component<{}, FriendsState>
                                     <p>Email: {person.email}</p>
                                     {isFriend ? (
                                         <p>Status: Already Friends</p>
-                                    ) : (
+                                    ) : person.id === this.state.sessionId ? <p></p> : (
                                         <button onClick={() => this.sendFriendRequest(person.id)}>
                                             Send Friend Request
                                         </button>

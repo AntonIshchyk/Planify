@@ -16,7 +16,8 @@ export type FriendsState = {
     friends : User[],
     requests: User[],
     foundPeople: User[],
-    searchStr: string
+    searchStr: string,
+    sessionId: string | null
     updateField: StateUpdater<FriendsState>
 }
 
@@ -25,5 +26,6 @@ export const initFriendsState = {
     requests: [],
     foundPeople: [],
     searchStr: "",
+    sessionId: "",
     updateField: createStateUpdater<FriendsState>()
 }

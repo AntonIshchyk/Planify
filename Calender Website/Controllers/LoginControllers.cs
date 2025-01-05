@@ -52,7 +52,7 @@ public class LoginControllers : Controller
         // don`t trust id`s from abroad, so...
         // create a new id, for safety reasons
         admin.Id = Guid.NewGuid();
-        
+
         if (!await AS.SaveAdmin(admin)) return BadRequest("Invalid Data");
         return Ok("Admin registered");
     }
@@ -114,5 +114,12 @@ public class LoginControllers : Controller
             return Ok(true);
         }
         return Ok(false);
+    }
+
+    [HttpGet("get-session-id")]
+    public IActionResult GetSessionId()
+    {
+        var UserId = HttpContext.Session.GetString("UserId");
+        return Ok(UserId);
     }
 }
