@@ -147,7 +147,7 @@ export class Friends extends React.Component<{}, FriendsState>
     sendFriendRequest = async (personId:string) => {
         try 
         {
-            const response = await axios.post(
+            await axios.post(
                 `http://localhost:3000/Calender-Website/send-friend-request?toId=${personId}`,
                 {},
                 { withCredentials: true }
@@ -167,6 +167,42 @@ export class Friends extends React.Component<{}, FriendsState>
         }
     };
 
+    manageFriendRequest = async (friendId: string, approve: boolean) => {
+        try {
+            await axios.post(
+                `http://localhost:3000/Calender-Website/manage-friend-request?id=${friendId}&approve=${approve}`,
+                {},
+                { withCredentials: true }
+            );
+    
+            // Update the requests and friends state based on the action
+            if (approve) {
+                // If approved, move the friend from requests to friends
+                const newFriend = this.state.requests.find(request => request.id === friendId);
+                if (newFriend) {
+                    this.setState({
+                        requests: this.state.requests.filter(request => request.id !== friendId),
+                        friends: [...this.state.friends, newFriend],
+                    });
+                }
+                toast.success('Friend request approved successfully!');
+            } else {
+                // If denied, remove the request from the state
+                this.setState({
+                    requests: this.state.requests.filter(request => request.id !== friendId),
+                });
+                toast.success('Friend request denied successfully!');
+            }
+        } 
+        catch (error) {
+            if (axios.isAxiosError(error) && error.response) {
+                toast.error(error.response.data);
+            } else {
+                toast.error('An error occurred. Please try again.');
+            }
+        }
+    };
+    
     render() 
     {
         return (
@@ -203,7 +239,12 @@ export class Friends extends React.Component<{}, FriendsState>
                                 <p>{friend.lastName}</p>
                                 <p>{friend.email}</p>
                                 <p>Recurring Days {friend.recurringDays}</p>
-                                <p>We could also show friends of our potential friend</p>
+                                <button onClick={() => this.manageFriendRequest(friend.id, true)}>
+                                    Approve
+                                </button>
+                                <button onClick={() => this.manageFriendRequest(friend.id, false)}>
+                                    Deny
+                                </button>
                                 <br />
                             </div>
                         ))
