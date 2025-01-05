@@ -161,6 +161,10 @@ export class Friends extends React.Component<{}, FriendsState>
         if (searchStr.length > 0) {
             this.fetchFindPeople(searchStr);
         }
+        else {
+            // Clear the foundPeople list if the search field is empty
+            this.setState(this.state.updateField("foundPeople", []));
+        }
     };
 
     sendFriendRequest = async (personId:string) => {
