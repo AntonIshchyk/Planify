@@ -214,10 +214,8 @@ export class Friends extends React.Component<{}, FriendsState>
                     ) : (
                         this.state.friends.map(friend => (
                             <div key={friend.id}>
-                                <p>{friend.firstName}</p>
-                                <p>{friend.lastName}</p>
-                                <p>{friend.email}</p>
-                                <p>Recurring Days {friend.recurringDays}</p>
+                                <p>Name: {friend.firstName} {friend.lastName}</p>
+                                <p>Email: {friend.email}</p>
                                 <p>We could also show friends of our friend</p>
                                 <button onClick={() => this.deleteFriend(friend.id)}>
                                     Delete friend
@@ -235,10 +233,8 @@ export class Friends extends React.Component<{}, FriendsState>
                     ) : (
                         this.state.requests.map(friend => (
                             <div key={friend.id}>
-                                <p>{friend.firstName}</p>
-                                <p>{friend.lastName}</p>
-                                <p>{friend.email}</p>
-                                <p>Recurring Days {friend.recurringDays}</p>
+                                <p>Name: {friend.firstName} {friend.lastName}</p>
+                                <p>Email: {friend.email}</p>
                                 <button onClick={() => this.manageFriendRequest(friend.id, true)}>
                                     Approve
                                 </button>
@@ -270,7 +266,6 @@ export class Friends extends React.Component<{}, FriendsState>
                                 <div key={person.id}>
                                     <p>Name: {person.firstName} {person.lastName}</p>
                                     <p>Email: {person.email}</p>
-                                    <p>Recurring Days: {person.recurringDays}</p>
                                     {isFriend ? (
                                         <p>Status: Already Friends</p>
                                     ) : (
