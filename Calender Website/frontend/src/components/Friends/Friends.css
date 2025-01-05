@@ -19,8 +19,9 @@
   }
   
   .find-people h1 {
-    font-size: 24px;
     margin-bottom: 20px;
+    text-align: center;
+    width: 100%; 
   }
   
   .find-people input {
@@ -84,12 +85,7 @@
     border-radius: 8px;
     box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.05);
   }
-  
-  .friend-requests h2 {
-    font-size: 20px;
-    margin-bottom: 10px;
-  }
-  
+    
   .friend-requests div {
     margin-bottom: 15px;
   }
