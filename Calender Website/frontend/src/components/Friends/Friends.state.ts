@@ -1,6 +1,6 @@
 import {StateUpdater, createStateUpdater} from '../Updater/Updater';
 
-interface User {
+export interface User {
     id: string;
     firstName: string;
     lastName: string;
