@@ -220,7 +220,7 @@ export class Friends extends React.Component<{}, FriendsState>
                     />
 
                     {this.state.foundPeople.length === 0 ? (
-                        <p>No results found.</p>
+                        <p></p>
                     ) : (
                         this.state.foundPeople.map(person => {
                             const isFriend = this.state.friends.some(friend => friend.id === person.id);
