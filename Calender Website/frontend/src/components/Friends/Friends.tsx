@@ -230,80 +230,80 @@ export class Friends extends React.Component<{}, FriendsState>
     {
         return (
             <div className="container">
-                <div className="friends">
-                    <h1>Your Friends</h1>
-                    {this.state.friends.length <= 0 ? (
-                        <p>No Friends found.</p>
-                    ) : (
-                        this.state.friends.map(friend => (
-                            <div key={friend.id}>
-                                <p>Name: {friend.firstName} {friend.lastName}</p>
-                                <p>Email: {friend.email}</p>
-                                <p>We could also show friends of our friend</p>
-                                <button onClick={() => this.deleteFriend(friend.id)}>
-                                    Delete friend
-                                </button>
-                                <br />
-                            </div>
-                        ))
-                    )}
-                </div>
-    
-                <div className="friend-requests">
-                    <h1>Your Friend Requests</h1>
-                    {this.state.requests.length <= 0 ? (
-                        <p>No Requests found.</p>
-                    ) : (
-                        this.state.requests.map(friend => (
-                            <div key={friend.id}>
-                                <p>Name: {friend.firstName} {friend.lastName}</p>
-                                <p>Email: {friend.email}</p>
-                                <button onClick={() => this.manageFriendRequest(friend.id, true)}>
-                                    Approve
-                                </button>
-                                <button onClick={() => this.manageFriendRequest(friend.id, false)}>
-                                    Deny
-                                </button>
-                                <br />
-                            </div>
-                        ))
-                    )}
-                </div>
-
-                <div className="friends">
+                <div className="find-people">
                     <h1>Find People</h1>
                     <input
-                        type="text"
-                        placeholder="Search for people..."
-                        value={this.state.searchStr}
-                        onChange={this.handleSearchChange}
+                    type="text"
+                    placeholder="Search for people..."
+                    value={this.state.searchStr}
+                    onChange={this.handleSearchChange}
                     />
 
                     {this.state.foundPeople.length === 0 ? (
-                        <p></p>
+                    <p></p>
                     ) : (
-                        this.state.foundPeople.map(person => {
-                            const isFriend = this.state.friends.some(friend => friend.id === person.id);
+                    this.state.foundPeople.map(person => {
+                        const isFriend = this.state.friends.some(friend => friend.id === person.id);
 
-                            return (
-                                <div key={person.id}>
-                                    <p>Name: {person.firstName} {person.lastName}</p>
-                                    <p>Email: {person.email}</p>
-                                    {isFriend ? (
-                                        <p>Status: Already Friends</p>
-                                    ) : person.id === this.state.sessionId ? <p></p> : (
-                                        <button onClick={() => this.sendFriendRequest(person.id)}>
-                                            Send Friend Request
-                                        </button>
-                                    )}
-                                </div>
-                            );
-                        })
+                        return (
+                        <div key={person.id}>
+                            <p>Name: {person.firstName} {person.lastName}</p>
+                            <p>Email: {person.email}</p>
+                            {isFriend ? (
+                            <p>Status: Already Friends</p>
+                            ) : person.id === this.state.sessionId ? <p></p> : (
+                            <button onClick={() => this.sendFriendRequest(person.id)}>
+                                Send Friend Request
+                            </button>
+                            )}
+                        </div>
+                        );
+                    })
                     )}
+                </div>
+
+                <div className="friends-requests-container">
+                    <div className="friends">
+                    <h1>Your Friends</h1>
+                    {this.state.friends.length <= 0 ? (
+                        <p>No Friends found</p>
+                    ) : (
+                        this.state.friends.map(friend => (
+                        <div key={friend.id}>
+                            <p>Name: {friend.firstName} {friend.lastName}</p>
+                            <p>Email: {friend.email}</p>
+                            <button onClick={() => this.deleteFriend(friend.id)}>
+                                Delete friend
+                            </button>
+                            <br />
+                        </div>
+                        ))
+                    )}
+                    </div>
+
+                    <div className="friend-requests">
+                    <h1>Your Friend Requests</h1>
+                    {this.state.requests.length <= 0 ? (
+                        <p>No Requests found</p>
+                    ) : (
+                        this.state.requests.map(friend => (
+                        <div key={friend.id}>
+                            <p>Name: {friend.firstName} {friend.lastName}</p>
+                            <p>Email: {friend.email}</p>
+                            <button onClick={() => this.manageFriendRequest(friend.id, true)}>
+                                Approve
+                            </button>
+                            <button className="deny"onClick={() => this.manageFriendRequest(friend.id, false)}>
+                                Deny
+                            </button>
+                            <br />
+                        </div>
+                        ))
+                    )}
+                    </div>
                 </div>
             </div>
         );
     }
 }
-
 export default Friends;
