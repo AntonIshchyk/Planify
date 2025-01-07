@@ -6,7 +6,9 @@
     "Email": "testemail@gmail.com",
     "Password": "testpassword",
     "RecurringDays": 0,
-    "Friends": [],
+    "Friends": [
+      "98c52815-1b03-47c1-a5e9-b7056fdb7a26"
+    ],
     "FriendRequests": []
   },
   {
@@ -16,7 +18,9 @@
     "Email": "matts@gmail.com",
     "Password": "Omaaaaa",
     "RecurringDays": 0,
-    "Friends": [],
+    "Friends": [
+      "0be5ec7d-2de0-4259-a149-0b254907086d"
+    ],
     "FriendRequests": []
   }
 ]
