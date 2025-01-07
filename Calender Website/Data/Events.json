@@ -7,7 +7,8 @@
     "StartTime": "2024-12-25T09:00:00",
     "EndTime": "2024-12-25T17:00:00",
     "Location": "Convention Center, City",
-    "AdminApproval": false
+    "AdminApproval": false,
+    "DateTimeEvent": "2024-12-25T09:00:00"
   },
   {
     "Id": "a8ad48c9-aee8-495b-b86a-6be42874b6fd",
@@ -17,7 +18,8 @@
     "StartTime": "2024-12-25T09:00:00",
     "EndTime": "2024-11-25T17:00:00",
     "Location": "Convention Center, City",
-    "AdminApproval": false
+    "AdminApproval": false,
+    "DateTimeEvent": "2024-12-25T09:00:00"
   },
   {
     "Id": "41640f26-4751-4878-81ef-6390d78f4338",
@@ -27,6 +29,18 @@
     "StartTime": "10:45",
     "EndTime": "11:46",
     "Location": "Hellu",
-    "AdminApproval": true
+    "AdminApproval": true,
+    "DateTimeEvent": "2025-01-07T10:45:00"
+  },
+  {
+    "Id": "9973b643-0f9b-4be3-bc2d-de62a156dc3b",
+    "Title": "Matts",
+    "Description": "Matts",
+    "Date": "2025-01-21",
+    "StartTime": "11:05",
+    "EndTime": "17:05",
+    "Location": "Matts",
+    "AdminApproval": true,
+    "DateTimeEvent": "2025-01-07T11:05:00"
   }
 ]
