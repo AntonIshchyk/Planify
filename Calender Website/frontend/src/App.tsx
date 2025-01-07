@@ -11,7 +11,6 @@ import axios from 'axios';
 import AdminScreen from './components/Home/AdminScreen';
 import UserScreen from './components/Home/UserScreen';
 import EventList from './components/Events/EventList';
-import DeleteEvent from './components/Events/DeleteEvent';
 import { AppState, initAppState } from './App.state';
 import CreateAttendance from './components/EventAttendance/CreateAttendance';
 import EventAttendanceesList from './components/EventAttendance/EventAttendanceesList';
@@ -19,6 +18,8 @@ import ViewAttendancees from './components/EventAttendance/ViewAttendancees';
 import Register from './components/Register/Register';
 import AddAdminAccount from './components/Register/AddAdminAccount';
 import { Friends } from './components/Friends/Friends';
+import EventDetails from './components/Events/EventDetails';
+import apiClient from './ApiClient';
 import UpdateEvent from './components/Events/UpdateEvent';
 
 export class App extends Component<{}, AppState> {
@@ -104,7 +105,7 @@ export class App extends Component<{}, AppState> {
 
   checkAdminStatus = async () => {
     try {
-      const response = await axios.get('http://localhost:3000/Calender-Website/check-admin', {
+      const response = await apiClient.get('http://localhost:3000/Calender-Website/check-admin', {
         withCredentials: true,
       });
       this.setState({ isAdmin: response.data }); // true or false
@@ -116,7 +117,7 @@ export class App extends Component<{}, AppState> {
 
   checkLoginStatus = async () => {
     try {
-      const response = await axios.get('http://localhost:3000/Calender-Website/check-logged-in', {
+      const response = await apiClient.get('http://localhost:3000/Calender-Website/check-logged-in', {
         withCredentials: true,
       });
       this.setState({
@@ -166,17 +167,16 @@ export class App extends Component<{}, AppState> {
               onBacktoMenuClick={this.handleBacktoMenuClick}
               isAdminLogin={this.state.isAdmin}
               isLoggedIn={this.state.loggedIn} />} />
-            <Route path="/delete-event" element={<DeleteEvent />} />
             <Route path="/update-event/:Id" element={<UpdateEvent/>} />
             <Route path="/get-all-events" element={<EventList onBacktoMenuClick={function (): void {
               throw new Error('Function not implemented.');
             } } isAdminLogin={this.state.isAdmin} isLoggedIn={this.state.loggedIn} />} />
-            <Route path="/delete-event" element={<DeleteEvent />} />
             <Route path="/attend" element={<CreateAttendance/>}/>
             <Route path="/attending-events" element={<EventAttendanceesList />} />
             <Route path="/show-attendances/:eventId/:title" element={<ViewAttendancees/>} />
             <Route path="/add-admin" element={<AddAdminAccount/>} />
             <Route path="/friends" element={<Friends />} />
+            <Route path="/show-event/:eventId" element={<EventDetails onBacktoMenuClick={this.handleBacktoMenuClick} isAdminLogin={this.state.isAdmin} isLoggedIn={this.state.loggedIn}/>} />
           </Routes>
         </div>
       </BrowserRouter>

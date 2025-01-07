@@ -7,6 +7,7 @@ export class AdminScreen extends React.Component<AdminScreenProps,{}>{
     return (
         <div>
             <div className='narrator'>Welcome Admin!</div>
+            
         </div>
     );
 };

@@ -68,16 +68,17 @@ public class EventService
 
     public async Task<List<EventAttendance>> GetReviewsFromEventId(Guid eventId)
     {
-        List<EventAttendance> reviews = await AccessJson.ReadJson<EventAttendance>();
+        List<EventAttendance> reviews = await EventAttendanceAccess.LoadAll();
         return reviews.FindAll(r => r.EventId == eventId).ToList();
     }
 
     public async Task<double> GetAverageRating(Guid eventId)
     {
-        List<EventAttendance> reviews = await AccessJson.ReadJson<EventAttendance>();
-        List<EventAttendance> filtered = reviews.FindAll(x => x.EventId == eventId).ToList();
-        if (filtered.Count() == 0) return 0;
-        return filtered.Average(x => x.Rating);
+        List<EventAttendance> reviews = await GetReviewsFromEventId(eventId);
+        List<EventAttendance> filtered = reviews.Where(r => r.Rating > 0).ToList();
+        if (filtered.Count == 0) return 0;
+        return Math.Round(filtered.Average(x => x.Rating) * 2) / 2;
+
     }
 
     public async Task<List<Event>> GetAllAttendingEvents(string UserId)

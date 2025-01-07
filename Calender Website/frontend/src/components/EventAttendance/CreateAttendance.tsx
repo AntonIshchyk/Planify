@@ -3,6 +3,7 @@ import React from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { CreateAttendanceState, initCreateAttendanceState } from './CreateAttendance.state';
+import apiClient from '../../ApiClient';
 
 interface CreateAttendanceProps{
 }
@@ -14,7 +15,7 @@ export class CreateAttendance extends React.Component<CreateAttendanceProps, Cre
     handleAttend = async (event : React.FormEvent) => {
         event.preventDefault();
         try{
-            const response = await axios.post(
+            const response = await apiClient.post(
                 'http://localhost:3000/Calender-Website/attend',
                 {
                     "Date": new Date(this.state.dateTime).toISOString(),

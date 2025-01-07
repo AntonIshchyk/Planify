@@ -3,6 +3,7 @@ import axios from 'axios';
 import { initUpdateEventState, UpdateEventState } from './UpdateEvent.state';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import apiClient from '../../ApiClient';
 import { useParams } from 'react-router-dom';
 interface UpdateEventProps {
     params : {
@@ -25,7 +26,7 @@ export class UpdateEvent extends React.Component<UpdateEventProps, UpdateEventSt
     handleUpdateEvent = async (event: React.FormEvent) => {
         event.preventDefault();
         try {
-            const response = await axios.put(
+            const response = await apiClient.put(
                 `http://localhost:3000/Calender-Website/update-event?id=${this.props.params.Id}`,
                 {
                     "Title": this.state.title,

@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { EventAttendanceesListState, initEventAttendanceesListState } from './EventAttendanceesList.state';
+import apiClient from '../../ApiClient';
 
 export class EventAttendanceesList extends React.Component<{}, EventAttendanceesListState>{
     constructor(props : {}){
@@ -11,7 +12,7 @@ export class EventAttendanceesList extends React.Component<{}, EventAttendancees
     }
     async handleDelete(id: string){
         try{
-            const response = await axios.delete(
+            const response = await apiClient.delete(
                 `http://localhost:3000/Calender-Website/delete-event-attendance?eventId=${id}`,
                 {
                     withCredentials: true
@@ -36,7 +37,7 @@ export class EventAttendanceesList extends React.Component<{}, EventAttendancees
     }
     fetchEvents = async () => {
         try {
-            const response = await axios.get(
+            const response = await apiClient.get(
                 'http://localhost:3000/Calender-Website/get-attending-events',
                 { withCredentials: true }
             );

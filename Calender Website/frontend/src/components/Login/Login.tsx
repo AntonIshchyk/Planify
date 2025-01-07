@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import { initLoginState, LoginState } from './Login.state';
 import { toast } from 'react-toastify';
+import apiClient from '../../ApiClient';
 
 interface LoginProps {
     onBacktoMenuClick : () => void;
@@ -19,7 +20,7 @@ export class Login extends React.Component<LoginProps, LoginState> {
         event.preventDefault();
         try{
             if(this.props.isAdminLogin){
-                const response = await axios.post(
+                const response = await apiClient.post(
                 'http://localhost:3000/Calender-Website/login-admin',
                 {"Username" : this.state.username, 
                  "Password" : this.state.password },
@@ -30,7 +31,7 @@ export class Login extends React.Component<LoginProps, LoginState> {
             window.dispatchEvent(new Event('storageUpdated'));
         }
         else{
-            const response = await axios.post(
+            const response = await apiClient.post(
                 'http://localhost:3000/Calender-Website/login-user',
                 {"Email" : this.state.email, 
                  "Password" : this.state.password },
