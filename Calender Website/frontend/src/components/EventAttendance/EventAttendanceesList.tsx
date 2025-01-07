@@ -59,10 +59,7 @@ export class EventAttendanceesList extends React.Component<{}, EventAttendancees
                 <p>No events found.</p>) : 
                 (this.state.events.map((event) => (
                     <div key={event.id}>
-                        <h3>{event.title}</h3>
-                        <li>
-                            <Link to={`/show-event/${event.id}`}><h3>{event.title}</h3></Link>
-                        </li>
+                        <Link to={`/show-event/${event.id}`}><h3>{event.title}</h3></Link>
                         <button type="button" onClick={() => this.handleDelete(event.id)}>
                             Remove Attendancee
                             </button>

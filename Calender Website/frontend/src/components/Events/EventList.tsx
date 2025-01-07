@@ -143,10 +143,9 @@ export class EventList extends React.Component<EventListProps, EventListState> {
                 <p>No events found.</p>) : 
                 (this.state.events.map((event) => (
                     <div key={event.id}>
-                        <li>
-                            <Link to={`/show-event/${event.id}`}><h3>{event.title}</h3></Link>
-                        </li>
+                        <Link to={`/show-event/${event.id}`}><h3>{event.title}</h3></Link>
                         {this.state.averageRatings.get(event.id)}
+                        <br />
                         {this.props.isLoggedIn && (
                                 <button onClick={() => this.fetchFriendsAttending(event.id)}>
                                     See Friends Attending
