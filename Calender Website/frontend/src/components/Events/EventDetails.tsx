@@ -178,8 +178,10 @@ export class EventDetails extends React.Component<EventDetailsProps, EventDetail
                         </form>
                         )}
                         {this.props.isAdminLogin && (<li>
+                            <Link to={`/update-event/${this.state.event.id}`}>Update event</Link> <br />
                             <Link to={`/show-attendances/${this.state.event.id}/${this.state.event.title}`}>See Attendancees</Link>
-                            </li>
+
+                        </li>
                         )}
                 {this.state.attending.includes(this.state.event.id) &&
                 <form onSubmit={(e) => {
