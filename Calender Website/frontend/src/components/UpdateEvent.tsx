@@ -17,8 +17,9 @@ export class UpdateEvent extends React.Component<UpdateEventProps, UpdateEventSt
 
         try {
             const response = await axios.put(
-                'http://localhost:3000/Calender-Website/update-event',
+                `http://localhost:3000/Calender-Website/update-event?id=${this.state.id}`,
                 {
+                    "Id": this.state.id,
                     "Title": this.state.title,
                     "Description": this.state.description,
                     "Date": this.state.date,

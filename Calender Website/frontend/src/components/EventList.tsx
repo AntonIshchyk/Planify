@@ -2,9 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import { EventListState, initEventListState } from './EventList.state';
 import { toast } from 'react-toastify';
-import { useNavigate } from 'react-router-dom';
-import { UpdateEvent } from './UpdateEvent';
-//import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 interface EventListProps {
     onBacktoMenuClick: () => void;
@@ -53,7 +51,7 @@ export class EventList extends React.Component<EventListProps, EventListState> {
         event.preventDefault()
         try {
             const response = await axios.put(
-                'http://localhost:3000/Calender-Website/update-event',
+                `http://localhost:3000/Calender-Website/update-event?id=${id}`,
                 {
                     "Id": id,
                     "Title": this.state.title,
@@ -110,7 +108,10 @@ export class EventList extends React.Component<EventListProps, EventListState> {
                             <p><strong>Location: </strong>{event.location}</p>
                             <p><strong>Approval: </strong>{event.adminApproval ? 'Approved' : 'Pending'}</p>
                             {this.props.isAdminLogin && <label><button type="submit" onClick={() => this.handleDelete(event.id)}>Delete</button></label>}
-                            {this.props.isAdminLogin && <label><button onClick={() => <UpdateEvent />}>Update</button></label>}
+                            {this.props.isAdminLogin && (<li>
+                                <Link to={`/update-event?id=${event.id}`}>Update event</Link>
+                            </li>
+                            )}
                             <br />
                         </div>
                     ))
