@@ -52,8 +52,8 @@ public class LoginControllers : Controller
         // don`t trust id`s from abroad, so...
         // create a new id, for safety reasons
         admin.Id = Guid.NewGuid();
-        bool IsAdminWritenToJson = await AS.SaveAdmin(admin);
-        if (!IsAdminWritenToJson) return BadRequest("Invalid Data");
+        
+        if (!await AS.SaveAdmin(admin)) return BadRequest("Invalid Data");
         return Ok("Admin registered");
     }
 
@@ -66,6 +66,7 @@ public class LoginControllers : Controller
         user.Id = Guid.NewGuid();
         bool IsUserWritenToJson = await US.SaveUser(user);
         if (!IsUserWritenToJson) return BadRequest("Invalid Data");
+        HttpContext.Session.SetString("UserId", user.Id.ToString());
         return Ok("User registered");
     }
 

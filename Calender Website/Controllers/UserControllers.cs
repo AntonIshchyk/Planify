@@ -4,11 +4,16 @@ using Microsoft.AspNetCore.Mvc;
 public class UserController : Controller
 {
     readonly UserService US;
+    EventAttendanceService EAS;
 
-    public UserController(UserService us)
+    public UserController(UserService us, EventAttendanceService eas)
     {
         US = us;
+        EAS = eas;
     }
+
+    [HttpGet("get-user-names")]
+    public async Task<IActionResult> GetUserNames([FromQuery] Guid eventId) => Ok(await EAS.AttendanceStrings(eventId));
 
     [HttpGet("get-all-users")]
     public async Task<IActionResult> GetAllUsers() => Ok(await US.GetAllUsers());
@@ -66,8 +71,13 @@ public class UserController : Controller
         if (user is null) return BadRequest("User not found");
 
         if (!user.Friends.Contains(id)) return BadRequest("Friend not found");
+
+        User friend = await UserAccess.Get(id);
+
+        friend.Friends.Remove(sessionId);
         user.Friends.Remove(id);
         await US.UpdateUser(user);
+        await US.UpdateUser(friend);
         return Ok("Friend deleted");
     }
 

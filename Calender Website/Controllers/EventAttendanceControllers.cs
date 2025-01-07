@@ -26,7 +26,7 @@ public class EventAttendanceControllers : Controller
             Event evt = await ES.GetEvent(attendance.EventId);
             if (!EAS.ValidateDate(evt)) return BadRequest("Because of the date of this event, you can no longer attend these.");
             attendance.Id = Guid.NewGuid();
-            if (await EAS.AppendEventAttendance(attendance)) return Ok(evt);
+            if (await EAS.AppendEventAttendance(attendance)) return Ok("You are now attending this Event!");
         }
         return BadRequest("Something went wrong.");
     }
@@ -43,6 +43,14 @@ public class EventAttendanceControllers : Controller
         //the function of this endpoint is very unclear in the description. For now I do not use any filter.
         List<EventAttendance> eventAttendances = await AccessJson.ReadJson<EventAttendance>();
         return Ok(eventAttendances.FindAll(x => x.EventId == Id).ToList());
+    }
+
+    [HttpGet("get-attending-events")]
+    [LoggedInFilter]
+    public async Task<IActionResult> GetAttendingEvents()
+    {
+        List<Event> events = await ES.GetAllAttendingEvents(HttpContext.Session.GetString("UserId"));
+        return Ok(events);
     }
 
     [HttpDelete("delete-event-attendance")]

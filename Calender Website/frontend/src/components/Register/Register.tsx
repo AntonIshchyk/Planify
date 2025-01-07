@@ -1,47 +1,36 @@
+"use client";
 import React from 'react';
 import axios from 'axios';
-import { initLoginState, LoginState } from './Login.state';
 import { toast } from 'react-toastify';
+import { initRegisterState, RegisterState } from '../Register/Register.state';
 
-interface LoginProps {
+interface RegisterProps {
     onBacktoMenuClick : () => void;
-    isAdminLogin : boolean;
-    isUserLogin : boolean;
 }
-export class Login extends React.Component<LoginProps, LoginState> {
-    constructor(props : LoginProps){
+export class Login extends React.Component<RegisterProps, RegisterState> {
+    constructor(props : RegisterProps){
         super(props);
-        this.state = initLoginState;
+        this.state = initRegisterState;
         
     }
-    handleLogin = async (event : React.FormEvent) => {
+    handleRegister = async (event : React.FormEvent) => {
         event.preventDefault();
         try{
-            if(this.props.isAdminLogin){
                 const response = await axios.post(
-                'http://localhost:3000/Calender-Website/login-admin',
-                {"Username" : this.state.username, 
+                'http://localhost:3000/Calender-Website/register',
+                {  "Email" : this.state.email,
+                    "FirstName" : this.state.firstName, 
+                 "LastName" : this.state.lastName,
                  "Password" : this.state.password },
                  {withCredentials: true}
-            );
+                )
             localStorage.setItem('message', response.data);
             window.location.reload();
             window.dispatchEvent(new Event('storageUpdated'));
         }
-        else{
-            const response = await axios.post(
-                'http://localhost:3000/Calender-Website/login-user',
-                {"Email" : this.state.email, 
-                 "Password" : this.state.password },
-                 {withCredentials : true}
-            );
-            localStorage.setItem('message', response.data);
-            window.location.reload();
-            window.dispatchEvent(new Event('storageUpdated'));
-        }
-        }catch(error){
+        catch(error){
             if (axios.isAxiosError(error) && error.response) {
-                toast.error(error.response.data); // Displays "User not found" or "User is already logged in."
+                toast.error(error.response.data);
             } else {
                 toast.error("There is an error");
             }
@@ -51,9 +40,9 @@ export class Login extends React.Component<LoginProps, LoginState> {
     render() {
         return(
         <div>
-            <h2>Login</h2>
-            <form onSubmit={this.handleLogin}>
-                {this.props.isUserLogin && <label>
+            <h2>Register</h2>
+            <form onSubmit={this.handleRegister}>
+                <label>
                     Email:
                     <input 
                     type="email"
@@ -61,17 +50,24 @@ export class Login extends React.Component<LoginProps, LoginState> {
                     onChange={(e) => this.setState(this.state.updateEmail(e.currentTarget.value))}
                     required />
                 </label>
-                }
                 <br />
-                {this.props.isAdminLogin && <label>
-                    Username:
+                <label>
+                    First Name:
                     <input 
                     type="username"
-                    value={this.state.username}
-                        onChange={(e) => this.setState(this.state.updateUsername(e.currentTarget.value))}
+                    value={this.state.firstName}
+                        onChange={(e) => this.setState(this.state.updateFirstName(e.currentTarget.value))}
                     required />
                 </label>
-                }
+                <br />
+                <label>
+                    Last Name:
+                    <input 
+                    type="username"
+                    value={this.state.lastName}
+                        onChange={(e) => this.setState(this.state.updateLastName(e.currentTarget.value))}
+                    required />
+                </label>
                 <br />
                 <label>
                     Password:
@@ -82,7 +78,7 @@ export class Login extends React.Component<LoginProps, LoginState> {
                     required/>
                 </label>
                 <br />
-                <button type="submit">Login</button>
+                <button type="submit">Register</button>
             </form>
 
             <form onSubmit={(event) => {

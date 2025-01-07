@@ -1,4 +1,4 @@
-import { createStateUpdater, StateUpdater } from "../Updater";
+import { createStateUpdater, StateUpdater } from "../Updater/Updater";
 
 interface Event {
     id: string;

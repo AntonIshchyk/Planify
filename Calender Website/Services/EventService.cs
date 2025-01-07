@@ -72,6 +72,17 @@ public class EventService
         return filtered.Average(x => x.Rating);
     }
 
+    public async Task<List<Event>> GetAllAttendingEvents(string UserId)
+    {
+        List<EventAttendance> eventAttendances = await EventAttendanceAccess.LoadAll();
+        List<Event> events = new();
+        foreach (EventAttendance attendance in eventAttendances)
+        {
+            if (attendance.UserId.ToString() == UserId) events.Add(await EventAccess.Get(attendance.EventId));
+        }
+        return events;
+    }
+
     public async Task<List<Event>> GetAllEvents() => await EventAccess.LoadAll();
 
     public async Task<List<EventAttendance>> GetAllReviews() => await EventAttendanceAccess.LoadAll();

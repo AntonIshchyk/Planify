@@ -92,33 +92,32 @@ export class EventList extends React.Component<EventListProps, EventListState> {
             }
         }
     };
-    // Empty dependency array to run once when the component mounts
-    render() {
-        return (
-            <div>
-                {this.state.events.length <= 0 ? (
-                    <p>No events found.</p>) :
-                    (this.state.events.map((event) => (
-                        <div key={event.id}>
-                            <h3>{event.title}</h3>
-                            <p><strong>Description: </strong>{event.description}</p>
-                            <p><strong>Date: </strong>{event.date}</p>
-                            <p><strong>Start time: </strong>{event.startTime}</p>
-                            <p><strong>End time: </strong>{event.endTime}</p>
-                            <p><strong>Location: </strong>{event.location}</p>
-                            <p><strong>Approval: </strong>{event.adminApproval ? 'Approved' : 'Pending'}</p>
-                            {this.props.isAdminLogin && <label><button type="submit" onClick={() => this.handleDelete(event.id)}>Delete</button></label>}
-                            {this.props.isAdminLogin && (<li>
-                                <Link to={`/update-event/${event.id}`}>Update event</Link>
+ // Empty dependency array to run once when the component mounts
+    render(){
+    return (
+        <div>
+            {this.state.events.length <= 0 ? (
+                <p>No events found.</p>) : 
+                (this.state.events.map((event) => (
+                    <div key={event.id}>
+                        <h3>{event.title}</h3>
+                        <p><strong>Description: </strong>{event.description}</p>
+                        <p><strong>Date: </strong>{event.date}</p>
+                        <p><strong>Start time: </strong>{event.startTime}</p>
+                        <p><strong>End time: </strong>{event.endTime}</p>
+                        <p><strong>Location: </strong>{event.location}</p>
+                        <p><strong>Approval: </strong>{event.adminApproval ? 'Approved' : 'Pending'}</p>
+                        {this.props.isAdminLogin && (<li>
+                            <Link to={`/show-attendances/${event.id}/${event.title}`}>See Attendancees</Link>
                             </li>
-                            )}
-                            <br />
-                        </div>
-                    ))
-                    )}
-            </div>
-        );
-    }
+                        )}
+                        <br />  
+                    </div>
+                ))
+            )}
+        </div>
+    );
+}
 }
 function withNavigation(Component: typeof EventList) {
     return function Wrapper(props: Omit<EventListProps, 'navigate'>) {

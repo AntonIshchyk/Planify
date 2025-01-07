@@ -61,42 +61,42 @@ export class UpdateEvent extends React.Component<UpdateEventProps, UpdateEventSt
                 <input
                     type="text"
                     value={this.state.title}
-                    onChange={(e) => this.setState(this.state.updateTitle(e.target.value))}
+                    onChange={(e) => this.setState(this.state.updateField("title", e.target.value))}
                     required />
                 <br />
                 Description:
                 <textarea
                     placeholder="Description"
                     value={this.state.description}
-                    onChange={(e) => this.setState(this.state.updateDescription(e.target.value))}
+                    onChange={(e) => this.setState(this.state.updateField("description", e.target.value))}
                 />
                 <br />
                 Location:
                 <input
                     type="text"
                     value={this.state.location}
-                    onChange={(e) => this.setState(this.state.updateLocation(e.target.value))}
+                    onChange={(e) => this.setState(this.state.updateField("location", e.target.value))}
                     required />
                 <br />
                 Date:
                 <input
                     type="date"
                     value={this.state.date}
-                    onChange={(e) => this.setState(this.state.updateDate(e.target.value))}
+                    onChange={(e) => this.setState(this.state.updateField("date", e.target.value))}
                     required />
                 <br />
                 Start Time:
                 <input
                     type="time"
                     value={this.state.startTime}
-                    onChange={(e) => this.setState(this.state.updateStartTime(e.target.value))}
+                    onChange={(e) => this.setState(this.state.updateField("startTime", e.target.value))}
                     required />
                 <br />
                 End Time:
                 <input
                     type="time"
                     value={this.state.endTime}
-                    onChange={(e) => this.setState(this.state.updateEndTime(e.target.value))}
+                    onChange={(e) => this.setState(this.state.updateField("endTime", e.target.value))}
                     required />
                 <br />
                 <label>
@@ -104,7 +104,7 @@ export class UpdateEvent extends React.Component<UpdateEventProps, UpdateEventSt
                     <input
                         type="checkbox"
                         checked={this.state.adminApproval}
-                        onChange={(e) => this.setState(this.state.updateAdminApproval(e.target.checked))} />
+                        onChange={(e) => this.setState(this.state.updateField("adminApproval", e.target.checked))} />
                 </label>
                 <br />
                 <button type="submit">Update Event</button>
