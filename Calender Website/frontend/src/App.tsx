@@ -139,18 +139,7 @@ export class App extends Component<{}, AppState> {
             isAdmin={this.state.isAdmin}
             isLoggedIn={this.state.loggedIn}
           />
-          <ToastContainer
-            position="top-right"
-            autoClose={5000}
-            hideProgressBar={false}
-            newestOnTop
-            closeOnClick
-            rtl={false}
-            pauseOnFocusLoss  
-            draggable
-            pauseOnHover
-            theme="light"
-          />
+          
           <Routes>
             <Route
               path="/"
@@ -176,7 +165,7 @@ export class App extends Component<{}, AppState> {
             <Route path="/get-all-events" element={<EventList
               onBacktoMenuClick={this.handleBacktoMenuClick}
               isAdminLogin={this.state.isAdmin}
-              isUserLogin={this.state.loggedIn} />} />
+              isLoggedIn={this.state.loggedIn} />} />
             <Route path="/delete-event" element={<DeleteEvent />} />
             <Route path="/update-event/:Id" element={<UpdateEvent/>} />
             <Route path="/get-all-events" element={<EventList onBacktoMenuClick={function (): void {
@@ -196,3 +185,15 @@ export class App extends Component<{}, AppState> {
 }
 
 export default App;
+/*<ToastContainer
+            position="top-right"
+            autoClose={5000}
+            hideProgressBar={false}
+            newestOnTop
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss  
+            draggable
+            pauseOnHover
+            theme="light"
+          />*/

@@ -5,18 +5,20 @@
     "Description": "This is a detailed description of the event.",
     "Date": "2024-12-25T00:00:00",
     "StartTime": "2024-12-25T09:00:00",
-    "EndTime": "2024-12-25T17:00:00",
+    "EndTime": "2024-11-25T17:00:00",
     "Location": "Convention Center, City",
-    "AdminApproval": false
+    "AdminApproval": false,
+    "DateTimeEvent": "2024-12-25T09:00:00"
   },
   {
-    "Id": "372cf45f-2a35-4ecc-bcb9-326f94e9b98a",
-    "Title": "Toby",
-    "Description": "Toby",
-    "Date": "2025-01-29",
-    "StartTime": "10:38",
-    "EndTime": "16:38",
-    "Location": "Toby",
-    "AdminApproval": true
+    "Id": "e9fe72b9-13ec-43b9-a125-6e3b043a55ae",
+    "Title": "Matts",
+    "Description": "Matts",
+    "Date": "2025-01-15",
+    "StartTime": "11:29",
+    "EndTime": "17:29",
+    "Location": "Matts",
+    "AdminApproval": true,
+    "DateTimeEvent": "2025-01-07T11:29:00"
   }
 ]

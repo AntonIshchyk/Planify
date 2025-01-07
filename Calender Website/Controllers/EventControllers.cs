@@ -1,4 +1,5 @@
 using System.Globalization;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
 [Route("Calender-Website")]
@@ -11,7 +12,9 @@ public class EventController : Controller
         eventService = eventservice;
         eventAttendanceService = eAS;
     }
-
+    [HttpGet("average-rating")]
+    [LoggedInFilter]
+    public async Task<IActionResult> GetAverageRating([FromQuery] Guid eventId) => Ok(eventService.GetAverageRating(eventId));
     [HttpGet("event")]
     public async Task<IActionResult> GetEvent([FromQuery] Guid id)
     {
@@ -43,7 +46,7 @@ public class EventController : Controller
     public async Task<IActionResult> GetAllEvents()
     {
         List<Event> events = await eventService.GetAllEvents();
-        return Ok(events);
+        return Ok(events.Where(e => e.DateTimeEvent > DateTime.Today).ToList());
     }
 
 
@@ -51,6 +54,7 @@ public class EventController : Controller
     [LoggedInFilter]
     public async Task<IActionResult> AddReview([FromBody] EventAttendance review)
     {
+        if (review is null) return BadRequest("No Review given!");
         string userIdString = HttpContext.Session.GetString("UserId")!;
         if (await eventService.AddReview(review, Guid.Parse(userIdString))) return Ok("Review added.");
         return BadRequest("Review could not be added. ");
