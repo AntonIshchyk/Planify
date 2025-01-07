@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import { CreateEventState, initCreateEventState } from './CreateEvent.state';
 import { toast } from 'react-toastify';
+import apiClient from '../../ApiClient';
 
 interface CreateEventProps{
 }
@@ -12,9 +13,8 @@ export class CreateEvent extends React.Component<CreateEventProps, CreateEventSt
     }
     handleCreateEvent = async (event : React.FormEvent) => {
         event.preventDefault();
-
         try{
-            const response = await axios.post(
+            const response = await apiClient.post(
                 'http://localhost:3000/Calender-Website/create-event',
                 {
                     "Title": this.state.title,

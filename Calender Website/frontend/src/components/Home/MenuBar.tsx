@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import apiClient from '../../ApiClient';
 
 interface MenuBarProps {
   isAdmin: boolean;
@@ -12,7 +13,7 @@ export class MenuBar extends React.Component<MenuBarProps, {}> {
   handleLogout = async (event: React.FormEvent) => {
     
     event.preventDefault();
-    await axios.post(
+    await apiClient.post(
       'http://localhost:3000/Calender-Website/logout',
       {},
       { withCredentials: true }
@@ -42,11 +43,6 @@ export class MenuBar extends React.Component<MenuBarProps, {}> {
           {this.props.isLoggedIn && (
             <li>
               <Link to="/get-all-events">All Events</Link>
-            </li>
-          )}
-          {this.props.isAdmin && (
-            <li>
-              <Link to="/delete-event">Delete Event</Link>
             </li>
           )}
           {this.props.isLoggedIn && (

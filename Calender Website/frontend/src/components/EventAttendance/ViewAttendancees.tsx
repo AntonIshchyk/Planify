@@ -3,6 +3,7 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import { initViewAttendanceesState, ViewAttendanceesState } from './ViewAttendancees.state';
 import { useParams } from 'react-router-dom';
+import apiClient from '../../ApiClient';
 export function withRouter(Component: any) {
     return function WrappedComponent(props: any) {
         const params = useParams();
@@ -31,7 +32,7 @@ export class ViewAttendancees extends React.Component<ViewAttendanceesProps, Vie
     fetchAttendances = async () => {
         const  eventId  = this.props.params.eventId; // Access eventId from params
         try {
-            const response = await axios.get(
+            const response = await apiClient.get(
                 `http://localhost:3000/Calender-Website/get-user-names?eventId=${eventId}`,
                 { withCredentials: true }
             );

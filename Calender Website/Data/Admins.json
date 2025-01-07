@@ -4,15 +4,15 @@
     "Username": "TestUsername",
     "Password": "TestPassword",
     "Email": "TestEmail",
-    "LastLogIn": "2024-12-10T10:48:59.7114257+01:00",
-    "LastLogOut": "2024-12-10T09:45:42.8748695+01:00"
+    "LastLogIn": "2025-01-07T10:00:35.284858+01:00",
+    "LastLogOut": "2024-12-11T09:37:03.6666426+01:00"
   },
   {
     "Id": "163347b3-5ef7-4f33-832b-f1843d5ba19d",
     "Username": "Matts",
     "Password": "Matsoeeee",
     "Email": "Matts@gmail.com",
-    "LastLogIn": "0001-01-01T00:00:00",
+    "LastLogIn": "2024-12-12T12:10:53.8911444+01:00",
     "LastLogOut": "0001-01-01T00:00:00"
   },
   {
@@ -20,7 +20,15 @@
     "Username": "tobyyyyyyyyyyyyyyyyy",
     "Password": "toby",
     "Email": "toby@toby.gmail.com",
-    "LastLogIn": "2024-12-10T09:55:58.739408+01:00",
+    "LastLogIn": "2025-01-07T11:00:50.5302958+01:00",
+    "LastLogOut": "0001-01-01T00:00:00"
+  },
+  {
+    "Id": "c11f6527-0d7c-4a72-82c3-7f4a204dc13d",
+    "Username": "Roél",
+    "Password": "Roél123455",
+    "Email": "Roel@Roel.Roel",
+    "LastLogIn": "0001-01-01T00:00:00",
     "LastLogOut": "0001-01-01T00:00:00"
   }
 ]

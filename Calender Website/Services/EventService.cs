@@ -11,6 +11,14 @@ public class EventService
         return null!;
     }
 
+    public async Task<bool> ApproveEvent(Guid eventId)
+    {
+        Event unapprovedevent = await EventAccess.Get(eventId);
+        unapprovedevent.AdminApproval = true;
+        await EventAccess.Update(unapprovedevent);
+        return true;
+    }
+
     public async Task<bool> AppendEvent(Event e)
     {
         if (e is null) return false;
@@ -30,6 +38,12 @@ public class EventService
         AccessJson.WriteJsonList(events);
         return true;
     }
+
+    /*public async Task<bool> UpdateEvent(Guid id)
+    {
+        List<Event> events = await AccessJson.ReadJson<Event>();
+        Event foundEvent = events.Find(e => e.Id == id)!;
+    }*/
 
     public async Task<bool> DeleteEvent(Guid id) => await EventAccess.Remove(id);
 
@@ -54,16 +68,17 @@ public class EventService
 
     public async Task<List<EventAttendance>> GetReviewsFromEventId(Guid eventId)
     {
-        List<EventAttendance> reviews = await AccessJson.ReadJson<EventAttendance>();
+        List<EventAttendance> reviews = await EventAttendanceAccess.LoadAll();
         return reviews.FindAll(r => r.EventId == eventId).ToList();
     }
 
     public async Task<double> GetAverageRating(Guid eventId)
     {
-        List<EventAttendance> reviews = await AccessJson.ReadJson<EventAttendance>();
-        List<EventAttendance> filtered = reviews.FindAll(x => x.EventId == eventId).ToList();
-        if (filtered.Count() == 0) return 0;
-        return filtered.Average(x => x.Rating);
+        List<EventAttendance> reviews = await GetReviewsFromEventId(eventId);
+        List<EventAttendance> filtered = reviews.Where(r => r.Rating > 0).ToList();
+        if (filtered.Count == 0) return 0;
+        return Math.Round(filtered.Average(x => x.Rating) * 2) / 2;
+
     }
 
     public async Task<List<Event>> GetAllAttendingEvents(string UserId)

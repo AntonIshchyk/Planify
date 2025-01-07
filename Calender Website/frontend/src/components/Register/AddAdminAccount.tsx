@@ -3,6 +3,7 @@ import React from 'react';
 import axios from 'axios';
 import { initLoginState, LoginState } from '../Login/Login.state';
 import { toast } from 'react-toastify';
+import apiClient from '../../ApiClient';
 
 export class Login extends React.Component<{}, LoginState> {
     constructor(props : {}){
@@ -13,7 +14,7 @@ export class Login extends React.Component<{}, LoginState> {
     handleAddAdmin = async (event : React.FormEvent) => {
         event.preventDefault();
         try{
-            const response = await axios.post(
+            const response = await apiClient.post(
             'http://localhost:3000/Calender-Website/register-admin',
             {"Username" : this.state.username, 
                 "Password" : this.state.password,

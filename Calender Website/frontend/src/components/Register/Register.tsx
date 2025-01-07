@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { initRegisterState, RegisterState } from '../Register/Register.state';
+import apiClient from '../../ApiClient';
 
 interface RegisterProps {
     onBacktoMenuClick : () => void;
@@ -15,7 +16,7 @@ export class Login extends React.Component<RegisterProps, RegisterState> {
     handleRegister = async (event : React.FormEvent) => {
         event.preventDefault();
         try{
-                const response = await axios.post(
+                const response = await apiClient.post(
                 'http://localhost:3000/Calender-Website/register',
                 {  "Email" : this.state.email,
                     "FirstName" : this.state.firstName, 

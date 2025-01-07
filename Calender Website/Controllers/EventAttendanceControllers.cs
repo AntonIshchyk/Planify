@@ -30,6 +30,13 @@ public class EventAttendanceControllers : Controller
         }
         return BadRequest("Something went wrong.");
     }
+    [HttpGet("IsAttending")]
+    [LoggedInFilter]
+    public async Task<IActionResult> GetAttending()
+    {
+        string UserId = HttpContext.Session.GetString("UserId");
+        return Ok(await EAS.GetAttending(UserId));  
+    }
 
     [HttpGet("EventAttendance")]
     [LoggedInFilter]
