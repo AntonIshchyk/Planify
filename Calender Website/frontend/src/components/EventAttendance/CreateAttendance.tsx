@@ -1,4 +1,3 @@
-"use client";
 import React from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
@@ -40,7 +39,7 @@ export class CreateAttendance extends React.Component<CreateAttendanceProps, Cre
                 <input
                     type="datetime-local"
                     value={this.state.dateTime}
-                    onChange={(e) => this.setState(this.state.updateDate(e.target.value))}
+                    onChange={(e) => this.setState(this.state.updateField("dateTime", e.target.value))}
                     required />
                 <br />
                 <button type="submit">Attend</button>

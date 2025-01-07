@@ -1,4 +1,5 @@
 import {StateUpdater, createStateUpdater} from '../Updater/Updater';
+import {User} from '../Friends/Friends.state'
 
 interface Event {
     id: string;
@@ -12,6 +13,8 @@ interface Event {
 }
 
 export type EventListState = {
+    friendsAttending: User[];
+    isModalOpen: boolean;
     title: string
     description: string
     date: string
@@ -42,6 +45,8 @@ export const initEventListState = {
     feedback : new Map<string, string>(),
     events : [],
     attending : [],
+    friendsAttending: [],
+    isModalOpen : false,
     updateFeedback: (eventId: string, feedback: string) => (state: EventListState) => ({
         ...state,
         feedback: new Map<string, string>(state.feedback).set(eventId, feedback),

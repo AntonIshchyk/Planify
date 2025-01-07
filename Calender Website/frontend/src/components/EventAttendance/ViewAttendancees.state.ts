@@ -1,11 +1,11 @@
+import {StateUpdater, createStateUpdater} from '../Updater/Updater';
 
 export type ViewAttendanceesState = {
     attendances : string[],
-    updateAttendances: (attendances: string[]) => (state : ViewAttendanceesState) => ViewAttendanceesState
+    updateField: StateUpdater<ViewAttendanceesState>;
 }
 
 export const initViewAttendanceesState = {
     attendances : [],
-    updateAttendances: (attendances: string[]) => (state:ViewAttendanceesState) => ({...state, attendances : attendances})
-
+    updateField : createStateUpdater<ViewAttendanceesState>()
 }

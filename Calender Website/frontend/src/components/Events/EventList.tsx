@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import { EventListState, initEventListState } from './EventList.state';
 import { toast } from 'react-toastify';
+import Modal from './FriendsAttendingEvent';
 import apiClient from '../../ApiClient';
 import { Link, useNavigate } from 'react-router-dom';
 
@@ -16,8 +17,8 @@ export class EventList extends React.Component<EventListProps, EventListState> {
     constructor(props: EventListProps) {
         super(props);
         this.state = initEventListState;
-
     }
+
     handleChangeAverageRating = async (eventId : string, averageRating : number) => {
         this.setState(this.state.updateAverageRatings(eventId, averageRating))
     }
@@ -69,6 +70,7 @@ export class EventList extends React.Component<EventListProps, EventListState> {
                 },
                 { withCredentials: true }
             );
+            this.setState(this.state.updateField("events", response.data));
             toast.info(response.data);
             window.location.reload();
             this.props.navigate('/update-event');
@@ -113,6 +115,27 @@ export class EventList extends React.Component<EventListProps, EventListState> {
     };
 
  // Empty dependency array to run once when the component mounts
+ fetchFriendsAttending = async (eventId: string) => {
+        try {
+            const response = await axios.get(
+                `http://localhost:3000/Calender-Website/event-friends?eventId=${eventId}`,
+                { withCredentials: true }
+            );
+            this.setState(this.state.updateField("friendsAttending", response.data));
+            this.setState(this.state.updateField("isModalOpen", true)); // Open the modal
+        } catch (error) {
+            if (axios.isAxiosError(error) && error.response) {
+                toast.error(error.response.data);
+            } else {
+                toast.error('An error occurred while fetching friends attending.');
+            }
+        }
+    };
+
+    closeModal = () => {
+        this.setState(this.state.updateField("isModalOpen", false)); // Close the modal
+    };
+
     render(){
     return (
         <div>
@@ -124,9 +147,21 @@ export class EventList extends React.Component<EventListProps, EventListState> {
                             <Link to={`/show-event/${event.id}`}><h3>{event.title}</h3></Link>
                         </li>
                         {this.state.averageRatings.get(event.id)}
+                        {this.props.isLoggedIn && (
+                                <button onClick={() => this.fetchFriendsAttending(event.id)}>
+                                    See Friends Attending
+                                </button>
+                            )}
+                            <br />
                     </div>
                 ))
             )}
+            {/* Render the Modal with the list of friends attending */}
+                <Modal
+                    isOpen={this.state.isModalOpen}
+                    onClose={this.closeModal}
+                    friends={this.state.friendsAttending}
+                />
         </div>
     );
 

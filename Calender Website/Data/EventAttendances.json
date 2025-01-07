@@ -33,5 +33,12 @@
     "EventId": "9973b643-0f9b-4be3-bc2d-de62a156dc3b",
     "Rating": 16.8,
     "Feedback": "Matts"
+  },
+  {
+    "Id": "63bd5c1b-53a0-447b-a629-6749ad0ba6fb",
+    "UserId": "98c52815-1b03-47c1-a5e9-b7056fdb7a26",
+    "EventId": "41640f26-4751-4878-81ef-6390d78f4338",
+    "Rating": 0.0,
+    "Feedback": "None"
   }
 ]

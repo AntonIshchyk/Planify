@@ -117,6 +117,7 @@ export class App extends Component<{}, AppState> {
     return (
       <BrowserRouter>
         <div className="App">
+
           <MenuBar
           
             isAdmin={this.state.isAdmin}

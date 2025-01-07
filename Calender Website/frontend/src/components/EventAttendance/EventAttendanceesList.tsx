@@ -42,7 +42,7 @@ export class EventAttendanceesList extends React.Component<{}, EventAttendancees
                 'http://localhost:3000/Calender-Website/get-attending-events',
                 { withCredentials: true }
             );
-            this.setState(this.state.updateEvents(response.data));
+            this.setState(this.state.updateField("events", response.data));
         } catch (error) {
             if (axios.isAxiosError(error) && error.response) {
                 toast.error(error.response.data);

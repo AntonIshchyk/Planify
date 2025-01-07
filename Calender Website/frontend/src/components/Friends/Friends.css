@@ -1,0 +1,146 @@
+.container {
+    display: flex;
+    height: 100vh;  /* Use full viewport height */
+    padding: 20px;
+    gap: 20px;
+    justify-content: space-between;
+    overflow-x: hidden; /* Disable horizontal scrolling */
+  }
+  
+  .find-people {
+    flex: 3;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    display: flex;
+    width: 100%;
+    text-align: left;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    max-height: 80vh; /* Max height to make it scrollable vertically */
+    overflow-y: auto;  /* Enable vertical scrolling when content exceeds max height */
+    overflow-x: hidden; /* Disable horizontal scroll */
+  }
+  
+  .find-people h1 {
+    margin-bottom: 20px;
+    text-align: center;
+    width: 100%;
+  }
+  
+  .find-people input {
+    width: 99%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+  }
+  
+  .find-people input:focus {
+    outline: none;
+    border-color: #007bff;
+  }
+  
+  .friends-requests-container {
+    flex: 1;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    max-height: 80vh;  /* Max height to make it scrollable vertically */
+    overflow-y: auto;  /* Enable vertical scrolling */
+    overflow-x: hidden; /* Disable horizontal scroll */
+  }
+  
+  .friends {
+    flex: 1;
+    padding: 15px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.05);
+    max-height: 40vh; /* Set a max height for the friends section */
+    overflow-y: auto;  /* Enable vertical scrolling */
+    overflow-x: hidden; /* Disable horizontal scroll */
+    text-align: left; /* Align text to the left */
+  }
+  
+  .friends h2 {
+    font-size: 20px;
+    margin-bottom: 10px;
+  }
+  
+  .friends div {
+    margin-bottom: 15px;
+  }
+  
+  .friends button {
+    background-color: #e74c3c;
+    color: #fff;
+    border: none;
+    padding: 8px 15px;
+    font-size: 14px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .friends button:hover {
+    background-color: #c0392b;
+  }
+  
+  .friend-requests {
+    flex: 1;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.05);
+    max-height: 40vh; /* Set a max height for the requests section */
+    overflow-y: auto;  /* Enable vertical scrolling */
+    overflow-x: hidden; /* Disable horizontal scroll */
+    text-align: left; /* Align text to the left */
+  }
+  
+  .friend-requests div {
+    margin-bottom: 15px;
+  }
+  
+  .friend-requests button {
+    background-color: #2ecc71;
+    color: #fff;
+    border: none;
+    padding: 8px 15px;
+    font-size: 14px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 10px;
+  }
+  
+  .friend-requests button:hover {
+    background-color: #27ae60;
+  }
+  
+  .friend-requests button.deny {
+    background-color: #e74c3c;
+  }
+  
+  .friend-requests button.deny:hover {
+    background-color: #c0392b;
+  }
+  
+  @media (max-width: 768px) {
+    .container {
+      flex-direction: column;
+      gap: 15px;
+    }
+  
+    .find-people {
+      flex: 1;
+    }
+  
+    .friends-requests-container {
+      flex: 1;
+    }
+  }
+  

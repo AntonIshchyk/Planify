@@ -171,29 +171,18 @@ public class UserController : Controller
         return Ok("Friend request was sent");
     }
 
-
-    [HttpGet("search")]
+    [HttpGet("find-people")]
     [LoggedInFilter]
-    public async Task<IActionResult> Search(string str)
+    public async Task<IActionResult> FindPeople([FromQuery] string str)
     {
-        List<Event> allEvents = await EventAccess.LoadAll();
         List<User> allUsers = await UserAccess.LoadAll();
 
         str = str.ToLower();
-        List<Event> foundEvents = allEvents
-        .Where(e => e.Title.ToLower().Contains(str))
-        .ToList();
-
         List<User> foundUsers = allUsers
         .Where(u => u.FirstName.ToLower().Contains(str) ||
-                     u.LastName.ToLower().Contains(str))
+                    u.LastName.ToLower().Contains(str))
         .ToList();
 
-        List<object> result = new();
-
-        result.AddRange(foundEvents);
-        result.AddRange(foundUsers);
-
-        return Ok(result);
+        return Ok(foundUsers);
     }
 }

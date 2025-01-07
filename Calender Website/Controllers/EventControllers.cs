@@ -61,7 +61,6 @@ public class EventController : Controller
         return Ok(events.Where(e => e.DateTimeEvent > DateTime.Today).ToList());
     }
 
-
     [HttpPost("review")]
     [LoggedInFilter]
     public async Task<IActionResult> AddReview([FromBody] EventAttendance review)
@@ -103,5 +102,19 @@ public class EventController : Controller
     {
         if (await eventService.DeleteEvent(id)) return Ok("Event deleted.");
         return BadRequest("Event not found. ");
+    }
+
+    [HttpGet("find-events")]
+    [LoggedInFilter]
+    public async Task<IActionResult> FindEvents([FromQuery] string str)
+    {
+        List<Event> allEvents = await EventAccess.LoadAll();
+
+        str = str.ToLower();
+        List<Event> foundEvents = allEvents
+        .Where(e => e.Title.ToLower().Contains(str))
+        .ToList();
+
+        return Ok(foundEvents);
     }
 }

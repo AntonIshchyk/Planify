@@ -1,6 +1,6 @@
 import {StateUpdater, createStateUpdater} from '../Updater/Updater';
 
-interface User {
+export interface User {
     id: string;
     firstName: string;
     lastName: string;
@@ -15,11 +15,17 @@ interface User {
 export type FriendsState = {
     friends : User[],
     requests: User[],
+    foundPeople: User[],
+    searchStr: string,
+    sessionId: string | null
     updateField: StateUpdater<FriendsState>
 }
 
 export const initFriendsState = {
     friends : [],
     requests: [],
+    foundPeople: [],
+    searchStr: "",
+    sessionId: "",
     updateField: createStateUpdater<FriendsState>()
 }

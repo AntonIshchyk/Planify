@@ -6,43 +6,9 @@
     "Email": "testemail@gmail.com",
     "Password": "testpassword",
     "RecurringDays": 0,
-    "Friends": [],
-    "FriendRequests": []
-  },
-  {
-    "Id": "078049bb-4d88-4972-9642-9c7af0402360",
-    "FirstName": "Bob",
-    "LastName": "Bobby",
-    "Email": "b.bobby@Mail.com",
-    "Password": "Password",
-    "RecurringDays": 0,
     "Friends": [
-      "333bb2e8-2b02-4ada-9686-8627c5fabd5a"
+      "98c52815-1b03-47c1-a5e9-b7056fdb7a26"
     ],
-    "FriendRequests": ["1418bc94-b715-4ae3-a4d6-a111e3653c24"]
-  },
-  {
-    "Id": "333bb2e8-2b02-4ada-9686-8627c5fabd5a",
-    "FirstName": "TestName",
-    "LastName": "TestLastName",
-    "Email": "SecondMail.com",
-    "Password": "Password1",
-    "RecurringDays": 0,
-    "Friends": [
-      "078049bb-4d88-4972-9642-9c7af0402360"
-    ],
-    "FriendRequests": [
-      "078049bb-4d88-4972-9642-9c7af0402360"
-    ]
-  },
-  {
-    "Id": "1418bc94-b715-4ae3-a4d6-a111e3653c24",
-    "FirstName": "TestUsername2000",
-    "LastName": "TestUsername2000",
-    "Email": "Test2000",
-    "Password": "TestPassword2000",
-    "RecurringDays": 0,
-    "Friends": [],
     "FriendRequests": []
   },
   {
@@ -52,17 +18,9 @@
     "Email": "matts@gmail.com",
     "Password": "Omaaaaa",
     "RecurringDays": 0,
-    "Friends": [],
-    "FriendRequests": []
-  },
-  {
-    "Id": "4d1d4aaf-79de-452d-8a60-2c1d3d5966ab",
-    "FirstName": "Oma",
-    "LastName": "Ducik",
-    "Email": "oma@gmail.com",
-    "Password": "omaaaaaaa",
-    "RecurringDays": 0,
-    "Friends": [],
+    "Friends": [
+      "0be5ec7d-2de0-4259-a149-0b254907086d"
+    ],
     "FriendRequests": []
   }
 ]
