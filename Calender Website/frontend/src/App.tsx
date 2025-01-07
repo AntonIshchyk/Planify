@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import './App.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Login from './components/Login/Login';
@@ -19,6 +19,7 @@ import ViewAttendancees from './components/EventAttendance/ViewAttendancees';
 import Register from './components/Register/Register';
 import AddAdminAccount from './components/Register/AddAdminAccount';
 import { Friends } from './components/Friends/Friends';
+import UpdateEvent from './components/Events/UpdateEvent';
 
 export class App extends Component<{}, AppState> {
   constructor(props: {}) {
@@ -133,7 +134,6 @@ export class App extends Component<{}, AppState> {
     return (
       <BrowserRouter>
         <div className="App">
-
           <MenuBar
           
             isAdmin={this.state.isAdmin}
@@ -173,6 +173,12 @@ export class App extends Component<{}, AppState> {
                 </>
               }/>
             <Route path="/create-event" element={<CreateEvent />} />
+            <Route path="/get-all-events" element={<EventList
+              onBacktoMenuClick={this.handleBacktoMenuClick}
+              isAdminLogin={this.state.isAdmin}
+              isUserLogin={this.state.loggedIn} />} />
+            <Route path="/delete-event" element={<DeleteEvent />} />
+            <Route path="/update-event/:Id" element={<UpdateEvent/>} />
             <Route path="/get-all-events" element={<EventList onBacktoMenuClick={function (): void {
               throw new Error('Function not implemented.');
             } } isAdminLogin={this.state.isAdmin} isLoggedIn={this.state.loggedIn} />} />

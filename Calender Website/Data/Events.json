@@ -1,15 +1,5 @@
 [
   {
-    "Id": "6cae6a27-0716-4633-a34a-2bb277b0e234",
-    "Title": "Annual Conference",
-    "Description": "This is a detailed description of the event.",
-    "Date": "2024-12-25T00:00:00",
-    "StartTime": "2024-12-25T09:00:00",
-    "EndTime": "2024-12-25T17:00:00",
-    "Location": "Convention Center, City",
-    "AdminApproval": false
-  },
-  {
     "Id": "a8ad48c9-aee8-495b-b86a-6be42874b6fd",
     "Title": "Annual Conference",
     "Description": "This is a detailed description of the event.",
@@ -20,13 +10,13 @@
     "AdminApproval": false
   },
   {
-    "Id": "41640f26-4751-4878-81ef-6390d78f4338",
-    "Title": "Hellu",
-    "Description": "Hellu",
-    "Date": "2024-12-11",
-    "StartTime": "10:45",
-    "EndTime": "11:46",
-    "Location": "Hellu",
+    "Id": "372cf45f-2a35-4ecc-bcb9-326f94e9b98a",
+    "Title": "Toby",
+    "Description": "Toby",
+    "Date": "2025-01-29",
+    "StartTime": "10:38",
+    "EndTime": "16:38",
+    "Location": "Toby",
     "AdminApproval": true
   }
 ]
