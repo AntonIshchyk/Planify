@@ -26,5 +26,12 @@
     "EventId": "41640f26-4751-4878-81ef-6390d78f4338",
     "Rating": 0.0,
     "Feedback": "None"
+  },
+  {
+    "Id": "3cdc7e75-c3ac-43b9-94cc-c1087f47f9c5",
+    "UserId": "ddd4ea4c-20ea-4ad7-bca5-581527c84d8c",
+    "EventId": "9973b643-0f9b-4be3-bc2d-de62a156dc3b",
+    "Rating": 16.8,
+    "Feedback": "Matts"
   }
 ]
