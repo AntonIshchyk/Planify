@@ -5,7 +5,6 @@ import Login from './components/Login/Login';
 import MenuBar from './components/Home/MenuBar';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import Startup from './components/Home/Startup';
 import CreateEvent from './components/Events/CreateEvent';
 import axios from 'axios';
 import AdminScreen from './components/Home/AdminScreen';
@@ -29,28 +28,13 @@ export class App extends Component<{}, AppState> {
   }
 
   handleBacktoMenuClick = () => {
-    this.setState(this.state.updateField("showAdminLogin", false));
-    this.setState(this.state.updateField("showUserLogin", false));
     this.setState(this.state.updateField("showRegister", false));
   };
 
   handleRegisterClick = () => {
-    this.setState(this.state.updateField("showAdminLogin", false));
-    this.setState(this.state.updateField("showUserLogin", false));
     this.setState(this.state.updateField("showRegister", true));
   };
 
-  handleUserClick = () => {
-    this.setState(this.state.updateField("showAdminLogin", false));
-    this.setState(this.state.updateField("showUserLogin", true));
-    this.setState(this.state.updateField("showRegister", false));
-  };
-
-  handleAdminClick = () => {
-    this.setState(this.state.updateField("showAdminLogin", true));
-    this.setState(this.state.updateField("showUserLogin", false));
-    this.setState(this.state.updateField("showRegister", false));
-  };
   /*handleBacktoMenuClick = () => {
     this.setState(this.state.updateShowAdminLogin(false));
     this.setState(this.state.updateShowUserLogin(false));
@@ -121,9 +105,7 @@ export class App extends Component<{}, AppState> {
         withCredentials: true,
       });
       this.setState({
-        loggedIn: response.data,
-        showAdminLogin: false,
-        showUserLogin: false,
+        loggedIn: response.data
       });
     } catch (error) {
       console.error('Error checking login status:', error);
@@ -146,20 +128,14 @@ export class App extends Component<{}, AppState> {
               path="/"
               element={
                 <>
-                  {!this.state.loggedIn && !this.state.showRegister && (this.state.showUserLogin || this.state.showAdminLogin) && (
+                  {!this.state.loggedIn && !this.state.showRegister && (
                     <Login
-                      onBacktoMenuClick={this.handleBacktoMenuClick}
-                      isAdminLogin={this.state.showAdminLogin}
-                      isUserLogin={this.state.showUserLogin}
                       onRegisterClick={this.handleRegisterClick}
                     />
                   )}
-                  {!this.state.loggedIn && !this.state.showAdminLogin && !this.state.showUserLogin && !this.state.showRegister && (
-                    <Startup onUserClick={this.handleUserClick} onAdminClick={this.handleAdminClick} />
-                  )}
                   {this.state.isAdmin && <AdminScreen />}
                   {!this.state.isAdmin && this.state.loggedIn && <UserScreen />}
-                  {!this.state.showUserLogin && !this.state.showAdminLogin && this.state.showRegister && <Register onBacktoMenuClick={this.handleBacktoMenuClick} />}
+                  {this.state.showRegister && <Register onBacktoMenuClick={this.handleBacktoMenuClick} />}
                 </>
               }/>
             <Route path="/create-event" element={<CreateEvent />} />

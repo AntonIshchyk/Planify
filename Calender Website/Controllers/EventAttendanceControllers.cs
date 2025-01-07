@@ -35,7 +35,7 @@ public class EventAttendanceControllers : Controller
     public async Task<IActionResult> GetAttending()
     {
         string UserId = HttpContext.Session.GetString("UserId");
-        return Ok(await EAS.GetAttending(UserId));
+        return Ok(await EAS.GetAttending(UserId));  
     }
 
     [HttpGet("EventAttendance")]

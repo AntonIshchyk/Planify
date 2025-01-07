@@ -45,11 +45,6 @@ export class MenuBar extends React.Component<MenuBarProps, {}> {
               <Link to="/get-all-events">All Events</Link>
             </li>
           )}
-          {this.props.isAdmin && (
-            <li>
-              <Link to="/delete-event">Delete Event</Link>
-            </li>
-          )}
           {this.props.isLoggedIn && (
             <li>
               <Link to="/attend">Attend Office</Link>

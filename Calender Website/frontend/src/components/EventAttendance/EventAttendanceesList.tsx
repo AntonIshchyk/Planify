@@ -3,6 +3,7 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import { EventAttendanceesListState, initEventAttendanceesListState } from './EventAttendanceesList.state';
 import apiClient from '../../ApiClient';
+import { Link } from 'react-router-dom';
 
 export class EventAttendanceesList extends React.Component<{}, EventAttendanceesListState>{
     constructor(props : {}){
@@ -18,7 +19,7 @@ export class EventAttendanceesList extends React.Component<{}, EventAttendancees
                     withCredentials: true
                 }
             )
-            localStorage.setItem('message', id);
+            localStorage.setItem('message', response.data);
             window.location.reload();
             window.dispatchEvent(new Event('storageUpdated'));
         }
@@ -59,12 +60,9 @@ export class EventAttendanceesList extends React.Component<{}, EventAttendancees
                 (this.state.events.map((event) => (
                     <div key={event.id}>
                         <h3>{event.title}</h3>
-                        <p><strong>Description: </strong>{event.description}</p>
-                        <p><strong>Date: </strong>{event.date}</p>
-                        <p><strong>Start time: </strong>{event.startTime}</p>
-                        <p><strong>End time: </strong>{event.endTime}</p>
-                        <p><strong>Location: </strong>{event.location}</p>
-                        <p><strong>Approval: </strong>{event.adminApproval ? 'Approved' : 'Pending'}</p>
+                        <li>
+                            <Link to={`/show-event/${event.id}`}><h3>{event.title}</h3></Link>
+                        </li>
                         <button type="button" onClick={() => this.handleDelete(event.id)}>
                             Remove Attendancee
                             </button>
