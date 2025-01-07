@@ -14,7 +14,6 @@ import EventList from './components/Events/EventList';
 import DeleteEvent from './components/Events/DeleteEvent';
 import { AppState, initAppState } from './App.state';
 import CreateAttendance from './components/EventAttendance/CreateAttendance';
-import AttendEvent from './components/EventAttendance/AttendEvent';
 import EventAttendanceesList from './components/EventAttendance/EventAttendanceesList';
 import ViewAttendancees from './components/EventAttendance/ViewAttendancees';
 import Register from './components/Register/Register';
@@ -135,12 +134,23 @@ export class App extends Component<{}, AppState> {
     return (
       <BrowserRouter>
         <div className="App">
-        
           <MenuBar
+          
             isAdmin={this.state.isAdmin}
             isLoggedIn={this.state.loggedIn}
           />
-
+          <ToastContainer
+            position="top-right"
+            autoClose={5000}
+            hideProgressBar={false}
+            newestOnTop
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss  
+            draggable
+            pauseOnHover
+            theme="light"
+          />
           <Routes>
             <Route
               path="/"
@@ -171,11 +181,10 @@ export class App extends Component<{}, AppState> {
             <Route path="/update-event/:Id" element={<UpdateEvent/>} />
             <Route path="/get-all-events" element={<EventList onBacktoMenuClick={function (): void {
               throw new Error('Function not implemented.');
-            } } isAdminLogin={this.state.isAdmin} isUserLogin={this.state.loggedIn} />} />
+            } } isAdminLogin={this.state.isAdmin} isLoggedIn={this.state.loggedIn} />} />
             <Route path="/delete-event" element={<DeleteEvent />} />
             <Route path="/attend" element={<CreateAttendance/>}/>
             <Route path="/attending-events" element={<EventAttendanceesList />} />
-            <Route path="/attend-event" element={<AttendEvent />} />
             <Route path="/show-attendances/:eventId/:title" element={<ViewAttendancees/>} />
             <Route path="/add-admin" element={<AddAdminAccount/>} />
             <Route path="/friends" element={<Friends />} />
@@ -187,15 +196,3 @@ export class App extends Component<{}, AppState> {
 }
 
 export default App;
-/*<ToastContainer
-            position="top-right"
-            autoClose={5000}
-            hideProgressBar={false}
-            newestOnTop
-            closeOnClick
-            rtl={false}
-            pauseOnFocusLoss  
-            draggable
-            pauseOnHover
-            theme="light"
-          />*/

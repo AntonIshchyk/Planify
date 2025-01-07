@@ -17,6 +17,44 @@ export class EventList extends React.Component<EventListProps, EventListState> {
         this.state = initEventListState;
 
     }
+    handleEventAttend = async (eventId : string) => {
+        try{
+            const response = await axios.post(
+                'http://localhost:3000/Calender-Website/EventAttendance',
+                {
+                    "EventId" : eventId
+                },
+                { withCredentials: true }
+            );
+            localStorage.setItem('message', response.data);
+            window.location.reload();
+            window.dispatchEvent(new Event('storageUpdated'));
+        }catch(error){
+            if (axios.isAxiosError(error) && error.response) {
+                toast.error(error.response.data); // Displays "Event already exists."
+            } else {
+                toast.error('An error occurred. Please try again.');
+            }
+        }
+    }
+    approve = async (id : string) => {
+        try{
+        const response = await axios.put(
+            `http://localhost:3000/Calender-Website/approve-event?eventId=${id}`,
+            {},
+            { withCredentials: true }
+        );
+            localStorage.setItem('message', "Event Approved");
+            window.location.reload();
+            window.dispatchEvent(new Event('storageUpdated'));
+    }catch (error) {
+        if (axios.isAxiosError(error) && error.response) {
+            toast.error(error.response.data);
+        } else {
+            toast.error('An error occurred. Please try again.');
+        }
+    }
+    }
     componentDidMount() {
         // Fetch data when the component mounts
         this.fetchEvents();
@@ -82,8 +120,17 @@ export class EventList extends React.Component<EventListProps, EventListState> {
                 'http://localhost:3000/Calender-Website/get-all-events',
                 { withCredentials: true }
             );
+
             console.log(this.props.isAdminLogin ? 'Fetching all events...' : 'Fetching your events...');
             this.setState(this.state.updateEvents(response.data));
+
+            const attending = await axios.get(
+                'http://localhost:3000/Calender-Website/IsAttending',
+                { withCredentials: true }
+            );
+            this.setState(this.state.updateField("attending",attending.data));
+            this.setState(this.state.updateField("events", response.data));
+
         } catch (error) {
             if (axios.isAxiosError(error) && error.response) {
                 toast.error(error.response.data);
@@ -92,6 +139,7 @@ export class EventList extends React.Component<EventListProps, EventListState> {
             }
         }
     };
+
     // Empty dependency array to run once when the component mounts
     render() {
         return (
@@ -108,9 +156,24 @@ export class EventList extends React.Component<EventListProps, EventListState> {
                             <p><strong>Location: </strong>{event.location}</p>
                             <p><strong>Approval: </strong>{event.adminApproval ? 'Approved' : 'Pending'}</p>
                             {this.props.isAdminLogin && <label><button type="submit" onClick={() => this.handleDelete(event.id)}>Delete</button></label>}
+                            {this.props.isAdminLogin && !event.adminApproval && (<form onSubmit={(e) => {
+                               e.preventDefault();
+                               this.approve(event.id)
+                            }}>
+                            <button type="submit">Approve</button>
+                            </form>
+                            )}
+                            {this.props.isLoggedIn && event.adminApproval && !this.state.attending.includes(event.id)  && (<form onSubmit={(e) => {
+                            e.preventDefault();
+                            this.handleEventAttend(event.id)
+                        }}>
+                        <button type="submit">Attend</button>
+                        </form>
+                        )}
                             {this.props.isAdminLogin && (<li>
                                 <Link to={`/update-event/${event.id}`}>Update event</Link> <br />
                                 <Link to={`/show-attendances/${event.id}/${event.title}`}>See Attendancees</Link>
+
                             </li>
                             )}
                             <br />

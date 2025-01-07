@@ -11,6 +11,14 @@ public class EventService
         return null!;
     }
 
+    public async Task<bool> ApproveEvent(Guid eventId)
+    {
+        Event unapprovedevent = await EventAccess.Get(eventId);
+        unapprovedevent.AdminApproval = true;
+        await EventAccess.Update(unapprovedevent);
+        return true;
+    }
+
     public async Task<bool> AppendEvent(Event e)
     {
         if (e is null) return false;
