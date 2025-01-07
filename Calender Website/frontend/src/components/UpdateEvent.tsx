@@ -3,32 +3,45 @@ import axios from 'axios';
 import { initUpdateEventState, UpdateEventState } from './UpdateEvent.state';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useParams } from 'react-router-dom';
 interface UpdateEventProps {
+    params : {
+        Id: string
+    }
+}
+
+export function withRouter(Component: any) {
+    return function WrappedComponent(props: any) {
+        const params = useParams();
+        return <Component {...props} params={params} />;
+    };
 }
 export class UpdateEvent extends React.Component<UpdateEventProps, UpdateEventState>{
-    constructor(props: UpdateEventProps, id: string){
+    constructor(props: UpdateEventProps){
     
         super(props);
         this.state = initUpdateEventState;
-        this.setState(this.state.updateId(id));
     }
     handleUpdateEvent = async (event: React.FormEvent) => {
         event.preventDefault();
-
         try {
             const response = await axios.put(
-                `http://localhost:3000/Calender-Website/update-event`,
+                `http://localhost:3000/Calender-Website/update-event?id=${this.props.params.Id}`,
                 {
-                    "Id": this.state.id,
                     "Title": this.state.title,
                     "Description": this.state.description,
                     "Date": this.state.date,
                     "StartTime": this.state.startTime,
                     "EndTime": this.state.endTime,
-                    "Location": this.state.adminApproval,
+                    "Location": this.state.location,
                     "AdminApproval": this.state.adminApproval
                 },
-                { withCredentials: true }
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    withCredentials: true,
+                }
             );
             toast.info(response.data);
         } catch (error) {
@@ -101,4 +114,5 @@ export class UpdateEvent extends React.Component<UpdateEventProps, UpdateEventSt
 }
 }
 
-export default UpdateEvent;
+export default withRouter(UpdateEvent);
+export {};

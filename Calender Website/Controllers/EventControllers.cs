@@ -43,7 +43,7 @@ public class EventController : Controller
         List<Event> events = await eventService.GetAllEvents();
         return Ok(events);
     }
-    
+
 
     [HttpPost("review")]
     [LoggedInFilter]
@@ -72,8 +72,9 @@ public class EventController : Controller
 
     [HttpPut("update-event")]
     [AdminFilter]
-    public async Task<IActionResult> UpdateEvent([FromBody] Event e)
+    public async Task<IActionResult> UpdateEvent([FromBody] Event e, [FromQuery] Guid Id)
     {
+        e.Id = Id;
         if (await eventService.UpdateEvent(e)) return Ok("Event updated.");
         return BadRequest("Event could not be found.");
     }

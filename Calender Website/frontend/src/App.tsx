@@ -3,7 +3,7 @@ import './App.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Login from './components/Login';
 import MenuBar from './components/MenuBar';
-import { toast } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Startup from './components/Startup';
 import CreateEvent from './components/CreateEvent';
@@ -97,7 +97,18 @@ export class App extends Component<{}, AppState> {
     return (
       <BrowserRouter>
         <div className="App">
-
+        <ToastContainer
+            position="top-right"
+            autoClose={5000}
+            hideProgressBar={false}
+            newestOnTop
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="light"
+          />
           <MenuBar
             isAdmin={this.state.isAdmin}
             isLoggedIn={this.state.loggedIn}
@@ -129,7 +140,7 @@ export class App extends Component<{}, AppState> {
               isAdminLogin={this.state.isAdmin}
               isUserLogin={this.state.loggedIn} />} />
             <Route path="/delete-event" element={<DeleteEvent />} />
-            <Route path="/update-event" element={<UpdateEvent />} />
+            <Route path="/update-event/:Id" element={<UpdateEvent/>} />
           </Routes>
         </div>
       </BrowserRouter>

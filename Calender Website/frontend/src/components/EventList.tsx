@@ -109,7 +109,7 @@ export class EventList extends React.Component<EventListProps, EventListState> {
                             <p><strong>Approval: </strong>{event.adminApproval ? 'Approved' : 'Pending'}</p>
                             {this.props.isAdminLogin && <label><button type="submit" onClick={() => this.handleDelete(event.id)}>Delete</button></label>}
                             {this.props.isAdminLogin && (<li>
-                                <Link to={`/update-event?id=${event}`}>Update event</Link>
+                                <Link to={`/update-event/${event.id}`}>Update event</Link>
                             </li>
                             )}
                             <br />

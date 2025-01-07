@@ -21,12 +21,12 @@
   },
   {
     "Id": "372cf45f-2a35-4ecc-bcb9-326f94e9b98a",
-    "Title": "Anual conference",
-    "Description": "Description",
-    "Date": "2025-01-08",
-    "StartTime": "20:00",
-    "EndTime": "21:00",
-    "Location": "Rotterdam",
+    "Title": "Matts",
+    "Description": "Matts",
+    "Date": "2025-01-16",
+    "StartTime": "10:18",
+    "EndTime": "14:14",
+    "Location": "Matts",
     "AdminApproval": true
   }
 ]

@@ -6,7 +6,6 @@ export type UpdateEventState = {
     endTime : string;
     location : string;
     adminApproval : boolean;
-    id : string;
     updateTitle : (title : string) => (state: UpdateEventState) => UpdateEventState
     updateDescription : (description : string) => (state: UpdateEventState) => UpdateEventState
     updateDate : (date : string) => (state: UpdateEventState) => UpdateEventState
@@ -14,7 +13,6 @@ export type UpdateEventState = {
     updateEndTime : (endTime : string) => (state: UpdateEventState) => UpdateEventState
     updateLocation : (location : string) => (state: UpdateEventState) => UpdateEventState
     updateAdminApproval : (adminApproval : boolean) => (state: UpdateEventState) => UpdateEventState
-    updateId : (id : string) => (state : UpdateEventState) => UpdateEventState
 }
 export const initUpdateEventState = {
     title : '',
@@ -24,7 +22,6 @@ export const initUpdateEventState = {
     endTime : '',
     location : '',
     adminApproval : false,
-    id : '',
     updateTitle : (title: string) => (state: UpdateEventState) : UpdateEventState => ({...state,
         title : title
     }),
@@ -45,6 +42,5 @@ export const initUpdateEventState = {
     }),
     updateAdminApproval : (adminApproval: boolean) => (state: UpdateEventState) : UpdateEventState => ({...state,
         adminApproval : adminApproval
-    }),
-    updateId : (id : string) => (state : UpdateEventState) : UpdateEventState => ({...state, id : id})
+    })
 }
