@@ -18,5 +18,15 @@
     "EndTime": "2024-12-25T17:00:00",
     "Location": "Convention Center, City",
     "AdminApproval": false
+  },
+  {
+    "Id": "372cf45f-2a35-4ecc-bcb9-326f94e9b98a",
+    "Title": "Anual conference",
+    "Description": "Description",
+    "Date": "2025-01-08",
+    "StartTime": "20:00",
+    "EndTime": "21:00",
+    "Location": "Rotterdam",
+    "AdminApproval": true
   }
 ]

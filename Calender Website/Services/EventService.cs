@@ -31,6 +31,12 @@ public class EventService
         return true;
     }
 
+    /*public async Task<bool> UpdateEvent(Guid id)
+    {
+        List<Event> events = await AccessJson.ReadJson<Event>();
+        Event foundEvent = events.Find(e => e.Id == id)!;
+    }*/
+
     public async Task<bool> DeleteEvent(Guid id) => await EventAccess.Remove(id);
 
     public async Task<bool> AddReview(EventAttendance review, Guid userId)
