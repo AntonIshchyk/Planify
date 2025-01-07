@@ -7,7 +7,7 @@ import { Link, useNavigate } from 'react-router-dom';
 interface EventListProps {
     onBacktoMenuClick: () => void;
     isAdminLogin: boolean;
-    isUserLogin: boolean;
+    isLoggedIn: boolean;
     navigate: (path: string) => void;
 }
 
@@ -131,7 +131,7 @@ export class EventList extends React.Component<EventListProps, EventListState> {
                     "Date": this.state.date,
                     "StartTime": this.state.startTime,
                     "EndTime": this.state.endTime,
-                    "Location": this.state.adminApproval,
+                    "Location": this.state.location,
                     "AdminApproval": this.state.adminApproval
                 },
                 { withCredentials: true }
@@ -156,7 +156,7 @@ export class EventList extends React.Component<EventListProps, EventListState> {
             );
 
             console.log(this.props.isAdminLogin ? 'Fetching all events...' : 'Fetching your events...');
-            this.setState(this.state.updateEvents(response.data));
+            this.setState(this.state.updateField("events", response.data));
 
             const attending = await axios.get(
                 'http://localhost:3000/Calender-Website/IsAttending',
@@ -259,6 +259,7 @@ export class EventList extends React.Component<EventListProps, EventListState> {
         </div>
     );
 
+}
 }
 
 function withNavigation(Component: typeof EventList) {

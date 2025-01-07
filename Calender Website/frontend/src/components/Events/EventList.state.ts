@@ -12,6 +12,13 @@ interface Event {
 }
 
 export type EventListState = {
+    title: string
+    description: string
+    date: string
+    startTime: string
+    endTime: string
+    location: string
+    adminApproval: boolean
     events : Event[],
     attending : string[],
     feedback: Map<string, string>,
@@ -24,6 +31,13 @@ export type EventListState = {
     }
 
 export const initEventListState = {
+    title: "",
+    description: "",
+    date: "",
+    startTime: "",
+    endTime: "",
+    location: "",
+    adminApproval: false,
     feedback : new Map<string, string>(),
     events : [],
     attending : [],
