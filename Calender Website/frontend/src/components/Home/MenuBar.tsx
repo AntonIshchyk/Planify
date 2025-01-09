@@ -19,7 +19,6 @@ export class MenuBar extends React.Component<MenuBarProps, {}> {
     );
 
     // Programmatically navigate to the root path
-    window.location.reload();
     this.props.navigate('');
     window.location.reload();
   };
