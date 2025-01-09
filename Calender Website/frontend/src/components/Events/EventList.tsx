@@ -32,7 +32,7 @@ export class EventList extends React.Component<EventListProps, EventListState> {
         if (!isConfirmed) return;
 
         try {
-            const response = await axios.delete(
+            await axios.delete(
                 `http://localhost:3000/Calender-Website/delete-event?id=${id}`,
                 {
                     withCredentials: true
@@ -144,7 +144,7 @@ export class EventList extends React.Component<EventListProps, EventListState> {
                 (this.state.events.map((event) => (
                     <div key={event.id}>
                         <Link to={`/show-event/${event.id}`}><h3>{event.title}</h3></Link>
-                        {this.state.averageRatings.get(event.id)}
+                        <p>Rating: {this.state.averageRatings.get(event.id)}</p>
                         <br />
                         {this.props.isLoggedIn && (
                                 <button onClick={() => this.fetchFriendsAttending(event.id)}>
