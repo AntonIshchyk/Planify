@@ -35,7 +35,7 @@ public class EventAttendanceControllers : Controller
     public async Task<IActionResult> GetAttending()
     {
         string UserId = HttpContext.Session.GetString("UserId");
-        return Ok(await EAS.GetAttending(UserId));  
+        return Ok(await EAS.GetAttending(UserId));
     }
 
     [HttpGet("EventAttendance")]
@@ -56,7 +56,7 @@ public class EventAttendanceControllers : Controller
     [LoggedInFilter]
     public async Task<IActionResult> GetAttendingEvents()
     {
-        List<Event> events = await ES.GetAllAttendingEvents(HttpContext.Session.GetString("UserId"));
+        List<Event> events = await ES.GetAllAttendingEvents(HttpContext.Session.GetString("UserId")!);
         return Ok(events);
     }
 

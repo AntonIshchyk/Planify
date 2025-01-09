@@ -56,7 +56,7 @@ export class EventAttendanceesList extends React.Component<{}, EventAttendancees
     return (
         <div>
             {this.state.events.length <= 0 ? (
-                <p>No events found.</p>) : 
+                <p>No attendances found.</p>) : 
                 (this.state.events.map((event) => (
                     <div key={event.id}>
                         <Link to={`/show-event/${event.id}`}><h3>{event.title}</h3></Link>

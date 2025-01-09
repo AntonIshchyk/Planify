@@ -50,14 +50,14 @@ export class MenuBar extends React.Component<MenuBarProps, {}> {
               <Link to="/attend">Attend Office</Link>
             </li>
           )}
-          {this.props.isLoggedIn && (
+           {this.props.isLoggedIn && (
             <li>
-              <Link to="/attending-events">Attending Events</Link>
+              <Link to="/attending-dates">Attendances Office</Link>
             </li>
           )}
           {this.props.isLoggedIn && (
             <li>
-              <Link to="/attend-event">Attend Event</Link>
+              <Link to="/attending-events">Attending Events</Link>
             </li>
           )}
           {this.props.isLoggedIn && !this.props.isAdmin &&
