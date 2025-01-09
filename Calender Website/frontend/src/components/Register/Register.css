@@ -1,0 +1,67 @@
+/* Register.css */
+
+/* Container for the register form */
+.register-container {
+    max-width: 400px;
+    margin: auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+/* Title style inside the register container */
+.register-container h2 {
+    color: #333;
+}
+
+/* Input fields inside register container */
+.register-container input[type="email"],
+.register-container input[type="text"],
+.register-container input[type="password"] {
+    width: calc(100% - 20px);
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box; /* Ensures padding doesn't affect width */
+}
+
+/* Label styling inside register container */
+.register-container label {
+    font-size: 14px;
+    text-align: left;
+    display: block;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+/* Button styles inside register container */
+.register-container button {
+    padding: 10px 20px;
+    margin: 10px 0;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%; /* Ensures buttons are the same size */
+    box-sizing: border-box;
+    font-size: 16px;
+}
+
+/* Back to menu button with different color inside register container */
+.register-container button.back-btn {
+    background-color: #28a745;
+}
+
+/* Button hover effect */
+.register-container button:hover {
+    opacity: 0.9;
+}
+
+/* Button active effect */
+.register-container button:active {
+    transform: scale(0.98);
+}
