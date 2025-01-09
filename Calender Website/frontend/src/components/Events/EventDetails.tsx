@@ -154,7 +154,7 @@ export class EventDetails extends React.Component<EventDetailsProps, EventDetail
                         <p><strong>Start time: </strong>{this.state.event.startTime}</p>
                         <p><strong>End time: </strong>{this.state.event.endTime}</p>
                         <p><strong>Location: </strong>{this.state.event.location}</p>
-                        {this.state.averageRatings}
+                        <p><strong>Rating: {this.state.averageRatings}</strong></p>
                         <p><strong>Approval: </strong>{this.state.event.adminApproval ? 'Approved' : 'Pending'}</p>
                         {this.props.isAdminLogin && !this.state.event.adminApproval && (<form onSubmit={(e) => {
                             e.preventDefault();
@@ -193,9 +193,10 @@ export class EventDetails extends React.Component<EventDetailsProps, EventDetail
                     type="number"
                     step="0.5"
                     value={this.state.rating}
-                    onChange={(e) => 
-                        this.setState(this.state.updateRating(Number(e.target.value)))
-                    }
+                    onChange={(e) =>{
+                        const value = Math.min(5, Math.max(0, Number(e.target.value))) 
+                        this.setState(this.state.updateRating(value))
+                    }}
                     required />
                 <br />
                 Feedback:
