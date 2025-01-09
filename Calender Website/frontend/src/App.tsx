@@ -6,7 +6,6 @@ import MenuBar from './components/Home/MenuBar';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import CreateEvent from './components/Events/CreateEvent';
-import axios from 'axios';
 import AdminScreen from './components/Home/AdminScreen';
 import UserScreen from './components/Home/UserScreen';
 import EventList from './components/Events/EventList';

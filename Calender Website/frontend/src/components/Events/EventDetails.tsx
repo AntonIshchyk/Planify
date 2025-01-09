@@ -1,6 +1,5 @@
 import React from 'react';
 import axios from 'axios';
-import { EventListState, initEventListState } from './EventList.state';
 import { toast } from 'react-toastify';
 import { Link } from 'react-router-dom';
 import { EventDetailsState, initEventDetailsState } from './EventDetails.state';
@@ -93,7 +92,7 @@ export class EventDetails extends React.Component<EventDetailsProps, EventDetail
     }
     approve = async () => {
         try{
-        const response = await apiClient.put(
+        await apiClient.put(
             `http://localhost:3000/Calender-Website/approve-event?eventId=${this.state.event.id}`,
             {},
             { withCredentials: true }
@@ -120,7 +119,7 @@ export class EventDetails extends React.Component<EventDetailsProps, EventDetail
                 {withCredentials:true}
             )
             this.setState(this.state.updateEvent(responseevent.data))
-            const response = await apiClient.get(
+            await apiClient.get(
                 'http://localhost:3000/Calender-Website/get-all-events',
                 { withCredentials: true }
             );

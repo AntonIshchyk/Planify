@@ -2,9 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import apiClient from '../../ApiClient';
-import { Link, useNavigate } from 'react-router-dom';
 import { initViewOfficeState, ViewOfficeState } from './ViewOffice.state';
-import { initViewAttendanceesState } from './ViewAttendancees.state';
 
 interface ViewOfficeProps {
 }
