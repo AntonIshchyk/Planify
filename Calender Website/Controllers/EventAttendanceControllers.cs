@@ -34,7 +34,7 @@ public class EventAttendanceControllers : Controller
     [LoggedInFilter]
     public async Task<IActionResult> GetAttending()
     {
-        string UserId = HttpContext.Session.GetString("UserId");
+        string UserId = HttpContext.Session.GetString("UserId")!;
         return Ok(await EAS.GetAttending(UserId));
     }
 
