@@ -48,40 +48,40 @@ export class ViewOffice extends React.Component<ViewOfficeProps, ViewOfficeState
                 { withCredentials: true }
             );
             this.setState(this.state.updateAttendances(response.data));
-        } catch (error ) {
+        } catch (error) {
             if (axios.isAxiosError(error) && error.response) {
                 toast.error(error.response.data);
-            } 
+            }
             else {
                 toast.error('An error occurred. Please try again.');
             }
         }
     };
 
-    render(){
-    return (
-        <div>
-            {this.state.attendances.length <= 0 ? (
-                <p>No attendances found.</p>) : 
-                (this.state.attendances.map((attendance) => (
-                    <div key={attendance.id}>
-                        {attendance.date.slice(0, -8).replace("T", " ")}
-                        <br/>
-                        <button type="button" onClick={() => this.handleDelete(attendance.id)}>
-                            Remove Attendancee
+    render() {
+        return (
+            <div>
+                {this.state.attendances.length <= 0 ? (
+                    <p>No attendances found.</p>) :
+                    (this.state.attendances.map((attendance) => (
+                        <div key={attendance.id}>
+                            {attendance.date.slice(0, -6).replace("T", " ")}
+                            <br />
+                            <button type="button" onClick={() => this.handleDelete(attendance.id)}>
+                                Remove Attendancee
                             </button>
-                        <br />
-                        <br/>
-                    </div>
-                    
-                )))
-            }
-                        
+                            <br />
+                            <br />
+                        </div>
 
-        </div>
-    );
+                    )))
+                }
 
-}
+
+            </div>
+        );
+
+    }
 }
 
 export default ViewOffice;
