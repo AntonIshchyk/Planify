@@ -17,9 +17,9 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, friends }) => {
                 {friends.length > 0 ? (
                     <ul>
                         {friends.map((friend) => (
-                            <li key={friend.id}>
+                            <div key={friend.id}>
                                 {friend.firstName} {friend.lastName}
-                            </li>
+                            </div>
                         ))}
                     </ul>
                 ) : (

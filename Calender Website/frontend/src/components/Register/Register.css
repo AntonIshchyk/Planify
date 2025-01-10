@@ -25,7 +25,8 @@
     margin: 10px 0;
     border: 1px solid #ccc;
     border-radius: 5px;
-    box-sizing: border-box; /* Ensures padding doesn't affect width */
+    box-sizing: border-box;
+    /* Ensures padding doesn't affect width */
 }
 
 /* Label styling inside register container */
@@ -46,7 +47,8 @@
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    width: 100%; /* Ensures buttons are the same size */
+    width: 100%;
+    /* Ensures buttons are the same size */
     box-sizing: border-box;
     font-size: 16px;
 }

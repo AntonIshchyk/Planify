@@ -6,7 +6,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import apiClient from '../../ApiClient';
 import { useParams } from 'react-router-dom';
 interface UpdateEventProps {
-    params : {
+    params: {
         Id: string
     }
 }
@@ -17,9 +17,9 @@ export function withRouter(Component: any) {
         return <Component {...props} params={params} />;
     };
 }
-export class UpdateEvent extends React.Component<UpdateEventProps, UpdateEventState>{
-    constructor(props: UpdateEventProps){
-    
+export class UpdateEvent extends React.Component<UpdateEventProps, UpdateEventState> {
+    constructor(props: UpdateEventProps) {
+
         super(props);
         this.state = initUpdateEventState;
     }
@@ -53,67 +53,67 @@ export class UpdateEvent extends React.Component<UpdateEventProps, UpdateEventSt
             }
         }
     }
-    render(){
-    return (
-        <div>
-            <h2>Update Event</h2>
-            <form onSubmit={this.handleUpdateEvent}>
-                Title:
-                <input
-                    type="text"
-                    value={this.state.title}
-                    onChange={(e) => this.setState(this.state.updateField("title", e.target.value))}
-                    required />
-                <br />
-                Description:
-                <textarea
-                    placeholder="Description"
-                    value={this.state.description}
-                    onChange={(e) => this.setState(this.state.updateField("description", e.target.value))}
-                />
-                <br />
-                Location:
-                <input
-                    type="text"
-                    value={this.state.location}
-                    onChange={(e) => this.setState(this.state.updateField("location", e.target.value))}
-                    required />
-                <br />
-                Date:
-                <input
-                    type="date"
-                    value={this.state.date}
-                    onChange={(e) => this.setState(this.state.updateField("date", e.target.value))}
-                    required />
-                <br />
-                Start Time:
-                <input
-                    type="time"
-                    value={this.state.startTime}
-                    onChange={(e) => this.setState(this.state.updateField("startTime", e.target.value))}
-                    required />
-                <br />
-                End Time:
-                <input
-                    type="time"
-                    value={this.state.endTime}
-                    onChange={(e) => this.setState(this.state.updateField("endTime", e.target.value))}
-                    required />
-                <br />
-                <label>
-                    Admin Approval:
+    render() {
+        return (
+            <div>
+                <h2>Update Event</h2>
+                <form onSubmit={this.handleUpdateEvent}>
+                    Title:
                     <input
-                        type="checkbox"
-                        checked={this.state.adminApproval}
-                        onChange={(e) => this.setState(this.state.updateField("adminApproval", e.target.checked))} />
-                </label>
-                <br />
-                <button type="submit">Update Event</button>
-            </form>
-        </div>
-    );
-}
+                        type="text"
+                        value={this.state.title}
+                        onChange={(e) => this.setState(this.state.updateField("title", e.target.value))}
+                        required />
+                    <br />
+                    Description:
+                    <textarea
+                        placeholder="Description"
+                        value={this.state.description}
+                        onChange={(e) => this.setState(this.state.updateField("description", e.target.value))}
+                    />
+                    <br />
+                    Location:
+                    <input
+                        type="text"
+                        value={this.state.location}
+                        onChange={(e) => this.setState(this.state.updateField("location", e.target.value))}
+                        required />
+                    <br />
+                    Date:
+                    <input
+                        type="date"
+                        value={this.state.date}
+                        onChange={(e) => this.setState(this.state.updateField("date", e.target.value))}
+                        required />
+                    <br />
+                    Start Time:
+                    <input
+                        type="time"
+                        value={this.state.startTime}
+                        onChange={(e) => this.setState(this.state.updateField("startTime", e.target.value))}
+                        required />
+                    <br />
+                    End Time:
+                    <input
+                        type="time"
+                        value={this.state.endTime}
+                        onChange={(e) => this.setState(this.state.updateField("endTime", e.target.value))}
+                        required />
+                    <br />
+                    <label>
+                        Admin Approval:
+                        <input
+                            type="checkbox"
+                            checked={this.state.adminApproval}
+                            onChange={(e) => this.setState(this.state.updateField("adminApproval", e.target.checked))} />
+                    </label>
+                    <br />
+                    <button type="submit">Update Event</button>
+                </form>
+            </div>
+        );
+    }
 }
 
 export default withRouter(UpdateEvent);
-export {};
+export { };

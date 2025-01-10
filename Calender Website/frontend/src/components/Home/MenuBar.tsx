@@ -10,7 +10,7 @@ interface MenuBarProps {
 
 export class MenuBar extends React.Component<MenuBarProps, {}> {
   handleLogout = async (event: React.FormEvent) => {
-    
+
     event.preventDefault();
     await apiClient.post(
       'http://localhost:3000/Calender-Website/logout',
@@ -48,7 +48,7 @@ export class MenuBar extends React.Component<MenuBarProps, {}> {
               <Link to="/attend">Attend Office</Link>
             </li>
           )}
-           {this.props.isLoggedIn && (
+          {this.props.isLoggedIn && (
             <li>
               <Link to="/attending-dates">Attendances Office</Link>
             </li>

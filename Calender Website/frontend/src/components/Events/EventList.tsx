@@ -19,7 +19,7 @@ export class EventList extends React.Component<EventListProps, EventListState> {
         this.state = initEventListState;
     }
 
-    handleChangeAverageRating = async (eventId : string, averageRating : number) => {
+    handleChangeAverageRating = async (eventId: string, averageRating: number) => {
         this.setState(this.state.updateAverageRatings(eventId, averageRating))
     }
 
@@ -99,23 +99,23 @@ export class EventList extends React.Component<EventListProps, EventListState> {
                     return { eventId: event.id, rating: ratingResponse.data };
                 })
             );
-    
+
             // Update state with the ratings
             ratings.forEach(({ eventId, rating }) => {
                 this.setState(this.state.updateAverageRatings(eventId, rating));
             });
-        } catch (error ) {
+        } catch (error) {
             if (axios.isAxiosError(error) && error.response) {
                 toast.error(error.response.data);
-            } 
+            }
             else {
                 toast.error('An error occurred. Please try again.');
             }
         }
     };
 
- // Empty dependency array to run once when the component mounts
- fetchFriendsAttending = async (eventId: string) => {
+    // Empty dependency array to run once when the component mounts
+    fetchFriendsAttending = async (eventId: string) => {
         try {
             const response = await axios.get(
                 `http://localhost:3000/Calender-Website/event-friends?eventId=${eventId}`,
@@ -136,35 +136,34 @@ export class EventList extends React.Component<EventListProps, EventListState> {
         this.setState(this.state.updateField("isModalOpen", false)); // Close the modal
     };
 
-    render(){
-    return (
-        <div>
-            {this.state.events.length <= 0 ? (
-                <p>No events found.</p>) : 
-                (this.state.events.map((event) => (
-                    <div key={event.id}>
-                        <Link to={`/show-event/${event.id}`}><h3>{event.title}</h3></Link>
-                        <p>Rating: {this.state.averageRatings.get(event.id)}</p>
-                        <br />
-                        {this.props.isLoggedIn && (
+    render() {
+        return (
+            <div>
+                {this.state.events.length <= 0 ? (
+                    <p>No events found.</p>) :
+                    (this.state.events.map((event) => (
+                        <div key={event.id}>
+                            <Link to={`/show-event/${event.id}`}><h3>{event.title}</h3></Link>
+                            <p><strong>Rating: </strong>{this.state.averageRatings.get(event.id)}</p>
+                            {this.props.isLoggedIn && (
                                 <button onClick={() => this.fetchFriendsAttending(event.id)}>
                                     See Friends Attending
                                 </button>
                             )}
                             <br />
-                    </div>
-                ))
-            )}
-            {/* Render the Modal with the list of friends attending */}
+                        </div>
+                    ))
+                    )}
+                {/* Render the Modal with the list of friends attending */}
                 <Modal
                     isOpen={this.state.isModalOpen}
                     onClose={this.closeModal}
                     friends={this.state.friendsAttending}
                 />
-        </div>
-    );
+            </div>
+        );
 
-}
+    }
 }
 
 function withNavigation(Component: typeof EventList) {

@@ -9,5 +9,16 @@
     "Location": "Convention Center, City",
     "AdminApproval": false,
     "DateTimeEvent": "2024-12-25T09:00:00"
+  },
+  {
+    "Id": "009027d9-b054-4495-a476-685344b66d94",
+    "Title": "Hoi",
+    "Description": "test",
+    "Date": "2025-01-25",
+    "StartTime": "20:00",
+    "EndTime": "21:00",
+    "Location": "testStad",
+    "AdminApproval": true,
+    "DateTimeEvent": "2025-01-10T20:00:00"
   }
 ]

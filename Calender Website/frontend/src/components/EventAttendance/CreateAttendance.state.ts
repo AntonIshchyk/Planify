@@ -1,10 +1,10 @@
-import {StateUpdater, createStateUpdater} from '../Updater/Updater';
+import { StateUpdater, createStateUpdater } from '../Updater/Updater';
 
 export type CreateAttendanceState = {
-    dateTime : string;
+    dateTime: string;
     updateField: StateUpdater<CreateAttendanceState>;
 }
 export const initCreateAttendanceState = {
-    dateTime : '',
+    dateTime: '',
     updateField: createStateUpdater<CreateAttendanceState>()
 }

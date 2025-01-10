@@ -1,1 +1,16 @@
-[]
+[
+  {
+    "Id": "c8fd17b0-077c-43a3-8c87-360e4ae64e6f",
+    "UserId": "ddd4ea4c-20ea-4ad7-bca5-581527c84d8c",
+    "EventId": "009027d9-b054-4495-a476-685344b66d94",
+    "Rating": 0.0,
+    "Feedback": "None"
+  },
+  {
+    "Id": "5c058ee1-a355-45ce-a422-84da03a3825a",
+    "UserId": "0be5ec7d-2de0-4259-a149-0b254907086d",
+    "EventId": "009027d9-b054-4495-a476-685344b66d94",
+    "Rating": 0.0,
+    "Feedback": "None"
+  }
+]

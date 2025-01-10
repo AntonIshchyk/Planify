@@ -117,24 +117,24 @@ export class App extends Component<{}, AppState> {
     return (
       <BrowserRouter>
         <div className="App">
-        <ToastContainer
+          <ToastContainer
             position="top-right"
             autoClose={5000}
             hideProgressBar={false}
             newestOnTop
             closeOnClick
             rtl={false}
-            pauseOnFocusLoss  
+            pauseOnFocusLoss
             draggable
             pauseOnHover
             theme="light"
           />
           <MenuBar
-          
+
             isAdmin={this.state.isAdmin}
             isLoggedIn={this.state.loggedIn}
           />
-          
+
           <Routes>
             <Route
               path="/"
@@ -149,23 +149,23 @@ export class App extends Component<{}, AppState> {
                   {!this.state.isAdmin && this.state.loggedIn && <UserScreen />}
                   {this.state.showRegister && <Register onBacktoMenuClick={this.handleBacktoMenuClick} />}
                 </>
-              }/>
+              } />
             <Route path="/create-event" element={<CreateEvent />} />
             <Route path="/get-all-events" element={<EventList
               onBacktoMenuClick={this.handleBacktoMenuClick}
               isAdminLogin={this.state.isAdmin}
               isLoggedIn={this.state.loggedIn} />} />
-            <Route path="/update-event/:Id" element={<UpdateEvent/>} />
+            <Route path="/update-event/:Id" element={<UpdateEvent />} />
             <Route path="/get-all-events" element={<EventList onBacktoMenuClick={function (): void {
               throw new Error('Function not implemented.');
-            } } isAdminLogin={this.state.isAdmin} isLoggedIn={this.state.loggedIn} />} />
-            <Route path="/attend" element={<CreateAttendance/>}/>
+            }} isAdminLogin={this.state.isAdmin} isLoggedIn={this.state.loggedIn} />} />
+            <Route path="/attend" element={<CreateAttendance />} />
             <Route path="/attending-events" element={<EventAttendanceesList />} />
-            <Route path="/show-attendances/:eventId/:title" element={<ViewAttendancees/>} />
-            <Route path="/add-admin" element={<AddAdminAccount/>} />
+            <Route path="/show-attendances/:eventId/:title" element={<ViewAttendancees />} />
+            <Route path="/add-admin" element={<AddAdminAccount />} />
             <Route path="/friends" element={<Friends />} />
             <Route path="/attending-dates" element={<ViewOffice />} />
-            <Route path="/show-event/:eventId" element={<EventDetails onBacktoMenuClick={this.handleBacktoMenuClick} isAdminLogin={this.state.isAdmin} isLoggedIn={this.state.loggedIn}/>} />
+            <Route path="/show-event/:eventId" element={<EventDetails onBacktoMenuClick={this.handleBacktoMenuClick} isAdminLogin={this.state.isAdmin} isLoggedIn={this.state.loggedIn} />} />
           </Routes>
         </div>
       </BrowserRouter>

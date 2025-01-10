@@ -1,5 +1,5 @@
-import {StateUpdater, createStateUpdater} from '../Updater/Updater';
-import {User} from '../Friends/Friends.state'
+import { StateUpdater, createStateUpdater } from '../Updater/Updater';
+import { User } from '../Friends/Friends.state'
 
 interface Event {
     id: string;
@@ -22,19 +22,19 @@ export type EventListState = {
     endTime: string
     location: string
     adminApproval: boolean
-    events : Event[],
-    updateEvents : (events : Event[]) => (state : EventListState) => EventListState,
-    attending : string[],
+    events: Event[],
+    updateEvents: (events: Event[]) => (state: EventListState) => EventListState,
+    attending: string[],
     feedback: Map<string, string>,
-    rating : Map<string, number>,
-    updateFeedback : (eventId : string, feedback : string) => (state : EventListState) => EventListState,
-    averageRatings : Map<string, number>,
-    updateAverageRatings : (eventId : string, rating : number) => (state : EventListState) => EventListState
+    rating: Map<string, number>,
+    updateFeedback: (eventId: string, feedback: string) => (state: EventListState) => EventListState,
+    averageRatings: Map<string, number>,
+    updateAverageRatings: (eventId: string, rating: number) => (state: EventListState) => EventListState
     updateField: StateUpdater<EventListState>;
-    }
+}
 
 export const initEventListState = {
-    updateEvents : (events : Event[]) => (state:EventListState) => ({...state, events : events}),
+    updateEvents: (events: Event[]) => (state: EventListState) => ({ ...state, events: events }),
     title: "",
     description: "",
     date: "",
@@ -42,19 +42,20 @@ export const initEventListState = {
     endTime: "",
     location: "",
     adminApproval: false,
-    feedback : new Map<string, string>(),
-    events : [],
-    attending : [],
+    feedback: new Map<string, string>(),
+    events: [],
+    attending: [],
     friendsAttending: [],
-    isModalOpen : false,
+    isModalOpen: false,
     updateFeedback: (eventId: string, feedback: string) => (state: EventListState) => ({
         ...state,
         feedback: new Map<string, string>(state.feedback).set(eventId, feedback),
     }),
     rating: new Map<string, number>(),
-    averageRatings : new Map<string, number>(),
-    updateAverageRatings : (eventId : string, rating : number) => (state:EventListState) => ({...state, averageRatings : new Map<string, number>(state.averageRatings).set
-        (eventId, rating)
+    averageRatings: new Map<string, number>(),
+    updateAverageRatings: (eventId: string, rating: number) => (state: EventListState) => ({
+        ...state, averageRatings: new Map<string, number>(state.averageRatings).set
+            (eventId, rating)
     }),
     updateField: createStateUpdater<EventListState>()
 }

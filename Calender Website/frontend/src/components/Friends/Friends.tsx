@@ -4,12 +4,10 @@ import { toast } from 'react-toastify';
 import axios from 'axios';
 import './Friends.css';
 
-export class Friends extends React.Component<{}, FriendsState>
-{
-    constructor(props : {})
-    {
+export class Friends extends React.Component<{}, FriendsState> {
+    constructor(props: {}) {
         super(props);
-        this.state = initFriendsState;   
+        this.state = initFriendsState;
     }
 
     // Fetch data on component mount
@@ -35,11 +33,10 @@ export class Friends extends React.Component<{}, FriendsState>
             }
         }
     };
-    
+
 
     fetchFriends = async () => {
-        try 
-        {
+        try {
             const response = await axios.get(
                 'http://localhost:3000/Calender-Website/friends',
                 { withCredentials: true }
@@ -51,31 +48,27 @@ export class Friends extends React.Component<{}, FriendsState>
                 this.setState(this.state.updateField("friends", []));
                 return;
             }
-            
+
             // Fetch details for each friend
             const friendsResponse = await axios.get(
-                `http://localhost:3000/Calender-Website/get-many-users-by-id?${friendIds.map(id =>`Ids=${id}`).join('&')}`,
+                `http://localhost:3000/Calender-Website/get-many-users-by-id?${friendIds.map(id => `Ids=${id}`).join('&')}`,
                 { withCredentials: true }
             );
 
             this.setState(this.state.updateField("friends", friendsResponse.data));
-        } 
-        catch (error) 
-        {
-            if (axios.isAxiosError(error) && error.response) 
-            {
+        }
+        catch (error) {
+            if (axios.isAxiosError(error) && error.response) {
                 toast.error(error.response.data);
-            } 
-            else 
-            {
+            }
+            else {
                 toast.error('An error occurred. Please try again.');
             }
         }
     };
 
     fetchFriendsRequests = async () => {
-        try 
-        {
+        try {
             const response = await axios.get(
                 'http://localhost:3000/Calender-Website/friend-requests',
                 { withCredentials: true }
@@ -90,20 +83,17 @@ export class Friends extends React.Component<{}, FriendsState>
 
             // Fetch details for each friend
             const RequestsResponse = await axios.get(
-                `http://localhost:3000/Calender-Website/get-many-users-by-id?${RequestSourceIds.map(id =>`Ids=${id}`).join('&')}`,
+                `http://localhost:3000/Calender-Website/get-many-users-by-id?${RequestSourceIds.map(id => `Ids=${id}`).join('&')}`,
                 { withCredentials: true }
             );
 
             this.setState(this.state.updateField("requests", RequestsResponse.data));
-        } 
-        catch (error) 
-        {
-            if (axios.isAxiosError(error) && error.response) 
-            {
+        }
+        catch (error) {
+            if (axios.isAxiosError(error) && error.response) {
                 toast.error(error.response.data);
-            } 
-            else 
-            {
+            }
+            else {
                 toast.error('An error occurred. Please try again.');
             }
         }
@@ -133,29 +123,25 @@ export class Friends extends React.Component<{}, FriendsState>
         }
     };
 
-    fetchFindPeople = async (str:string) => {
-        try 
-        {
+    fetchFindPeople = async (str: string) => {
+        try {
             const response = await axios.get(
                 `http://localhost:3000/Calender-Website/find-people?str=${str}`,
                 { withCredentials: true }
             );
             this.setState(this.state.updateField("foundPeople", response.data));
-        } 
-        catch (error) 
-        {
-            if (axios.isAxiosError(error) && error.response) 
-            {
+        }
+        catch (error) {
+            if (axios.isAxiosError(error) && error.response) {
                 toast.error(error.response.data);
-            } 
-            else 
-            {
+            }
+            else {
                 toast.error('An error occurred. Please try again.');
             }
         }
     };
 
-    handleSearchChange = (e:React.ChangeEvent<HTMLInputElement>) => {
+    handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const searchStr = e.target.value;
         this.setState(this.state.updateField("searchStr", searchStr));
         if (searchStr.length > 0) {
@@ -167,24 +153,20 @@ export class Friends extends React.Component<{}, FriendsState>
         }
     };
 
-    sendFriendRequest = async (personId:string) => {
-        try 
-        {
+    sendFriendRequest = async (personId: string) => {
+        try {
             await axios.post(
                 `http://localhost:3000/Calender-Website/send-friend-request?toId=${personId}`,
                 {},
                 { withCredentials: true }
             );
             toast.success("Friend request sent successfully!");
-        } 
-        catch (error) 
-        {
-            if (axios.isAxiosError(error) && error.response) 
-            {
+        }
+        catch (error) {
+            if (axios.isAxiosError(error) && error.response) {
                 toast.error(error.response.data);
-            } 
-            else 
-            {
+            }
+            else {
                 toast.error('An error occurred. Please try again.');
             }
         }
@@ -197,7 +179,7 @@ export class Friends extends React.Component<{}, FriendsState>
                 {},
                 { withCredentials: true }
             );
-    
+
             // Update the requests and friends state based on the action
             if (approve) {
                 // If approved, move the friend from requests to friends
@@ -216,7 +198,7 @@ export class Friends extends React.Component<{}, FriendsState>
                 });
                 toast.success('Friend request denied successfully!');
             }
-        } 
+        }
         catch (error) {
             if (axios.isAxiosError(error) && error.response) {
                 toast.error(error.response.data);
@@ -225,81 +207,80 @@ export class Friends extends React.Component<{}, FriendsState>
             }
         }
     };
-    
-    render() 
-    {
+
+    render() {
         return (
             <div className="container">
                 <div className="find-people">
                     <h1>Find People</h1>
                     <input
-                    type="text"
-                    placeholder="Search for people..."
-                    value={this.state.searchStr}
-                    onChange={this.handleSearchChange}
+                        type="text"
+                        placeholder="Search for people..."
+                        value={this.state.searchStr}
+                        onChange={this.handleSearchChange}
                     />
 
                     {this.state.foundPeople.length === 0 ? (
-                    <p></p>
+                        <p></p>
                     ) : (
-                    this.state.foundPeople.map(person => {
-                        const isFriend = this.state.friends.some(friend => friend.id === person.id);
+                        this.state.foundPeople.map(person => {
+                            const isFriend = this.state.friends.some(friend => friend.id === person.id);
 
-                        return (
-                        <div key={person.id}>
-                            <p>Name: {person.firstName} {person.lastName}</p>
-                            <p>Email: {person.email}</p>
-                            {isFriend ? (
-                            <p>Status: Already Friends</p>
-                            ) : person.id === this.state.sessionId ? <p></p> : (
-                            <button onClick={() => this.sendFriendRequest(person.id)}>
-                                Send Friend Request
-                            </button>
-                            )}
-                        </div>
-                        );
-                    })
+                            return (
+                                <div key={person.id}>
+                                    <p>Name: {person.firstName} {person.lastName}</p>
+                                    <p>Email: {person.email}</p>
+                                    {isFriend ? (
+                                        <p>Status: Already Friends</p>
+                                    ) : person.id === this.state.sessionId ? <p></p> : (
+                                        <button onClick={() => this.sendFriendRequest(person.id)}>
+                                            Send Friend Request
+                                        </button>
+                                    )}
+                                </div>
+                            );
+                        })
                     )}
                 </div>
 
                 <div className="friends-requests-container">
                     <div className="friends">
-                    <h1>Your Friends</h1>
-                    {this.state.friends.length <= 0 ? (
-                        <p>No Friends found</p>
-                    ) : (
-                        this.state.friends.map(friend => (
-                        <div key={friend.id}>
-                            <p>Name: {friend.firstName} {friend.lastName}</p>
-                            <p>Email: {friend.email}</p>
-                            <button onClick={() => this.deleteFriend(friend.id)}>
-                                Delete friend
-                            </button>
-                            <br />
-                        </div>
-                        ))
-                    )}
+                        <h1>Your Friends</h1>
+                        {this.state.friends.length <= 0 ? (
+                            <p>No Friends found</p>
+                        ) : (
+                            this.state.friends.map(friend => (
+                                <div key={friend.id}>
+                                    <p>Name: {friend.firstName} {friend.lastName}</p>
+                                    <p>Email: {friend.email}</p>
+                                    <button onClick={() => this.deleteFriend(friend.id)}>
+                                        Delete friend
+                                    </button>
+                                    <br />
+                                </div>
+                            ))
+                        )}
                     </div>
 
                     <div className="friend-requests">
-                    <h1>Your Friend Requests</h1>
-                    {this.state.requests.length <= 0 ? (
-                        <p>No Requests found</p>
-                    ) : (
-                        this.state.requests.map(friend => (
-                        <div key={friend.id}>
-                            <p>Name: {friend.firstName} {friend.lastName}</p>
-                            <p>Email: {friend.email}</p>
-                            <button onClick={() => this.manageFriendRequest(friend.id, true)}>
-                                Approve
-                            </button>
-                            <button className="deny"onClick={() => this.manageFriendRequest(friend.id, false)}>
-                                Deny
-                            </button>
-                            <br />
-                        </div>
-                        ))
-                    )}
+                        <h1>Your Friend Requests</h1>
+                        {this.state.requests.length <= 0 ? (
+                            <p>No Requests found</p>
+                        ) : (
+                            this.state.requests.map(friend => (
+                                <div key={friend.id}>
+                                    <p>Name: {friend.firstName} {friend.lastName}</p>
+                                    <p>Email: {friend.email}</p>
+                                    <button onClick={() => this.manageFriendRequest(friend.id, true)}>
+                                        Approve
+                                    </button>
+                                    <button className="deny" onClick={() => this.manageFriendRequest(friend.id, false)}>
+                                        Deny
+                                    </button>
+                                    <br />
+                                </div>
+                            ))
+                        )}
                     </div>
                 </div>
             </div>

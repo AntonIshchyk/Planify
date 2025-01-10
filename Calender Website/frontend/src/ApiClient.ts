@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
 
 const apiClient = axios.create({
   baseURL: 'http://localhost:3000/Calender-Website', // Replace with your API's base URL
