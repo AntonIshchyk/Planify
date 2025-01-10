@@ -52,7 +52,7 @@ public class UserController : Controller
     }
 
     [HttpDelete("delete-user")]
-    [LoggedInFilter]
+    [AdminFilter]
     public async Task<IActionResult> DeleteUser(User user)
     {
         bool userIsDeleted = await US.DeleteUserWithUser(user);
@@ -171,7 +171,6 @@ public class UserController : Controller
     public async Task<IActionResult> FindPeople([FromQuery] string str)
     {
         List<User> allUsers = await UserAccess.LoadAll();
-
         str = str.ToLower();
         List<User> foundUsers = allUsers
         .Where(u => u.FirstName.ToLower().Contains(str) ||

@@ -65,7 +65,7 @@ export class ViewOffice extends React.Component<ViewOfficeProps, ViewOfficeState
                     <p>No attendances found.</p>) :
                     (this.state.attendances.map((attendance) => (
                         <div key={attendance.id}>
-                            {attendance.date.slice(0, -6).replace("T", " ")}
+                            {attendance.dateTimeAttendance.slice(0, -6).replace("T", " ")}
                             <br />
                             <button type="button" onClick={() => this.handleDelete(attendance.id)}>
                                 Remove Attendancee

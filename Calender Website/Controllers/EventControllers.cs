@@ -12,11 +12,13 @@ public class EventController : Controller
         eventService = eventservice;
         eventAttendanceService = eAS;
     }
+
     [HttpGet("average-rating")]
     [LoggedInFilter]
     public async Task<IActionResult> GetAverageRating([FromQuery] Guid eventId) => Ok(await eventService.GetAverageRating(eventId));
 
     [HttpGet("event")]
+    [LoggedInFilter]
     public async Task<IActionResult> GetEvent([FromQuery] Guid id)
     {
         Console.WriteLine(id);
@@ -26,6 +28,7 @@ public class EventController : Controller
     }
 
     [HttpGet("get-event")]
+    [LoggedInFilter]
     public async Task<IActionResult> GetEventOnly([FromQuery] Guid id) => Ok(await eventService.GetEvent(id));
 
     [HttpPut("approve-event")]
@@ -65,8 +68,11 @@ public class EventController : Controller
     }
 
     [HttpGet("review")]
+    [LoggedInFilter]
     public async Task<IActionResult> GetReviewsOfEvent([FromQuery] Guid id) => Ok(await eventService.GetReviewsFromEventId(id));
 
+    [HttpGet("reviews")]
+    [LoggedInFilter]
     public async Task<IActionResult> GetAllReviews() => Ok(await eventService.GetAllReviews());
 
     [HttpPost("create-event")]
@@ -102,7 +108,6 @@ public class EventController : Controller
     public async Task<IActionResult> FindEvents([FromQuery] string str)
     {
         List<Event> allEvents = await EventAccess.LoadAll();
-
         str = str.ToLower();
         List<Event> foundEvents = allEvents
         .Where(e => e.Title.ToLower().Contains(str))

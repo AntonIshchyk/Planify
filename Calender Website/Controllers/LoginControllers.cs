@@ -11,6 +11,7 @@ public class LoginControllers : Controller
         AS = adminService;
         US = userService;
     }
+
     [HttpPost("login-admin")]
     public async Task<IActionResult> LoginAdmin([FromBody] Admin admin)
     {
@@ -95,6 +96,7 @@ public class LoginControllers : Controller
         }
         return BadRequest("No data found");
     }
+
     [HttpGet("check-admin")]
     public IActionResult CheckAdmin()
     {
@@ -102,6 +104,7 @@ public class LoginControllers : Controller
         if (isAdmin == 1) return Ok(true);
         return Ok(false);
     }
+
     [HttpGet("check-logged-in")]
     public IActionResult CheckLoggedIn()
     {
