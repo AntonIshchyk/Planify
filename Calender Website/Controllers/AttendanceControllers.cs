@@ -43,7 +43,7 @@ public class AttendanceControllers : Controller
     }
 
     [HttpPut("update-attendance")]
-    [LoggedInFilter]
+    [AdminFilter]
     public async Task<IActionResult> UpdateAttendance([FromBody] Attendance attendance, [FromQuery] Guid attendanceId)
     {
         DateTime date;
@@ -58,7 +58,7 @@ public class AttendanceControllers : Controller
     }
 
     [HttpDelete("delete-attendance")]
-    [LoggedInFilter]
+    [AdminFilter]
     public async Task<IActionResult> DeleteAttendance([FromQuery] Guid id)
     {
         if (id == Guid.Empty) return BadRequest("Data not complete.");

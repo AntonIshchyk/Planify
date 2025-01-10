@@ -11,7 +11,7 @@ public class AdminControllers : Controller
     }
 
     [HttpDelete("delete-admin")]
-    [LoggedInFilter]
+    [AdminFilter]
     public async Task<IActionResult> DeleteAdmin([FromQuery] Guid Id)
     {
         bool doesExist = await AS.DoesAdminExist(Id);
@@ -20,7 +20,7 @@ public class AdminControllers : Controller
     }
 
     [HttpGet("get-admin")]
-    [LoggedInFilter]
+    [AdminFilter]
     public async Task<IActionResult> GetAdmin([FromQuery] Guid Id)
     {
         Admin admin = await AS.GetAdmin(Id);
@@ -29,7 +29,7 @@ public class AdminControllers : Controller
     }
 
     [HttpGet("get-many-admins")]
-    [LoggedInFilter]
+    [AdminFilter]
     public async Task<IActionResult> GetManyAdmins([FromQuery] Guid[] ids)
     {
         Admin[] admins = await AS.GetManyAdmins(ids);
@@ -38,11 +38,11 @@ public class AdminControllers : Controller
     }
 
     [HttpGet("get-all-admins")]
-    [LoggedInFilter]
+    [AdminFilter]
     public async Task<IActionResult> GetAllAdmins() => Ok(await AS.GetAllAdmin());
 
     [HttpPut("update-admin")]
-    [LoggedInFilter]
+    [AdminFilter]
     public async Task<IActionResult> UpdateAdmin([FromBody] Admin admin)
     {
         bool updatedAdmin = await AS.UpdateAdmin(admin);

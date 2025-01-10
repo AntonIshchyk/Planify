@@ -52,7 +52,7 @@ public class UserController : Controller
     }
 
     [HttpDelete("delete-user")]
-    [LoggedInFilter]
+    [AdminFilter]
     public async Task<IActionResult> DeleteUser(User user)
     {
         bool userIsDeleted = await US.DeleteUserWithUser(user);

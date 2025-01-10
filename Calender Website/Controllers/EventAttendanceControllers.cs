@@ -30,6 +30,7 @@ public class EventAttendanceControllers : Controller
         }
         return BadRequest("Something went wrong.");
     }
+
     [HttpGet("IsAttending")]
     [LoggedInFilter]
     public async Task<IActionResult> GetAttending()
@@ -71,7 +72,7 @@ public class EventAttendanceControllers : Controller
     }
 
     [HttpGet("list-of-attendees")]
-    [LoggedInFilter]
+    [AdminFilter]
     public async Task<IActionResult> GetListOfAttendeesOnEvent([FromQuery] Guid eventId)
     {
         if (eventId == Guid.Empty) return BadRequest("This id is not reliable.");
