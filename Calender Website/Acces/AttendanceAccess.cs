@@ -1,4 +1,1 @@
-public class AttendanceAccess : BaseAccess<Attendance>
-{
-
-}
+public class AttendanceAccess : BaseAccess<Attendance> { }

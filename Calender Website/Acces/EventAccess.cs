@@ -1,4 +1,1 @@
-public class EventAccess : BaseAccess<Event>
-{
-
-}
+public class EventAccess : BaseAccess<Event> { }

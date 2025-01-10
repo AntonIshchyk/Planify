@@ -14,11 +14,8 @@ public class EventController : Controller
     }
     [HttpGet("average-rating")]
     [LoggedInFilter]
-    public async Task<IActionResult> GetAverageRating([FromQuery] Guid eventId)
-    {
-        double average = await eventService.GetAverageRating(eventId);
-        return Ok(average);
-    }
+    public async Task<IActionResult> GetAverageRating([FromQuery] Guid eventId) => Ok(await eventService.GetAverageRating(eventId));
+
     [HttpGet("event")]
     public async Task<IActionResult> GetEvent([FromQuery] Guid id)
     {
@@ -29,11 +26,8 @@ public class EventController : Controller
     }
 
     [HttpGet("get-event")]
-    public async Task<IActionResult> GetEventOnly([FromQuery] Guid id)
-    {
-        Event e = await eventService.GetEvent(id);
-        return Ok(e);
-    }
+    public async Task<IActionResult> GetEventOnly([FromQuery] Guid id) => Ok(await eventService.GetEvent(id));
+
     [HttpPut("approve-event")]
     [AdminFilter]
     public async Task<IActionResult> ApproveEvent([FromQuery] Guid eventId) => Ok(await eventService.ApproveEvent(eventId));
@@ -43,7 +37,6 @@ public class EventController : Controller
     public async Task<IActionResult> GetFriendsParticipatingEvent([FromQuery] Guid eventId)
     {
         string userIdString = HttpContext.Session.GetString("UserId")!;
-
         if (string.IsNullOrEmpty(userIdString) || !Guid.TryParse(userIdString, out Guid userId)) return BadRequest("User ID is invalid or not available in session.");
 
         List<object> attendees = await eventAttendanceService.GetListOfAttendees(eventId);
@@ -114,7 +107,6 @@ public class EventController : Controller
         List<Event> foundEvents = allEvents
         .Where(e => e.Title.ToLower().Contains(str))
         .ToList();
-
         return Ok(foundEvents);
     }
 }

@@ -8,13 +8,7 @@ public class Event : IHasId
     public string EndTime { get; set; } = TimeOnly.FromDateTime(DateTime.MinValue).ToString();
     public string Location { get; set; } = "None";
     public bool AdminApproval { get; set; } = false;
-    public DateTime DateTimeEvent
-    {
-        get
-        {
-            return DateTime.Parse(StartTime);
-        }
-    }
+    public DateTime DateTimeEvent { get => DateTime.Parse(StartTime); }
 
     public Event() { }
 

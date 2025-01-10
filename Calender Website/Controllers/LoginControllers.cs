@@ -99,20 +99,14 @@ public class LoginControllers : Controller
     public IActionResult CheckAdmin()
     {
         var isAdmin = HttpContext.Session.GetInt32("IsAdmin");
-        if (isAdmin == 1)
-        {
-            return Ok(true);
-        }
+        if (isAdmin == 1) return Ok(true);
         return Ok(false);
     }
     [HttpGet("check-logged-in")]
     public IActionResult CheckLoggedIn()
     {
         var UserId = HttpContext.Session.GetString("UserId");
-        if (UserId != null)
-        {
-            return Ok(true);
-        }
+        if (UserId != null) return Ok(true);
         return Ok(false);
     }
 

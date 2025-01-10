@@ -69,7 +69,6 @@ public class UserController : Controller
 
         User user = await UserAccess.Get(sessionId);
         if (user is null) return BadRequest("User not found");
-
         if (!user.Friends.Contains(id)) return BadRequest("Friend not found");
 
         User friend = await UserAccess.Get(id);
@@ -91,7 +90,6 @@ public class UserController : Controller
 
         User user = await UserAccess.Get(sessionId);
         if (user is null) return BadRequest("User not found");
-
         return Ok(user.Friends);
     }
 
@@ -104,7 +102,6 @@ public class UserController : Controller
 
         User user = await UserAccess.Get(sessionId);
         if (user is null) return BadRequest("User not found");
-
         return Ok(user.FriendRequests);
     }
 
@@ -122,9 +119,7 @@ public class UserController : Controller
 
         User user = await UserAccess.Get(sessionId);
         if (user is null) return BadRequest("User not found");
-
         if (!user.FriendRequests.Contains(id)) return BadRequest("Friend Request not found");
-
         if (user.Friends.Contains(id)) return BadRequest("You are already friends");
 
         if (approve)
@@ -182,7 +177,6 @@ public class UserController : Controller
         .Where(u => u.FirstName.ToLower().Contains(str) ||
                     u.LastName.ToLower().Contains(str))
         .ToList();
-
         return Ok(foundUsers);
     }
 }

@@ -7,6 +7,7 @@ public class EventAttendance : IHasId
     public string Feedback { get; set; } = "None";
 
     public EventAttendance() { }
+
     public EventAttendance(Guid userId, Guid eventId, double rating, string feedback)
     {
         UserId = userId;

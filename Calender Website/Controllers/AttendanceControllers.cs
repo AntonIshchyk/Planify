@@ -38,7 +38,6 @@ public class AttendanceControllers : Controller
         Guid Id;
         bool converted = Guid.TryParse(HttpContext.Session.GetString("UserId"), out Id);
         if (!converted) return BadRequest("Something went wrong. ");
-
         List<Attendance> attendancesOfUser = await AS.GetAttendancesOfUser(Id);
         return Ok(attendancesOfUser);
     }
@@ -63,7 +62,6 @@ public class AttendanceControllers : Controller
     public async Task<IActionResult> DeleteAttendance([FromQuery] Guid id)
     {
         if (id == Guid.Empty) return BadRequest("Data not complete.");
-
         bool removed = await AS.DeleteAttendance(id);
         if (!removed) return BadRequest("Something went wrong.");
         return Ok("Attendance is deleted.");
