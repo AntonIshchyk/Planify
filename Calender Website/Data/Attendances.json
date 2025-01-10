@@ -6,18 +6,6 @@
     "DateTimeAttendance": "2024-10-29T08:00:00"
   },
   {
-    "Id": "3bbbf7b5-35ca-47ec-a901-f6cba028d066",
-    "UserId": "0be5ec7d-2de0-4259-a149-0b254907086d",
-    "Date": "2024-10-29 08:00",
-    "DateTimeAttendance": "2024-10-29T08:00:00"
-  },
-  {
-    "Id": "22dd77e9-c5f2-459d-9a69-122f0d09719f",
-    "UserId": "0be5ec7d-2de0-4259-a149-0b254907086d",
-    "Date": "2024-12-10 10:24",
-    "DateTimeAttendance": "2024-12-10T10:24:00"
-  },
-  {
     "Id": "c0fdb69d-007f-47de-9edf-e69cb6a34125",
     "UserId": "4d1d4aaf-79de-452d-8a60-2c1d3d5966ab",
     "Date": "2024-12-14 12:50",
@@ -34,5 +22,11 @@
     "UserId": "3062f683-a110-4813-8f2e-67116bc87448",
     "Date": "2025-02-08T12:43:00.000Z",
     "DateTimeAttendance": "2025-02-08T13:43:00+01:00"
+  },
+  {
+    "Id": "571a48ac-aecd-4171-aeb6-95598bc85975",
+    "UserId": "0be5ec7d-2de0-4259-a149-0b254907086d",
+    "Date": "2025-01-31T08:00:00.000Z",
+    "DateTimeAttendance": "2025-01-31T09:00:00+01:00"
   }
 ]

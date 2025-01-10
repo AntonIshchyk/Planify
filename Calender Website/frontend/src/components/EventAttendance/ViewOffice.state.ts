@@ -2,6 +2,7 @@ export interface Attendance {
     id: string;
     userId: string;
     date: string;
+    dateTimeAttendance: string;
 }
 
 export type ViewOfficeState = {

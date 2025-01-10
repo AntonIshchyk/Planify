@@ -108,7 +108,6 @@ public class EventController : Controller
     public async Task<IActionResult> FindEvents([FromQuery] string str)
     {
         List<Event> allEvents = await EventAccess.LoadAll();
-
         str = str.ToLower();
         List<Event> foundEvents = allEvents
         .Where(e => e.Title.ToLower().Contains(str))
