@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import apiClient from '../../ApiClient';
 
 interface MenuBarProps {
@@ -11,7 +10,7 @@ interface MenuBarProps {
 
 export class MenuBar extends React.Component<MenuBarProps, {}> {
   handleLogout = async (event: React.FormEvent) => {
-    
+
     event.preventDefault();
     await apiClient.post(
       'http://localhost:3000/Calender-Website/logout',
@@ -20,7 +19,6 @@ export class MenuBar extends React.Component<MenuBarProps, {}> {
     );
 
     // Programmatically navigate to the root path
-    window.location.reload();
     this.props.navigate('');
     window.location.reload();
   };
@@ -52,12 +50,12 @@ export class MenuBar extends React.Component<MenuBarProps, {}> {
           )}
           {this.props.isLoggedIn && (
             <li>
-              <Link to="/attending-events">Attending Events</Link>
+              <Link to="/attending-dates">Attendances Office</Link>
             </li>
           )}
           {this.props.isLoggedIn && (
             <li>
-              <Link to="/attend-event">Attend Event</Link>
+              <Link to="/attending-events">Attending Events</Link>
             </li>
           )}
           {this.props.isLoggedIn && !this.props.isAdmin &&

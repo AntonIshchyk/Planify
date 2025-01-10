@@ -1,6 +1,5 @@
 import React from 'react';
 import axios from 'axios';
-import { EventListState, initEventListState } from './EventList.state';
 import { toast } from 'react-toastify';
 import { Link } from 'react-router-dom';
 import { EventDetailsState, initEventDetailsState } from './EventDetails.state';
@@ -11,7 +10,7 @@ interface EventDetailsProps {
     isAdminLogin: boolean;
     isLoggedIn: boolean;
     params: {
-        eventId : string;
+        eventId: string;
     }
 };
 export function withRouter(Component: any) {
@@ -21,25 +20,25 @@ export function withRouter(Component: any) {
     };
 }
 
-export class EventDetails extends React.Component<EventDetailsProps, EventDetailsState>{
-    constructor(props: EventDetailsProps){
+export class EventDetails extends React.Component<EventDetailsProps, EventDetailsState> {
+    constructor(props: EventDetailsProps) {
         super(props);
         this.state = initEventDetailsState;
-        
+
     }
     handleDeleteEvent = async () => {
 
-        try{
+        try {
             const response = await apiClient.delete(
                 `http://localhost:3000/Calender-Website/delete-event?id=${this.state.event.id}`,
-                { withCredentials: true}
+                { withCredentials: true }
             );
-            
+
             localStorage.setItem('message', response.data);
             window.location.reload();
             window.dispatchEvent(new Event('storageUpdated'));
             window.location.href = '/get-all-events'
-        }catch(error){
+        } catch (error) {
             if (axios.isAxiosError(error) && error.response) {
                 toast.error(error.response.data);
             } else {
@@ -48,21 +47,22 @@ export class EventDetails extends React.Component<EventDetailsProps, EventDetail
         }
     }
     handleFeedbackSent = async () => {
-        try{
+        try {
             const response = await apiClient.post(
                 'http://localhost:3000/Calender-Website/review',
                 {
-                    "EventId" : this.state.event.id,
-                    "Rating" : this.state.rating,
-                    "Feedback" : this.state.feedback
+                    "EventId": this.state.event.id,
+                    "Rating": this.state.rating,
+                    "Feedback": this.state.feedback
                 },
-                { withCredentials: true
+                {
+                    withCredentials: true
                 }
             );
             localStorage.setItem('message', response.data);
             window.location.reload();
             window.dispatchEvent(new Event('storageUpdated'));
-        }catch(error){
+        } catch (error) {
             if (axios.isAxiosError(error) && error.response) {
                 toast.error(error.response.data); // Displays "Event already exists."
             } else {
@@ -72,18 +72,18 @@ export class EventDetails extends React.Component<EventDetailsProps, EventDetail
     }
 
     handleEventAttend = async () => {
-        try{
+        try {
             const response = await apiClient.post(
                 'http://localhost:3000/Calender-Website/EventAttendance',
                 {
-                    "EventId" : this.state.event.id
+                    "EventId": this.state.event.id
                 },
                 { withCredentials: true }
             );
             localStorage.setItem('message', response.data);
             window.location.reload();
             window.dispatchEvent(new Event('storageUpdated'));
-        }catch(error){
+        } catch (error) {
             if (axios.isAxiosError(error) && error.response) {
                 toast.error(error.response.data); // Displays "Event already exists."
             } else {
@@ -92,22 +92,22 @@ export class EventDetails extends React.Component<EventDetailsProps, EventDetail
         }
     }
     approve = async () => {
-        try{
-        const response = await apiClient.put(
-            `http://localhost:3000/Calender-Website/approve-event?eventId=${this.state.event.id}`,
-            {},
-            { withCredentials: true }
-        );
+        try {
+            await apiClient.put(
+                `http://localhost:3000/Calender-Website/approve-event?eventId=${this.state.event.id}`,
+                {},
+                { withCredentials: true }
+            );
             localStorage.setItem('message', "Event Approved");
             window.location.reload();
             window.dispatchEvent(new Event('storageUpdated'));
-    }catch (error) {
-        if (axios.isAxiosError(error) && error.response) {
-            toast.error(error.response.data);
-        } else {
-            toast.error('An error occurred. Please try again.');
+        } catch (error) {
+            if (axios.isAxiosError(error) && error.response) {
+                toast.error(error.response.data);
+            } else {
+                toast.error('An error occurred. Please try again.');
+            }
         }
-    }
     }
     componentDidMount() {
         // Fetch data when the component mounts
@@ -117,10 +117,10 @@ export class EventDetails extends React.Component<EventDetailsProps, EventDetail
         try {
             const responseevent = await apiClient.get(
                 `http://localhost:3000/Calender-Website/get-event?id=${this.props.params.eventId}`,
-                {withCredentials:true}
+                { withCredentials: true }
             )
             this.setState(this.state.updateEvent(responseevent.data))
-            const response = await apiClient.get(
+            await apiClient.get(
                 'http://localhost:3000/Calender-Website/get-all-events',
                 { withCredentials: true }
             );
@@ -129,90 +129,93 @@ export class EventDetails extends React.Component<EventDetailsProps, EventDetail
                 { withCredentials: true }
             );
             this.setState(this.state.updateAttending(attending.data));
-                    const rating = await apiClient.get(
-                        `http://localhost:3000/Calender-Website/average-rating?eventId=${this.props.params.eventId}`,
-                        { withCredentials: true }
-                    );
+            const rating = await apiClient.get(
+                `http://localhost:3000/Calender-Website/average-rating?eventId=${this.props.params.eventId}`,
+                { withCredentials: true }
+            );
             this.setState(this.state.updateAverageRatings(rating.data));
-                }
-         catch (error ) {
+        }
+        catch (error) {
             if (axios.isAxiosError(error) && error.response) {
                 toast.error(error.response.data);
-            } 
+            }
             else {
                 toast.error('An error occurred. Please try again.');
             }
         }
     };
- // Empty dependency array to run once when the component mounts
-    render(){
-    return (
-        <div>
-                        <h3>{this.state.event.title}</h3>
-                        <p><strong>Description: </strong>{this.state.event.description}</p>
-                        <p><strong>Date: </strong>{this.state.event.date}</p>
-                        <p><strong>Start time: </strong>{this.state.event.startTime}</p>
-                        <p><strong>End time: </strong>{this.state.event.endTime}</p>
-                        <p><strong>Location: </strong>{this.state.event.location}</p>
-                        {this.state.averageRatings}
-                        <p><strong>Approval: </strong>{this.state.event.adminApproval ? 'Approved' : 'Pending'}</p>
-                        {this.props.isAdminLogin && !this.state.event.adminApproval && (<form onSubmit={(e) => {
-                            e.preventDefault();
-                            this.approve()
-                        }}>
-                        <button type="submit">Approve</button>
-                        </form>
-                        )}
-                        {this.props.isAdminLogin && (<form onSubmit={(e) => {
-                            e.preventDefault();
-                            this.handleDeleteEvent()
-                        }}>
-                        <button type="submit">Delete</button>
-                        </form>
-                        )}
-                        {this.props.isLoggedIn && this.state.event.adminApproval && !this.state.attending.includes(this.state.event.id)  && (<form onSubmit={(e) => {
-                            e.preventDefault();
-                            this.handleEventAttend()
-                        }}>
-                        <button type="submit">Attend</button>
-                        </form>
-                        )}
-                        {this.props.isAdminLogin && (<li>
-                            <Link to={`/update-event/${this.state.event.id}`}>Update event</Link> <br />
-                            <Link to={`/show-attendances/${this.state.event.id}/${this.state.event.title}`}>See Attendancees</Link>
-
-                        </li>
-                        )}
-                {this.state.attending.includes(this.state.event.id) &&
-                <form onSubmit={(e) => {
+    // Empty dependency array to run once when the component mounts
+    render() {
+        return (
+            <div>
+                <h3>{this.state.event.title}</h3>
+                <p><strong>Description: </strong>{this.state.event.description}</p>
+                <p><strong>Date: </strong>{this.state.event.date}</p>
+                <p><strong>Start time: </strong>{this.state.event.startTime}</p>
+                <p><strong>End time: </strong>{this.state.event.endTime}</p>
+                <p><strong>Location: </strong>{this.state.event.location}</p>
+                <p><strong>Rating: {this.state.averageRatings}</strong></p>
+                <p><strong>Approval: </strong>{this.state.event.adminApproval ? 'Approved' : 'Pending'}</p>
+                {this.props.isAdminLogin && !this.state.event.adminApproval && (<form onSubmit={(e) => {
                     e.preventDefault();
-                    this.handleFeedbackSent()
+                    this.approve()
                 }}>
-                Rating: 
-                <input
-                    type="number"
-                    step="0.5"
-                    value={this.state.rating}
-                    onChange={(e) => 
-                        this.setState(this.state.updateRating(Number(e.target.value)))
-                    }
-                    required />
+                    <button type="submit">Approve</button>
+                </form>
+                )}
+                {this.props.isAdminLogin && (<form onSubmit={(e) => {
+                    e.preventDefault();
+                    this.handleDeleteEvent()
+                }}>
+                    <button type="submit">Delete</button>
+                </form>
+                )}
+                {this.props.isLoggedIn && this.state.event.adminApproval && !this.state.attending.includes(this.state.event.id) && (<form onSubmit={(e) => {
+                    e.preventDefault();
+                    this.handleEventAttend()
+                }}>
+                    <button type="submit">Attend</button>
+                </form>
+                )}
+                {this.props.isAdminLogin && (<div>
+                    <Link to={`/update-event/${this.state.event.id}`}>Update event</Link> <br />
+                </div>
+                )}
+                {this.props.isAdminLogin && (<div>
+                    <Link to={`/show-attendances/${this.state.event.id}/${this.state.event.title}`}>See Attendancees</Link>
+                </div>
+                )}
+                {this.state.attending.includes(this.state.event.id) &&
+                    <form onSubmit={(e) => {
+                        e.preventDefault();
+                        this.handleFeedbackSent()
+                    }}>
+                        Rating:
+                        <input
+                            type="number"
+                            step="0.5"
+                            value={this.state.rating}
+                            onChange={(e) => {
+                                const value = Math.min(5, Math.max(0, Number(e.target.value)))
+                                this.setState(this.state.updateRating(value))
+                            }}
+                            required />
+                        <br />
+                        Feedback:
+                        <textarea
+                            placeholder="feedback"
+                            value={this.state.feedback}
+                            onChange={(e) =>
+                                this.setState(this.state.updateFeedback(e.target.value))}
+                        />
+                        <br />
+                        <button type="submit">Send Feedback</button>
+                    </form>
+                }
                 <br />
-                Feedback:
-                <textarea
-                    placeholder="feedback"
-                    value={this.state.feedback}
-                    onChange={(e) => 
-                        this.setState(this.state.updateFeedback(e.target.value))}
-                />
-                <br />
-                <button type="submit">Send Feedback</button>
-            </form>
+            </div>
+        )
     }
-                        <br />  
-                    </div>
-                )
-            }
-        }
+}
 export default withRouter(EventDetails);
-export {};
+export { };

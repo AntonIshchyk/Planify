@@ -45,7 +45,11 @@ public class EventService
         Event foundEvent = events.Find(e => e.Id == id)!;
     }*/
 
-    public async Task<bool> DeleteEvent(Guid id) => await EventAccess.Remove(id);
+    public async Task<bool> DeleteEvent(Guid id)
+    {
+        if (!await EventAttendanceAccess.RemovebyEventId(id)) return false;
+        return await EventAccess.Remove(id);
+    }
 
     public async Task<bool> AddReview(EventAttendance review, Guid userId)
     {

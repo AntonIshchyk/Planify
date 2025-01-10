@@ -1,7 +1,7 @@
-import {StateUpdater, createStateUpdater} from '../Updater/Updater';
+import { StateUpdater, createStateUpdater } from '../Updater/Updater';
 
 export type LoginState = {
-    email : string;
+    email: string;
     username: string;
     password: string;
     adminLogin: boolean;
@@ -10,8 +10,8 @@ export type LoginState = {
 
 export const initLoginState = {
     email: '',
-    username : '',
-    password : '',
-    adminLogin : false,
+    username: '',
+    password: '',
+    adminLogin: false,
     updateField: createStateUpdater<LoginState>()
 } 

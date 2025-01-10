@@ -23,14 +23,14 @@ export class ViewAttendancees extends React.Component<ViewAttendanceesProps, Vie
         super(props);
         this.state = initViewAttendanceesState;
     }
-    
+
     componentDidMount() {
         // Fetch data when the component mounts
         this.fetchAttendances();
     }
 
     fetchAttendances = async () => {
-        const  eventId  = this.props.params.eventId; // Access eventId from params
+        const eventId = this.props.params.eventId; // Access eventId from params
         try {
             const response = await apiClient.get(
                 `http://localhost:3000/Calender-Website/get-user-names?eventId=${eventId}`,
@@ -51,7 +51,7 @@ export class ViewAttendancees extends React.Component<ViewAttendanceesProps, Vie
         if (!Array.isArray(this.state.attendances)) {
             return <p>Invalid data type for attendance list.</p>;
         }
-    
+
         return (
             <div>
                 <h3>Event attendances for {this.props.params.title}</h3>
@@ -67,7 +67,7 @@ export class ViewAttendancees extends React.Component<ViewAttendanceesProps, Vie
             </div>
         );
     }
-    
+
 }
 
 export default withRouter(ViewAttendancees);

@@ -10,18 +10,18 @@ export interface Event {
 }
 
 export type EventDetailsState = {
-    event : Event;
-    attending : string[],
-    updateAttending : (attending : string[]) => (state : EventDetailsState) => EventDetailsState,
+    event: Event;
+    attending: string[],
+    updateAttending: (attending: string[]) => (state: EventDetailsState) => EventDetailsState,
     feedback: string,
-    rating : number,
-    updateFeedback : (feedback: string) => (state : EventDetailsState) => EventDetailsState,
-    updateRating : (rating : number) => (state : EventDetailsState) => EventDetailsState,
-    averageRatings : number,
-    updateAverageRatings : (rating : number) => (state : EventDetailsState) => EventDetailsState,
-    updateEvent : (event : Event) => (state : EventDetailsState) => EventDetailsState
-    };
-    
+    rating: number,
+    updateFeedback: (feedback: string) => (state: EventDetailsState) => EventDetailsState,
+    updateRating: (rating: number) => (state: EventDetailsState) => EventDetailsState,
+    averageRatings: number,
+    updateAverageRatings: (rating: number) => (state: EventDetailsState) => EventDetailsState,
+    updateEvent: (event: Event) => (state: EventDetailsState) => EventDetailsState
+};
+
 
 const defaultEvent: Event = {
     id: "",
@@ -35,20 +35,23 @@ const defaultEvent: Event = {
 };
 
 export const initEventDetailsState = {
-    event : defaultEvent,
-    feedback : "",
-    attending : [],
-    updateAttending : (attending : string[]) => (state:EventDetailsState) => ({...state, attending : attending}),
+    event: defaultEvent,
+    feedback: "",
+    attending: [],
+    updateAttending: (attending: string[]) => (state: EventDetailsState) => ({ ...state, attending: attending }),
     updateFeedback: (feedback: string) => (state: EventDetailsState) => ({
         ...state,
         feedback: feedback,
     }),
     rating: 0,
-    averageRatings : 0,
-    updateRating : (rating : number) => (state:EventDetailsState) => ({...state, rating : rating
+    averageRatings: 0,
+    updateRating: (rating: number) => (state: EventDetailsState) => ({
+        ...state, rating: rating
     }),
-    updateAverageRatings : (averageRatings : number) => (state:EventDetailsState) => ({...state, averageRatings : averageRatings
+    updateAverageRatings: (averageRatings: number) => (state: EventDetailsState) => ({
+        ...state, averageRatings: averageRatings
     }),
-    updateEvent : (event : Event) => (state:EventDetailsState) => ({...state, event : event
+    updateEvent: (event: Event) => (state: EventDetailsState) => ({
+        ...state, event: event
     })
 }

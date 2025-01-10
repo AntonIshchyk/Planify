@@ -1,4 +1,4 @@
-import {StateUpdater, createStateUpdater} from '../Updater/Updater';
+import { StateUpdater, createStateUpdater } from '../Updater/Updater';
 
 export interface User {
     id: string;
@@ -13,7 +13,7 @@ export interface User {
 
 
 export type FriendsState = {
-    friends : User[],
+    friends: User[],
     requests: User[],
     foundPeople: User[],
     searchStr: string,
@@ -22,7 +22,7 @@ export type FriendsState = {
 }
 
 export const initFriendsState = {
-    friends : [],
+    friends: [],
     requests: [],
     foundPeople: [],
     searchStr: "",
