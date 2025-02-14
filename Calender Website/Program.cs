@@ -29,17 +29,6 @@ builder.Services.AddTransient<EventAttendanceService>();
 
 var app = builder.Build();
 
-// Middleware to handle specific request paths
-app.Use(async (context, next) =>
-{
-    if (context.Request.Path == "/Calender-Website/login-admin")
-    {
-        Console.WriteLine("Implement separate login for admin");
-        Console.WriteLine("Check for an API key");
-    }
-    await next.Invoke();
-});
-
 // Development and production environment handling
 if (app.Environment.IsDevelopment())
 {
